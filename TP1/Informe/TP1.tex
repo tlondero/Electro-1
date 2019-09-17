@@ -96,6 +96,10 @@ Redibujando convenientemente y utilizado el pasaje a nivel de corriente se puede
 \end{figure}
 Una pequeña modificacion que se hace a la expresión del circuito es definir un hfe efectivo y un hie efectivo, estos siendo para el circuito:
 \begin{align} hfe^* = hfe\cdot \frac{r_3}{R_3+hie} \ \ \ \ hie^* = R_3 // hie \end{align}
+\subsection{Elección de componentes.}
+Se eligió un punto de operación \textbf{Q} tal que la tensión colector-emisor $V_{ce} = 5 V$ y la corriente de colector $I_{cq} = 2mA$, para estos valores se eligió valores de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para elegirlos. Se eligieron:
+$R_1 = 10k\Omega \ \ \ R_2 = 14.7 k\Omega \ \ \ R_3 = 1 k\Omega \ \ \ R_E = 2.2k\Omega \ \ \ $
+se tomó como resistencia del generador $R_s \approx 50 \Omega$ y $R_L \approx 10k\Omega $ los valores de capacitores elegidos fueron tal que su impedancia sea despreciable frente a las resistencias para valores de frecuencias medias.
 \subsection{Resultados de interés.}
 Nos centraremos en la ganancia de Tensión, Corriente, impedancia de entrada y salida:
 \begin{equation} \Delta V = \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
@@ -104,6 +108,19 @@ Nos centraremos en la ganancia de Tensión, Corriente, impedancia de entrada y s
 \end{equation}
 \begin{equation} Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
 \begin{equation} Z_{Out} = R_s + hie^* //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
-\section{Conclusiones}
+Luego se graficó la ganancia de tensión en función de la frecuencia:
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=\textwidth]{imagenes/avs.png}
+	\caption{Transferencia Módulo.}
+	\label{fig:transmod}
+\end{figure}
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=\textwidth]{imagenes/avsp.png}
+	\caption{Transferencia Fase.}
+	\label{fig:transph}
+\end{figure}
+
 
 \end{document}
