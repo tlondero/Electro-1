@@ -1,7 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish, es-tabla]{babel}
-
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -59,16 +59,12 @@
 \tableofcontents
 \newpage
 
-\begin{center}
-	\textcolor{red}{\textbf{VERIFICAR FECHA DE ENTREGA.}}
-\end{center}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %								INFORME									%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introducción}
-La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capcitor $C_2$ para la realimentación:
+La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capacitor $C_2$ para la realimentación:
 
 \begin{figure}[H]
 \begin{center}
@@ -118,7 +114,7 @@ donde:
 
 Recorriendo la malla de entrada se obtienen la siguientes ecuaciones:
 \begin{equation*}
-	V_{Th}-I_b \cdot R_{Th} -V_{BE_{On}}-I_e \cdot R_E=0  \ \  I_b\approx  \beta \cdot I_e
+	V_{Th}-I_b \cdot R_{Th} -V_{BE_{On}}-I_e \cdot R_E=0 \ \ I_c \approx I_e  \ \  I_b\approx  \beta \cdot I_e 
 \end{equation*}
 
 Es así que se consigue una expresión para $I_C$ con $V_{ce}$:
@@ -152,9 +148,9 @@ Siendo este el circuito correspondiente al modelo:
 \end{center}
 \end{figure}
 
-Para el transistor utilizado en este informe, se midió HFE, siendo este $HFE \approx 380$
+Al transistor fírisco utilizado en el circuito se le midió el HFE, siendo este $HFE \approx 380$
 \subsection{Circuito Incremental}
-Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, se obtiene el siguiente circuito:
+Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, los capacitores son tomados como cortocircuitos dado a que representan una baja impedancia a estas frecuencias, se obtiene el siguiente circuito:
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}[european voltages]
@@ -186,11 +182,11 @@ Redibujando convenientemente y utilizado el pasaje a nivel de corriente, se pued
 \end{center}
 \end{figure}
 
-Una pequeña modificacion que se hace a la expresión del circuito es definir un $hfe$ y un $hie$ efectivo. Para el circuito dado, estos son:
+Una pequeña modificación que se hace a la expresión del circuito es definir un $hfe$ y un $hie$ efectivo. Para el circuito dado, estos son:
 \begin{equation*}
 \left\{
 \begin{aligned}
-	& hfe^* = hfe\cdot \frac{r_3}{R_3+hie} \\
+	& hfe^* = hfe\cdot \frac{R_3}{R_3+hie} \\
 	& hie^* = R_3 // hie
 \end{aligned}
 \right.
@@ -198,9 +194,9 @@ Una pequeña modificacion que se hace a la expresión del circuito es definir un
 
 \subsection{Elección de componentes.}
 
-Se eligió un punto de operación \textbf{Q} tal que la tensión colector-emisor $V_{ce} = 5 V$,mientras que la corriente de colector $I_{cq} = 2 \ mA$.  Se eligieron resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
+Lo primero fue definir una tensión de alimentación vcc=10V, a partir de esta tensión se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo,  la tensión  colector-emisor será de $V_{ce} = 5 V$,mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
 
-Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias. Finalmente se eligió una tensión de alimentación vcc=10V.
+Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
 \subsection{Resultados de interés.}
 Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida:
 
@@ -209,10 +205,10 @@ Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entra
 	\Delta V \triangleq \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
 \end{equation}
 
-\begin{equation} \Delta I \triangleq \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{\frac{1}{hoe} // R_1 // R_2 // R_E+R_L} \cdot (1+hfe^*)
+\begin{equation} \Delta I \triangleq \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
 \end{equation}
 \begin{equation} Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
-\begin{equation} Z_{Out} = \frac{(R_s + hie^*)}{(1+hfe*)} //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\end{equation}
+\begin{equation} Z_{Out} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)\end{equation}
 
 Luego se graficó la ganancia de tensión en función de la frecuencia:
 \begin{figure} [H]
@@ -221,13 +217,34 @@ Luego se graficó la ganancia de tensión en función de la frecuencia:
 	\caption{Transferencia Módulo.}
 	\label{fig:transmod}
 \end{figure}
+Una cualidad  a notar es que esta configuració efectivamente tiene una ganancia de tensión menor a 1  y que para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente si se continúa aumentando la frecuencia eventualmente decaerá en un pasabanda. Algunas posibles aplicaciones para el circuito son las de seguidor de tensión \footnote{El circuito también es conocido como "Seguidor por Emisor"} y como amplificador de corriente.
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=\textwidth]{imagenes/avsp.png}
 	\caption{Transferencia Fase.}
 	\label{fig:transph}
 \end{figure}
-Se midió la impedancia de entrada para frecuencias medias, las cuales fueron entre 1kHz y 10 kHz, obteniendio un valor de $Z_{in}=83.4k\Omega$ y midiendo la impedancia de salida se obtuvo un valor de $Z_{out} = 9.86 k \Omega $
-Dichas mediciones coinciden parcialmente con la simulación, las discrepancias se deben principalmente a los cambios en el HFE, los cuales son esperables, pero dadoa  que la impedancia de entrada es grande y la de salida pequeña se toman como válidos.
+Otro aspecto de interés se puede ver en la fase, dado a que el circuito no inverte la fase.
+
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\cellcolor[HTML]{000000} & \textbf{$\Delta V_s$} & \textbf{$R_{In}$} & \textbf{$R_{Out}$} \\ \hline
+\textbf{Simulación}      & -0.0783[dB]           & 66 [k $\Omega$]   & 200 [$\Omega$]     \\ \hline
+\textbf{Calculado}       & -0.01 [dB]            & 356 [k $\Omega$]  & 374 [$\Omega$]     \\ \hline
+\textbf{Medido}          & -0.1 [dB]             & 83.4 [k $\Omega$] & 9860 [$\Omega$]    \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{center}
+	\textcolor{red}{\textbf{Preguntar cuentas.}}
+\end{center}
+
+
+Dichas mediciones coinciden parcialmente con la simulación, las discrepancias se deben principalmente a los cambios en el HFE, los cuales son esperables, pero dado a que la impedancia de entrada es grande y la de salida pequeña se toman como válidos lo cual es esperable ya que el circuito está basado en un colector común.
 
 \end{document}
