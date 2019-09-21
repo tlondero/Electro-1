@@ -8,20 +8,36 @@
 
 \usepackage{float}
 \usepackage{graphicx}
+
+\usepackage{caption}
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
-\usepackage{xcolor}
-
 \usepackage{multirow}
 \setlength{\doublerulesep}{\arrayrulewidth}
+
+\newcommand{\quotes}[1]{``#1''}
+\newcommand\underrel[2]{\mathrel{\mathop{#2}\limits_{#1}}}
 
 \usepackage{array}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \usepackage[american]{circuitikz}
-
+\usepackage{xcolor}
 \usepackage{fancyhdr}
+
+\newlength{\stockheight}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=blue,    
+}
+
+\urlstyle{same}
 
 \usepackage{units} 
 \pagestyle{fancy}
@@ -40,29 +56,55 @@
 
 \input{Caratula.tex}
 
+\tableofcontents
+\newpage
+
+\begin{center}
+	\textcolor{red}{\textbf{VERIFICAR FECHA DE ENTREGA.}}
+\end{center}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %								INFORME									%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introducción}
-La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capcitor C2 para la realimentación:
-\begin{figure} [H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{imagenes/bootstrap.PNG}
-	\caption{Circuito Bootstrap propuesto.}
-	\label{fig:boot}
+La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capcitor $C_2$ para la realimentación:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\node [npn](Q){};
+	\draw (Q.B) to[short, -*] ++(-3,0) node[](v1){};
+	\draw (v1) to[C, l = $C_1$] ++(-1.5,0) to[R, l = $R_S$] ++(-1.5,0) to[short] ++(-0.5,0) node[ocirc,label=left:$V_{S}$]{};
+	\draw (v1) to[short] ++(0,-0.5) to[R, l = $R_3$] ++(0,-1.5) to[short, -*] ++(1.5,0) node[](v2){} to[C, l = $C_2$] ++(2.35,0) to[short] ++(0.5,0) to[C, l = $C_3$] ++(1.5,0) node[](aux){};
+	\draw (aux) to[open] ++(0,-2.1) node[ground]{} to[R, l= $R_L$, v= $V_o$] (aux);
+	\draw (v2) to[short] ++(0,-0.5) to[R, l = $R_2$] ++(0,-1.5) node[ground]{};
+	\draw (Q.E) to[short, -*] ++(0,-1.23) to[short] ++(0,-0.5) to[R, l = $R_e$] ++(0,-1.5) node[ground]{};
+	\draw (Q.C) to[short] ++(0,2) node[ocirc,label=right:$V_{cc}$]{};
+	\draw (v2) to[short] ++(0,2.5) to[R, l = $R_1$] ++(0,1.5) to[short, -*] ++(2.35,0);
+\end{circuitikz}
+\caption{Circuito Bootstrap propuesto.}
+\label{fig:boot}
+\end{center}
 \end{figure}
 
 \section{Desarrollo}
 
 \subsection{Polarización}
 El primer paso consiste en pasivar la fuente Vs y tratar los capacitores como un circuito abierto. Redibujando y utilizando el teorema de Thevenin se llega a las siguientes condiciones:
-\begin{figure} [H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{imagenes/polarizacion.PNG}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\node [npn](Q){};
+	\draw (Q.B) to[R, l = $R_{Th}$] ++(-1.5,0) to[short] ++(-0.5,0) node[ocirc,label=left:$V_{Th}$]{};
+	\draw (Q.E) to[R, l = $R_e$] ++(0,-1.5) node[ground]{};
+	\draw (Q.C) to[short] ++(0,0.5) node[ocirc,label=right:$V_{cc}$]{};
+\end{circuitikz}
 	\caption{Circuito Bootstrap Polarización.}
 	\label{fig:pol}
+\end{center}
 \end{figure}
+
 donde:
 
 \begin{equation*}
@@ -97,11 +139,17 @@ Para el modelo incremental se utilizarán los siguientes estimadores:
 \end{equation*}
 
 Siendo este el circuito correspondiente al modelo:
-\begin{figure} [H]
-	\centering
-	\includegraphics[width=\textwidth]{imagenes/modeloincremetnal.jpg}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\node [ocirc,label=left:$B$](b){};
+	\draw (b) to[short, f_= $I_B$] ++(1.5,0) to[R, l = $hie$] ++(0,-2) node[circ](e){} to[short] ++(-1.5,0) node[ocirc, label=left:$E$](){};
+	\draw (e) to[short, -*] ++(2,0) to[open] ++(0,2) node[](aux){} to[dcisource, l = $hfe \cdot I_B$] ++(0,-2) to[short, -*] ++(2.5,0) to[open] ++(0,2) to[R, l= $\frac{1}{hoe}$] ++(0,-2) to[short]++(1.5,0) node[ocirc, label=right:$E$](){};
+	\draw (aux) to[short] ++(4,0) node[ocirc, label=right:$C$](){};
+\end{circuitikz}
 	\caption{Modelo incremental.}
 	\label{fig:modinc}
+\end{center}
 \end{figure}
 
 Para el transistor utilizado en este infore, se midió HFE, siendo este $HFE \approx $
@@ -111,19 +159,35 @@ Para el transistor utilizado en este infore, se midió HFE, siendo este $HFE \ap
 
 \subsection{Circuito Incremental}
 Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, se obtiene el siguiente circuito:
-\begin{figure} [H]
-	\centering
-	\includegraphics[width=\textwidth]{imagenes/circinc.png}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\node [ocirc,label=left:$V_i$](vi){};
+	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S$] ++(2,0) node[circ](v1){} to[R, l = $R_3$] ++(2,0) node[circ](v2){};
+	\draw (v1) to[short] ++(0,1) to[R, l = $hie$] ++(2,0) to[short] ++(0,-1);
+	\draw (v2) to[open] ++(0,-2) node[ground](gnd){} to[dcisource, l = $hfe \cdot I_B$] ++(0,2);
+	\draw (v2) to[short, -*] ++(1.5,0) to[R, l= $\frac{1}{hoe}$] ++(0,-2) node[ground](){};
+	
+	\draw (v2) to[short, -*] ++(3,0) to[R, l= $R_1$] ++(0,-2) node[ground](){};
+	\draw (v2) to[short, -*] ++(4.5,0) to[R, l= $R_2$] ++(0,-2) node[ground](){};
+	\draw (v2) to[short, -*] ++(6,0) to[R, l= $R_E$] ++(0,-2) node[ground](){};
+	\draw (v2) to[short, -*] ++(7.5,0) to[R, l= $R_L$] ++(0,-2) node[ground](){};
+\end{circuitikz}
 	\caption{Circuito incremental.}
 	\label{fig:circinc}
+\end{center}
 \end{figure}
 
 Redibujando convenientemente y utilizado el pasaje a nivel de corriente, se puede describir el circuito como:
-\begin{figure} [H]
-	\centering
-	\includegraphics[width=\textwidth]{imagenes/circinc2.png}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\node [ocirc,label=left:$V_i$](vi){};
+	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S + \left( R_3 // hie \right)$] ++(2,0) to[R, l= $\frac{1}{hoe} // R_1 // R_2 // R_E // R_L \cdot \left(1 + \frac{R_3 hfe}{R_3 + hfe}\right)$] ++(0,-2) node[ground](){};
+\end{circuitikz}
 	\caption{Circuito incremental final.}
 	\label{fig:circinc2}
+\end{center}
 \end{figure}
 
 Una pequeña modificacion que se hace a la expresión del circuito es definir un $hfe$ y un $hie$ efectivo. Para el circuito dado, estos son:
