@@ -77,7 +77,7 @@ Siendo este el circuito correspondiente al modelo:
 	\caption{Modelo incremental.}
 	\label{fig:modinc}
 \end{figure}
-Para nuestro transistor en particular se midió el HFE siendo este $HFE \approx $
+Para nuestro transistor en particular se midió el HFE siendo este $HFE \approx 380 $
 \subsection{Circuito Incremental}
 Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias se obtiene el siguiente circuito
 \begin{figure} [H]
@@ -99,15 +99,15 @@ Una pequeña modificacion que se hace a la expresión del circuito es definir un
 \subsection{Elección de componentes.}
 Se eligió un punto de operación \textbf{Q} tal que la tensión colector-emisor $V_{ce} = 5 V$ y la corriente de colector $I_{cq} = 2mA$, para estos valores se eligió valores de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para elegirlos. Se eligieron:
 $R_1 = 10k\Omega \ \ \ R_2 = 14.7 k\Omega \ \ \ R_3 = 1 k\Omega \ \ \ R_E = 2.2k\Omega \ \ \ $
-se tomó como resistencia del generador $R_s \approx 50 \Omega$ y $R_L \approx 10k\Omega $ los valores de capacitores elegidos fueron tal que su impedancia sea despreciable frente a las resistencias para valores de frecuencias medias.
+se tomó como resistencia del generador $R_s \approx 50 \Omega$ y $R_L \approx 10k\Omega $ los valores de capacitores elegidos fueron tal que su impedancia sea despreciable frente a las resistencias para valores de frecuencias medias, tomando vcc=10V.
 \subsection{Resultados de interés.}
 Nos centraremos en la ganancia de Tensión, Corriente, impedancia de entrada y salida:
 \begin{equation} \Delta V = \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
 \end{equation}
-\begin{equation} \Delta I = \frac{I_o}{I_i} =  
+\begin{equation} \Delta I = \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{\frac{1}{hoe} // R_1 // R_2 // R_E+R_L} \cdot (1+hfe^*)
 \end{equation}
 \begin{equation} Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
-\begin{equation} Z_{Out} = R_s + hie^* //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
+\begin{equation} Z_{Out} = \frac{(R_s + hie^*)}{(1+hfe*)} //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\end{equation}
 Luego se graficó la ganancia de tensión en función de la frecuencia:
 \begin{figure} [H]
 	\centering
@@ -121,6 +121,7 @@ Luego se graficó la ganancia de tensión en función de la frecuencia:
 	\caption{Transferencia Fase.}
 	\label{fig:transph}
 \end{figure}
-
+Se midió la impedancia de entrada para frecuencias medias, las cuales fueron entre 1kHz y 10 kHz, obteniendio un valor de $Z_{in}=83.4k\Omega$ y midiendo la impedancia de salida se obtuvo un valor de $Z_{out} = 9.86 k \Omega $
+Dichas mediciones coinciden parcialmente con la simulación, las discrepancias se deben principalmente a los cambios en el HFE, los cuales son esperables, pero dadoa  que la impedancia de entrada es grande y la de salida pequeña se toman como válidos.
 
 \end{document}
