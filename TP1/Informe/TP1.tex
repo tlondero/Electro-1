@@ -11,6 +11,8 @@
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
+\usepackage{xcolor}
+
 \usepackage{multirow}
 \setlength{\doublerulesep}{\arrayrulewidth}
 
@@ -43,10 +45,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introducción}
-La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la impedancia de salida utilizando un capacitor para realimentar el emisor con la base del transistor. El circuito propuesto es un colector común utilizando el capcitor C2 para la realimentación:
+La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capcitor C2 para la realimentación:
 \begin{figure} [H]
 	\centering
-	\includegraphics[width=0.6\textwidth]{imagenes/bootstrap.PNG}
+	\includegraphics[width=0.8\textwidth]{imagenes/bootstrap.PNG}
 	\caption{Circuito Bootstrap propuesto.}
 	\label{fig:boot}
 \end{figure}
@@ -54,7 +56,7 @@ La configuración a estudiar en este informe será la configuración de \textbf{
 \section{Desarrollo}
 
 \subsection{Polarización}
-El primer paso será pasivar la fuente Vs y tratar los capacitores como un circuito abierto. Redibujando y utilizando el teorema de Thevenin se llega a las siguientes condiciones:
+El primer paso consiste en pasivar la fuente Vs y tratar los capacitores como un circuito abierto. Redibujando y utilizando el teorema de Thevenin se llega a las siguientes condiciones:
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{imagenes/polarizacion.PNG}
@@ -62,14 +64,38 @@ El primer paso será pasivar la fuente Vs y tratar los capacitores como un circu
 	\label{fig:pol}
 \end{figure}
 donde:
-\begin{align} V_{Th}= V_{cc}\cdot \frac{R_2}{R_1+R_2} \ \ R_{Th}= (R_1 // R_2) +R_3\end{align}
+
+\begin{equation*}
+\left\{
+\begin{aligned}
+		& V_{Th}= V_{cc}\cdot \frac{R_2}{R_1+R_2} \\
+		& R_{Th}= (R_1 // R_2) + R_3 
+\end{aligned}
+\right.
+\end{equation*}
+
 Recorriendo la malla de entrada se obtienen la siguientes ecuaciones:
-\begin{align} V_{Th}-I_b \cdot R_{Th} -V_{BE_{On}}-I_e \cdot R_E=0  \ \  I_b\approx  \beta \cdot I_e\end{align}
-Obteniendo las siguientes expresiones apra $I_C$ y $V_{ce}$:
-\begin{align} I_{C}\approx \frac{V_{Th}-V_{BE_{On}}}{\frac{R_{Th}}{1+\beta}+R_E} \ \ V_{ce}= V_{cc}-I_c\cdot R_E\end{align}
+\begin{equation*}
+	V_{Th}-I_b \cdot R_{Th} -V_{BE_{On}}-I_e \cdot R_E=0  \ \  I_b\approx  \beta \cdot I_e
+\end{equation*}
+
+Es así que se consigue una expresión para $I_C$ con $V_{ce}$:
+\begin{equation*}
+	I_{C}\approx \frac{V_{Th}-V_{BE_{On}}}{\frac{R_{Th}}{1+\beta}+R_E} \ \ V_{ce} = V_{cc}-I_c\cdot R_E
+\end{equation*}
+
 \subsection{Modelo Incremental}
 Para el modelo incremental se utilizarán los siguientes estimadores:
-\begin{align}\hat{hfe}=\beta \ \ \ \  \hat{hie} = \frac{V_T}{I_b} \ \ \ \ \hat{\frac{1}{hoe}} = \frac{V_a}{I_c}\end{align}
+\begin{equation*}
+\left\{
+\begin{aligned}
+	& \hat{hfe}=\beta \\
+	& \hat{hie} = \frac{V_T}{I_b} \\
+	& \hat{\frac{1}{hoe}} = \frac{V_a}{I_c}
+\end{aligned}
+\right.
+\end{equation*}
+
 Siendo este el circuito correspondiente al modelo:
 \begin{figure} [H]
 	\centering
@@ -77,29 +103,43 @@ Siendo este el circuito correspondiente al modelo:
 	\caption{Modelo incremental.}
 	\label{fig:modinc}
 \end{figure}
-Para nuestro transistor en particular se midió el HFE siendo este $HFE \approx $
+
+Para el transistor utilizado en este infore, se midió HFE, siendo este $HFE \approx $
+\begin{center}
+	\textcolor{red}{\textbf{PONER HFE MEDIDO.}}
+\end{center}
+
 \subsection{Circuito Incremental}
-Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias se obtiene el siguiente circuito
+Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, se obtiene el siguiente circuito:
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=\textwidth]{imagenes/circinc.png}
 	\caption{Circuito incremental.}
 	\label{fig:circinc}
 \end{figure}
-Redibujando convenientemente y utilizado el pasaje a nivel de corriente se puede describir el circuito como:
 
+Redibujando convenientemente y utilizado el pasaje a nivel de corriente, se puede describir el circuito como:
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=\textwidth]{imagenes/circinc2.png}
 	\caption{Circuito incremental final.}
 	\label{fig:circinc2}
 \end{figure}
-Una pequeña modificacion que se hace a la expresión del circuito es definir un hfe efectivo y un hie efectivo, estos siendo para el circuito:
-\begin{align} hfe^* = hfe\cdot \frac{r_3}{R_3+hie} \ \ \ \ hie^* = R_3 // hie \end{align}
+
+Una pequeña modificacion que se hace a la expresión del circuito es definir un $hfe$ y un $hie$ efectivo. Para el circuito dado, estos son:
+\begin{equation*}
+\left\{
+\begin{aligned}
+	& hfe^* = hfe\cdot \frac{r_3}{R_3+hie} \\
+	& hie^* = R_3 // hie
+\end{aligned}
+\right.
+\end{equation*}
+
 \subsection{Elección de componentes.}
-Se eligió un punto de operación \textbf{Q} tal que la tensión colector-emisor $V_{ce} = 5 V$ y la corriente de colector $I_{cq} = 2mA$, para estos valores se eligió valores de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para elegirlos. Se eligieron:
-$R_1 = 10k\Omega \ \ \ R_2 = 14.7 k\Omega \ \ \ R_3 = 1 k\Omega \ \ \ R_E = 2.2k\Omega \ \ \ $
-se tomó como resistencia del generador $R_s \approx 50 \Omega$ y $R_L \approx 10k\Omega $ los valores de capacitores elegidos fueron tal que su impedancia sea despreciable frente a las resistencias para valores de frecuencias medias.
+Se eligió un punto de operación $Q$ tal que la tensión colector-emisor sea $V_{ce} = 5 \ V$, mientras que la corriente de colector sea $I_{cq} = 2 \ mA$. Se eligieron resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
+
+Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
 \subsection{Resultados de interés.}
 Nos centraremos en la ganancia de Tensión, Corriente, impedancia de entrada y salida:
 \begin{equation} \Delta V = \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
