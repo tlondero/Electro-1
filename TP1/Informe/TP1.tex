@@ -152,11 +152,7 @@ Siendo este el circuito correspondiente al modelo:
 \end{center}
 \end{figure}
 
-Para el transistor utilizado en este infore, se midió HFE, siendo este $HFE \approx $
-\begin{center}
-	\textcolor{red}{\textbf{PONER HFE MEDIDO.}}
-\end{center}
-
+Para el transistor utilizado en este informe, se midió HFE, siendo este $HFE \approx 380$
 \subsection{Circuito Incremental}
 Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, se obtiene el siguiente circuito:
 \begin{figure}[H]
@@ -201,10 +197,10 @@ Una pequeña modificacion que se hace a la expresión del circuito es definir un
 \end{equation*}
 
 \subsection{Elección de componentes.}
-Se eligió un punto de operación $Q$ tal que la tensión colector-emisor sea $V_{ce} = 5 \ V$, mientras que la corriente de colector sea $I_{cq} = 2 \ mA$. Se eligieron resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
 
-Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
+Se eligió un punto de operación \textbf{Q} tal que la tensión colector-emisor $V_{ce} = 5 V$,mientras que la corriente de colector $I_{cq} = 2 \ mA$.  Se eligieron resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
 
+Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias. Finalmente se eligió una tensión de alimentación vcc=10V.
 \subsection{Resultados de interés.}
 Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida:
 
@@ -213,26 +209,10 @@ Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entra
 	\Delta V \triangleq \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
 \end{equation}
 
-\begin{equation}
-	\Delta I \triangleq \frac{I_o}{I_i} =  
+\begin{equation} \Delta I \triangleq \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{\frac{1}{hoe} // R_1 // R_2 // R_E+R_L} \cdot (1+hfe^*)
 \end{equation}
-
-\begin{center}
-	\textcolor{red}{\textbf{COLOCAR GANANCIA DE CORRIENTE.}}
-\end{center}
-
-\begin{equation}
-	Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)
-\end{equation}
-
-\begin{equation}
-	Z_{Out} = R_s + \left[ hie^* //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right) \right] \cdot (1+hfe*)
-\end{equation}
-
-\begin{center}
-	\textcolor{red}{\textbf{VERIFICAR PRECEDENCIA.}}\\
-	\textcolor{red}{\textbf{AGREGUÉ LOS CORCHETES Y CREO QUE ERA ASÍ.}}
-\end{center}
+\begin{equation} Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
+\begin{equation} Z_{Out} = \frac{(R_s + hie^*)}{(1+hfe*)} //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\end{equation}
 
 Luego se graficó la ganancia de tensión en función de la frecuencia:
 \begin{figure} [H]
@@ -247,6 +227,7 @@ Luego se graficó la ganancia de tensión en función de la frecuencia:
 	\caption{Transferencia Fase.}
 	\label{fig:transph}
 \end{figure}
-
+Se midió la impedancia de entrada para frecuencias medias, las cuales fueron entre 1kHz y 10 kHz, obteniendio un valor de $Z_{in}=83.4k\Omega$ y midiendo la impedancia de salida se obtuvo un valor de $Z_{out} = 9.86 k \Omega $
+Dichas mediciones coinciden parcialmente con la simulación, las discrepancias se deben principalmente a los cambios en el HFE, los cuales son esperables, pero dadoa  que la impedancia de entrada es grande y la de salida pequeña se toman como válidos.
 
 \end{document}
