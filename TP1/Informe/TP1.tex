@@ -163,7 +163,7 @@ Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja c
 	\draw (v2) to[short, -*] ++(3,0) to[R, l= $R_1$] ++(0,-2) node[ground](){};
 	\draw (v2) to[short, -*] ++(4.5,0) to[R, l= $R_2$] ++(0,-2) node[ground](){};
 	\draw (v2) to[short, -*] ++(6,0) to[R, l= $R_E$] ++(0,-2) node[ground](){};
-	\draw (v2) to[short, -*] ++(7.5,0) to[R, l= $R_L$] ++(0,-2) node[ground](){};
+	\draw (v2) to[short, -*] ++(8,0) to[open] ++(0,-2) node[ground](){} to[R, l= $R_L$, v = $V_o$] ++(0,2);
 \end{circuitikz}
 	\caption{Circuito incremental.}
 	\label{fig:circinc}
@@ -175,12 +175,16 @@ Redibujando convenientemente y utilizado el pasaje a nivel de corriente, se pued
 \begin{center}
 \begin{circuitikz}[european voltages]
 	\node [ocirc,label=left:$V_i$](vi){};
-	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S + \left( R_3 // hie \right)$] ++(2,0) to[R, l= $\frac{1}{hoe} // R_1 // R_2 // R_E // R_L \cdot \left(1 + \frac{R_3 hfe}{R_3 + hfe}\right)$] ++(0,-2) node[ground](){};
+	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S + \left( R_3 // hie \right)$] ++(2,0) to[open] ++(0,-2) node[ground](){} to[R, l= $R_{d}$, v = $V_o$] ++(0,2);
 \end{circuitikz}
 	\caption{Circuito incremental final.}
 	\label{fig:circinc2}
 \end{center}
 \end{figure}
+siendo
+\begin{equation*}
+	R_d = \frac{1}{hoe} // R_1 // R_2 // R_E // R_L \cdot \left(1 + \frac{R_3 hfe}{R_3 + hfe}\right) 
+\end{equation*}
 
 Una pequeña modificación que se hace a la expresión del circuito es definir un $hfe$ y un $hie$ efectivo. Para el circuito dado, estos son:
 \begin{equation*}
