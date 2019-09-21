@@ -140,14 +140,36 @@ Una pequeña modificacion que se hace a la expresión del circuito es definir un
 Se eligió un punto de operación $Q$ tal que la tensión colector-emisor sea $V_{ce} = 5 \ V$, mientras que la corriente de colector sea $I_{cq} = 2 \ mA$. Se eligieron resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
 
 Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
+
 \subsection{Resultados de interés.}
-Nos centraremos en la ganancia de Tensión, Corriente, impedancia de entrada y salida:
-\begin{equation} \Delta V = \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
+Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida:
+
+
+\begin{equation}
+	\Delta V \triangleq \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
 \end{equation}
-\begin{equation} \Delta I = \frac{I_o}{I_i} =  
+
+\begin{equation}
+	\Delta I \triangleq \frac{I_o}{I_i} =  
 \end{equation}
-\begin{equation} Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
-\begin{equation} Z_{Out} = R_s + hie^* //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
+
+\begin{center}
+	\textcolor{red}{\textbf{COLOCAR GANANCIA DE CORRIENTE.}}
+\end{center}
+
+\begin{equation}
+	Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)
+\end{equation}
+
+\begin{equation}
+	Z_{Out} = R_s + \left[ hie^* //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right) \right] \cdot (1+hfe*)
+\end{equation}
+
+\begin{center}
+	\textcolor{red}{\textbf{VERIFICAR PRECEDENCIA.}}\\
+	\textcolor{red}{\textbf{AGREGUÉ LOS CORCHETES Y CREO QUE ERA ASÍ.}}
+\end{center}
+
 Luego se graficó la ganancia de tensión en función de la frecuencia:
 \begin{figure} [H]
 	\centering
