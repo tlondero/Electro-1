@@ -148,7 +148,7 @@ Siendo este el circuito correspondiente al modelo:
 \end{center}
 \end{figure}
 
-Al transistor fírisco utilizado en el circuito se le midió el HFE, siendo este $HFE \approx 380$
+Al transistor físico utilizado en el circuito se le midió el HFE, siendo este $HFE \approx 380$
 \subsection{Circuito Incremental}
 Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, los capacitores son tomados como cortocircuitos dado a que representan una baja impedancia a estas frecuencias, se obtiene el siguiente circuito:
 \begin{figure}[H]
@@ -198,17 +198,20 @@ Una pequeña modificación que se hace a la expresión del circuito es definir u
 
 \subsection{Elección de componentes.}
 
-Lo primero fue definir una tensión de alimentación vcc=10V, a partir de esta tensión se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo,  la tensión  colector-emisor será de $V_{ce} = 5 V$,mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
+Lo primero fue definir una tensión de alimentación $Vcc = 10 \ V$, a partir de esta tensión se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo, la tensión colector-emisor será de $V_{ce} = 5 \ V$, mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
+
+Luego, se seleccionó el transistor a utilizar, el cual fue un \href{https://www.futurlec.com/Transistors/BC548.shtml}{BC548}, de Motorola.
 
 Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
+
 \subsection{Resultados de interés.}
 Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida, siendo estos presentados a continuación:
 
 \begin{equation}
-	\Delta V \triangleq \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
+	\Delta V_s \triangleq \frac{V_o}{V_s} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
 \end{equation}
 \begin{equation}
-	\Delta I \triangleq \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
+	\Delta I_s \triangleq \frac{I_o}{I_s} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
 \end{equation}
 \begin{equation}
 	Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
@@ -234,37 +237,19 @@ Una cualidad a notar es que esta configuración tiene una ganancia de tensión m
 \end{figure}
 
 Otro aspecto de interés se puede ver en la fase, dado a que el circuito no invierte a esta.
-
-\begin{center}
-	\textcolor{red}{\textbf{GUIDO FIJATE QUE TABLA TE GUSTA MÁS, BORRÁ LA OTRA.}}
-\end{center}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{cccc}
 \hline                   & $\mathbf{\Delta V_S}$ & $\mathbf{R_{In}}$ & $\mathbf{R_{Out}}$ \\
 \hline
-\textbf{Simulación} & -0.0783 [db]          & 66 [$k\Omega$]    & 200 [$\Omega$]     \\
-\textbf{Calculado}  & -0.01 [db]            & 356 [$k\Omega$]   & 374 [$\Omega$]     \\
-\textbf{Medido}     & -0.1 [db]             & 83.4 [$k\Omega$]  & 9860 [$\Omega$]   	\\
+\textbf{Simulación} & -0.078 [dB]          & 66.0 [$k\Omega$]    & 200 [$\Omega$]     \\
+\textbf{Calculado}  & -0.077 [dB]            & 96.3 [$k\Omega$]   & 848 [$\Omega$]     \\
+\textbf{Medido}     & -0.100 [dB]             & 83.4 [$k\Omega$]  & 9860 [$\Omega$]   	\\
 \hline
 \end{tabular}
 \caption{Comparación de valores obtenidos de diversos enfoques.}
 \label{tabla:comparacion}
 \end{table}
-
-%\begin{table}[H]
-%\centering
-%\begin{tabular}{c|c|c|c|}
-%\cline{2-4}
-%                                          & $\mathbf{\Delta V_S}$ & $\mathbf{R_{In}}$ & $\mathbf{R_{Out}}$ \\ \hline
-%\multicolumn{1}{|c|}{\textbf{Simulación}} & -0.0783 [db]          & 66 [$k\Omega$]    & 200 [$\Omega$]     \\ \hline
-%\multicolumn{1}{|c|}{\textbf{Calculado}}  & -0.01 [db]            & 356 [$k\Omega$]   & 374 [$\Omega$]     \\ \hline
-%\multicolumn{1}{|c|}{\textbf{Medido}}     & -0.1 [db]             & 83.4 [$k\Omega$]  & 9860 [$\Omega$]    \\ \hline
-%\end{tabular}
-%\caption{Comparación de valores obtenidos de diversos enfoques.}
-%\label{tabla:comparacion}
-%\end{table}
 
 \begin{center}
 	\textcolor{red}{\textbf{Preguntar cuentas.}}
