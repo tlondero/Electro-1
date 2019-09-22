@@ -202,17 +202,20 @@ Lo primero fue definir una tensión de alimentación vcc=10V, a partir de esta t
 
 Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
 \subsection{Resultados de interés.}
-Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida:
-
+Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida, siendo estos presentados a continuación:
 
 \begin{equation}
 	\Delta V \triangleq \frac{V_o}{V_i} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
 \end{equation}
-
-\begin{equation} \Delta I \triangleq \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
+\begin{equation}
+	\Delta I \triangleq \frac{I_o}{I_i} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
 \end{equation}
-\begin{equation} Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*)\end{equation}
-\begin{equation} Z_{Out} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)\end{equation}
+\begin{equation}
+	Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
+\end{equation}
+\begin{equation}
+	Z_{Out} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
+\end{equation}
 
 Luego se graficó la ganancia de tensión en función de la frecuencia:
 \begin{figure} [H]
@@ -221,34 +224,57 @@ Luego se graficó la ganancia de tensión en función de la frecuencia:
 	\caption{Transferencia Módulo.}
 	\label{fig:transmod}
 \end{figure}
-Una cualidad  a notar es que esta configuració efectivamente tiene una ganancia de tensión menor a 1  y que para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente si se continúa aumentando la frecuencia eventualmente decaerá en un pasabanda. Algunas posibles aplicaciones para el circuito son las de seguidor de tensión \footnote{El circuito también es conocido como "Seguidor por Emisor"} y como amplificador de corriente.
+
+Una cualidad a notar es que esta configuración tiene una ganancia de tensión menor a 1 y que, para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente, al continuar aumentando la frecuencia, eventualmente decaerá en un pasa-banda. Algunas posibles aplicaciones para el circuito son las de seguidor de tensión\footnote{El circuito también es conocido como ``Seguidor por Emisor''} o como amplificador de corriente.
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=\textwidth]{imagenes/avsp.png}
 	\caption{Transferencia Fase.}
 	\label{fig:transph}
 \end{figure}
-Otro aspecto de interés se puede ver en la fase, dado a que el circuito no inverte la fase.
 
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+Otro aspecto de interés se puede ver en la fase, dado a que el circuito no invierte a esta.
+
+\begin{center}
+	\textcolor{red}{\textbf{GUIDO FIJATE QUE TABLA TE GUSTA MÁS, BORRÁ LA OTRA.}}
+\end{center}
+
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{cccc}
+\hline                   & $\mathbf{\Delta V_S}$ & $\mathbf{R_{In}}$ & $\mathbf{R_{Out}}$ \\
 \hline
-\cellcolor[HTML]{000000} & \textbf{$\Delta V_s$} & \textbf{$R_{In}$} & \textbf{$R_{Out}$} \\ \hline
-\textbf{Simulación}      & -0.0783[dB]           & 66 [k $\Omega$]   & 200 [$\Omega$]     \\ \hline
-\textbf{Calculado}       & -0.01 [dB]            & 356 [k $\Omega$]  & 374 [$\Omega$]     \\ \hline
-\textbf{Medido}          & -0.1 [dB]             & 83.4 [k $\Omega$] & 9860 [$\Omega$]    \\ \hline
+\textbf{Simulación} & -0.0783 [db]          & 66 [$k\Omega$]    & 200 [$\Omega$]     \\
+\textbf{Calculado}  & -0.01 [db]            & 356 [$k\Omega$]   & 374 [$\Omega$]     \\
+\textbf{Medido}     & -0.1 [db]             & 83.4 [$k\Omega$]  & 9860 [$\Omega$]   	\\
+\hline
 \end{tabular}
+\caption{Comparación de valores obtenidos de diversos enfoques.}
+\label{tabla:comparacion}
 \end{table}
+
+%\begin{table}[H]
+%\centering
+%\begin{tabular}{c|c|c|c|}
+%\cline{2-4}
+%                                          & $\mathbf{\Delta V_S}$ & $\mathbf{R_{In}}$ & $\mathbf{R_{Out}}$ \\ \hline
+%\multicolumn{1}{|c|}{\textbf{Simulación}} & -0.0783 [db]          & 66 [$k\Omega$]    & 200 [$\Omega$]     \\ \hline
+%\multicolumn{1}{|c|}{\textbf{Calculado}}  & -0.01 [db]            & 356 [$k\Omega$]   & 374 [$\Omega$]     \\ \hline
+%\multicolumn{1}{|c|}{\textbf{Medido}}     & -0.1 [db]             & 83.4 [$k\Omega$]  & 9860 [$\Omega$]    \\ \hline
+%\end{tabular}
+%\caption{Comparación de valores obtenidos de diversos enfoques.}
+%\label{tabla:comparacion}
+%\end{table}
 
 \begin{center}
 	\textcolor{red}{\textbf{Preguntar cuentas.}}
 \end{center}
 
+\begin{center}
+	\textcolor{red}{\textbf{Sé que no sabemos si las cuentas están bien, pero estas conclusiones están como el orto:}}\\
+	\textcolor{blue}{\textbf{\textit{Nos dió 15 pero era esperable porque era esperable jaja besooooo xdxdxd lolololol.}}}
+\end{center}
 
-Dichas mediciones coinciden parcialmente con la simulación, las discrepancias se deben principalmente a los cambios en el HFE, los cuales son esperables, pero dado a que la impedancia de entrada es grande y la de salida pequeña se toman como válidos lo cual es esperable ya que el circuito está basado en un colector común.
+Las mediciones realizadas coinciden parcialmente con las simulaciones. Las discrepancias se deben principalmente a los cambios en el HFE. Estas son esperables, pero dado a que la impedancia de entrada es grande y la de salida pequeña, se toman como válidos lo cual es esperable ya que el circuito está basado en un colector común.
 
 \end{document}
