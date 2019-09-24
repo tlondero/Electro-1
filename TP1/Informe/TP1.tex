@@ -16,7 +16,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introducción}
-La configuración a estudiar en este informe será la configuración de \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar al impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capacitor $C_2$ para la realimentación:
+En el siguiente informe se estudia la configuración \textbf{Bootstrap}. El bootstraping es una técnica usada para aumentar la impedancia de entrada y bajar la de salida, utilizando un capacitor para realimentar el emisor del transistor con su respectiva base. El circuito propuesto es un colector común utilizando el capacitor $C_2$ para la realimentación:
 
 \begin{figure}[H]
 \begin{center}
@@ -64,12 +64,21 @@ donde:
 \right.
 \end{equation*}
 
-Recorriendo la malla de entrada se obtienen la siguientes ecuaciones:
+Recorriendo la malla de entrada se obtienen la siguiente ecuación:
 \begin{equation*}
-	V_{Th}-I_b \cdot R_{Th} -V_{BE_{On}}-I_e \cdot R_E=0 \ \ I_c \approx I_e  \ \  I_b\approx  \beta \cdot I_e 
+V_{Th}-I_b \cdot R_{Th} - V_{BE_{On}} - I_e \cdot R_E = 0
 \end{equation*}
 
-Es así que se consigue una expresión para $I_C$ con $V_{ce}$:
+Además, utilizando las siguientes aproximaciones:
+\begin{equation*}
+\left\{
+\begin{aligned}
+	& I_c \approx I_e  \\
+	& I_b \approx  \beta \cdot I_e 
+\end{aligned}
+\right.
+\end{equation*}
+se consigue una expresión para $I_C$ con $V_{ce}$:
 \begin{equation*}
 	I_{C}\approx \frac{V_{Th}-V_{BE_{On}}}{\frac{R_{Th}}{1+\beta}+R_E} \ \ V_{ce} = V_{cc}-I_c\cdot R_E
 \end{equation*}
@@ -100,9 +109,9 @@ Siendo este el circuito correspondiente al modelo:
 \end{center}
 \end{figure}
 
-Al transistor físico utilizado en el circuito se le midió el HFE, siendo este $HFE \approx 380$
+Cabe destacar que se midió el $HFE$ del transistor físico utilizado en el circuito, siendo este $HFE \approx 380$.
 \subsection{Circuito Incremental}
-Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, los capacitores son tomados como cortocircuitos dado a que representan una baja impedancia a estas frecuencias, se obtiene el siguiente circuito:
+Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja con pequeñas señales a frecuencias medias, los capacitores son tomados como cortocircuitos dado a que representan una baja impedancia en dicho rango, se obtiene el siguiente circuito:
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}[european voltages]
@@ -150,9 +159,7 @@ Una pequeña modificación que se hace a la expresión del circuito es definir u
 
 \subsection{Elección de componentes.}
 
-Lo primero fue definir una tensión de alimentación $Vcc = 10 \ V$, a partir de esta tensión se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo, la tensión colector-emisor será de $V_{ce} = 5 \ V$, mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$.
-
-Luego, se seleccionó el transistor a utilizar, el cual fue un \href{https://www.futurlec.com/Transistors/BC548.shtml}{BC548}, de Motorola.
+Lo primero fue definir una tensión de alimentación $Vcc = 10 \ V$. A partir de esta, se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo, siendo así la tensión colector-emisor $V_{ce} = 5 \ V$, mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$. Luego, se seleccionó el transistor a utilizar, el cual fue un \href{https://www.futurlec.com/Transistors/BC548.shtml}{BC548}.
 
 Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
 
@@ -175,15 +182,15 @@ Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entra
 Luego se graficó la ganancia de tensión en función de la frecuencia:
 \begin{figure} [H]
 	\centering
-	\includegraphics[width=\textwidth]{imagenes/avs.png}
+	\includegraphics[width=0.9\textwidth]{imagenes/avs.png}
 	\caption{Transferencia Módulo.}
 	\label{fig:transmod}
 \end{figure}
 
-Una cualidad a notar es que esta configuración tiene una ganancia de tensión menor a 1 y que, para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente, al continuar aumentando la frecuencia, eventualmente decaerá en un pasa-banda. Algunas posibles aplicaciones para el circuito son las de seguidor de tensión\footnote{El circuito también es conocido como ``Seguidor por Emisor''} o como amplificador de corriente.
+Una cualidad a notar es que esta configuración tiene una ganancia de tensión menor a 1 y que, para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente, al continuar aumentando la frecuencia, eventualmente decaerá en un pasa-banda. Algunas posibles aplicaciones para el circuito son las de amplificador de corriente o como seguidor de tensión, circuito también es conocido como ``Seguidor por Emisor''.
 \begin{figure} [H]
 	\centering
-	\includegraphics[width=\textwidth]{imagenes/avsp.png}
+	\includegraphics[width=0.9\textwidth]{imagenes/avsp.png}
 	\caption{Transferencia Fase.}
 	\label{fig:transph}
 \end{figure}
@@ -203,8 +210,6 @@ Otro aspecto de interés se puede ver en la fase, dado a que el circuito no invi
 \label{tabla:comparacion}
 \end{table}
 
-Se puede observar como la ganancia de tensión atenúa pero no en gran cantidad, pudiendo ser utilizado como seguidor de tensión. Las impedancias de entrada y salida son similares, las variaciones se deben a efectos no considerados en el modelo del transistor, estas variaciones no son realmente un problema, dado a que como la impedancia de entrada es grande en los 3 casos, y la de salida es pequeña se toman como válidos los resultados.
-Finalmente eran esperables este tipo de resutlados ya que el circuito trabajado es una modificación del colector común.
-
+Se puede observar como la ganancia de tensión atenúa pero no en gran cantidad, pudiendo ser utilizado como seguidor de tensión. Por su parte, las impedancias de entrada y salida son similares, pero no iguales. Estas variaciones se deben a efectos no considerados en el modelo del transistor. A pesar de ello no son realmente un problema, dado a que como la impedancia de entrada es grande en los 3 casos, y la de salida es pequeña se toman como válidos los resultados. Finalmente se destaca que este tipo de resutlados era esperable ya que el circuito trabajado es una modificación del colector común, siendo así los resultados obtenidos similares a los de dicha configuración.
 
 \end{document}
