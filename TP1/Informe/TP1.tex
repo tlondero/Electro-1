@@ -35,8 +35,7 @@ En el siguiente informe se estudia la configuración \textbf{Bootstrap}. El boot
 \end{center}
 \end{figure}
 
-\section{Desarrollo}
-
+\section{Desarrollo Teórico}
 \subsection{Polarización}
 El primer paso consiste en pasivar la fuente Vs y tratar los capacitores como un circuito abierto. Redibujando y utilizando el teorema de Thevenin se llega a las siguientes condiciones:
 \begin{figure}[H]
@@ -81,6 +80,7 @@ se consigue una expresión para $I_C$ con $V_{ce}$:
 \begin{equation*}
 	I_{C}\approx \frac{V_{Th}-V_{BE_{On}}}{\frac{R_{Th}}{1+\beta}+R_E} \ \ V_{ce} = V_{cc}-I_c\cdot R_E
 \end{equation*}
+cuyo valor numérico será calculado en el desarrollo práctico del informe.
 
 \subsection{Modelo Incremental}
 Para el modelo incremental se utilizarán los siguientes estimadores:
@@ -143,7 +143,7 @@ Redibujando convenientemente y utilizado el pasaje a nivel de corriente, se pued
 \end{figure}
 siendo
 \begin{equation*}
-	R_d = \frac{1}{hoe} // R_1 // R_2 // R_E // R_L \cdot \left(1 + \frac{R_3 hfe}{R_3 + hfe}\right) 
+	R_d = \frac{1}{hoe} // R_1 // R_2 // R_E // R_L \cdot \left(1 + \frac{R_3 hfe}{R_3 + hie}\right) 
 \end{equation*}
 
 Una pequeña modificación que se hace a la expresión del circuito es definir un $hfe$ y un $hie$ efectivo. Para el circuito dado, estos son:
@@ -156,7 +156,11 @@ Una pequeña modificación que se hace a la expresión del circuito es definir u
 \right.
 \end{equation*}
 
-\subsection{Elección de componentes.}
+\section{Desarrollo Práctico}
+
+Se realizaron dos ensayos con el circuito, uno con $R_s = 50\Omega$ y otro con $R_s = 10k\Omega$ llegando a la conclusión de que para valores pequeños de $R_s$ el circuito se comporta perfectamente como un seguidor de tensión mientras que si el valor de $R_s$ aumenta, la característica de seguidor de tensión disminuye en calidad. Primero se analizó el caso de $R_s = 50\Omega$ y luego el caso de $R_s=10k\Omega$. A continuación se destacaran los valores de componentes elegidos. 
+
+\subsection{Elección de componentes}
 
 Lo primero fue definir una tensión de alimentación $Vcc = 10 \ V$. A partir de esta, se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo, siendo así la tensión colector-emisor $V_{ce} = 5 \ V$, mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$. Luego, se seleccionó el transistor a utilizar, el cual fue un \href{https://www.futurlec.com/Transistors/BC548.shtml}{BC548}\footnote{Motorola, ``Amplifier Transistors NPN Silicon'', BC548 Datasheet.}.
 
@@ -167,20 +171,35 @@ Se llevo a cabo la placa en un Protoboard siendo este el mismo:
 \includegraphics[scale=0.6]{imagenes/proto.jpeg} 
 \caption{Circuito implementado en protoboard.}
 \end{figure}
-\subsection{Resultados de interés.}
-Se realiza un enfoque en la ganancia de tensión, corriente, impedancia de entrada y de salida, siendo estos presentados a continuación:
+
+\subsection{Estimadores}
+
+Una vez elegidos los valores de los componentes a utilizar, se calcularon los valores de los estimadores para el modelo incremental del transistor, siendo estos:
+
+\begin{equation*}
+\left\{
+\begin{aligned}
+	& \hat{hfe}=380 \\
+	& \hat{hie}=4750\Omega \\
+	& \hat{\frac{1}{hoe}} = 45k\Omega
+\end{aligned}
+\right.
+\end{equation*}
+
+\subsection{Resultados de Interés: Primer Ensayo}
+Se calcularon los valores de la ganancia de tensión, corriente, impedancia de entrada y de salida para una $R_s=50\Omega$, siendo estos presentados a continuación:
 
 \begin{equation}
-	\Delta V_s \triangleq \frac{V_o}{V_s} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } 
+	\Delta V_s \triangleq \frac{V_o}{V_s} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } = 0.99
 \end{equation}
 \begin{equation}
-	\Delta I_s \triangleq \frac{I_o}{I_s} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
+	\Delta I_s \triangleq \frac{I_o}{I_s} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*) = 9
 \end{equation}
 \begin{equation}
-	Z_{In} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
+	R_{is} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*) = 91k\Omega
 \end{equation}
 \begin{equation}
-	Z_{Out} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
+	R_{os} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*) = 867.65\Omega
 \end{equation}
 
 Luego se graficó la ganancia de tensión en función de la frecuencia:
@@ -214,6 +233,44 @@ Otro aspecto de interés se puede ver en la fase, dado a que el circuito no invi
 \label{tabla:comparacion}
 \end{table}
 
-Se puede observar como la ganancia de tensión atenúa pero no en gran cantidad, pudiendo ser utilizado como seguidor de tensión. Por su parte, las impedancias de entrada y salida son similares, pero no iguales. Estas variaciones se deben a efectos no considerados en el modelo del transistor. A pesar de ello no son realmente un problema, dado a que como la impedancia de entrada es grande en los 3 casos, y la de salida es pequeña se toman como válidos los resultados. Finalmente se destaca que este tipo de resutlados era esperable ya que el circuito trabajado es una modificación del colector común, siendo así los resultados obtenidos similares a los de dicha configuración.
+Se puede observar como la ganancia de tensión atenúa pero no en gran cantidad, pudiendo ser utilizado como seguidor de tensión. Por otra parte, las impedancias de entrada y salida medidas son similares a las calculadas, pero no iguales. Estas variaciones se deben a efectos no considerados en el modelo del transistor. A pesar de ello no son realmente un problema, dado a que como la impedancia de entrada es grande en los 3 casos, y la de salida es pequeña se toman como válidos los resultados. Finalmente se destaca que este tipo de resultados era esperable ya que el circuito trabajado es una modificación del colector común, siendo así los resultados obtenidos similares a los de dicha configuración.
+
+\subsection{Resultados de Interés: Segundo Ensayo}
+Se repitió la experiencia con una resistencia $R_s = 10k\Omega$, obteniéndose los siguientes resultados:
+\begin{equation}
+\Delta V_s \triangleq \frac{V_o}{V_s} = 0.892
+\end{equation}
+\begin{equation}
+\Delta I_s \triangleq \frac{I_o}{I_s} = 9
+\end{equation}
+\begin{equation}
+R_{is} = 100.9k\Omega
+\end{equation}
+\begin{equation}
+R_{os} = 9664.5\Omega
+\end{equation}
+A continuación se graficó la transferencia del circuito en módulo y fase:
+
+%\begin{figure} [H]
+%	\centering
+%	\includegraphics[width=0.9\textwidth]{imagenes/avs.png}
+%	\caption{Transferencia Módulo.}
+%	\label{fig:transmod}
+%\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline $\mathbf{R_s}$ & $\mathbf{\Delta V_S}$ & $\mathbf{R_{is}}$ & $\mathbf{R_{os}}$ \\
+\hline
+\textbf{$50\Omega$} & 0.9903          & 91 [$k\Omega$]    & 867.65 [$\Omega$]     \\
+\textbf{$10k\Omega$}  & 0.8927            & 100.9 [$k\Omega$]   & 9664.5 [$\Omega$]     \\
+\hline
+\end{tabular}
+\caption{Comparación de valores obtenidos de diversos enfoques.}
+\label{tabla:comparacion}
+\end{table}
+
+Como se puede observar, la ganancia del sistema empeoró en casi un 10\% mientras que la resistencia de entrada empeoró en más de un 100\%. Esto muestra como el circuito se comporta mucho más cercano al ideal cuanto más baja sea la impedancia de salida de la etapa anterior a la que esta conectado.
 
 \end{document}
