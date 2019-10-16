@@ -99,8 +99,8 @@ Siendo este el circuito correspondiente al modelo:
 \begin{center}
 \begin{circuitikz}[european voltages]
 	\node [ocirc,label=left:$B$](b){};
-	\draw (b) to[short, f_= $I_B$] ++(1.5,0) to[R, l = $hie$] ++(0,-2) node[circ](e){} to[short] ++(-1.5,0) node[ocirc, label=left:$E$](){};
-	\draw (e) to[short, -*] ++(2,0) to[open] ++(0,2) node[](aux){} to[dcisource, l = $hfe \cdot I_B$] ++(0,-2) to[short, -*] ++(2.5,0) to[open] ++(0,2) to[R, l= $\frac{1}{hoe}$] ++(0,-2) to[short]++(1.5,0) node[ocirc, label=right:$E$](){};
+	\draw (b) to[short, f_= $i_b$] ++(1.5,0) to[R, l = $hie$] ++(0,-2) node[circ](e){} to[short] ++(-1.5,0) node[ocirc, label=left:$E$](){};
+	\draw (e) to[short, -*] ++(2,0) to[open] ++(0,2) node[](aux){} to[dcisource, l = $hfe \cdot i_b$] ++(0,-2) to[short, -*] ++(2.5,0) to[open] ++(0,2) to[R, l= $\frac{1}{hoe}$] ++(0,-2) to[short]++(1.5,0) node[ocirc, label=right:$E$](){};
 	\draw (aux) to[short] ++(4,0) node[ocirc, label=right:$C$](){};
 \end{circuitikz}
 	\caption{Modelo incremental.}
@@ -117,7 +117,7 @@ Reemplazando el transistor por su modelo incremental, asumiendo que se trabaja c
 	\node [ocirc,label=left:$V_i$](vi){};
 	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S$] ++(2,0) node[circ](v1){} to[R, l = $R_3$] ++(2,0) node[circ](v2){};
 	\draw (v1) to[short] ++(0,1) to[R, l = $hie$] ++(2,0) to[short] ++(0,-1);
-	\draw (v2) to[open] ++(0,-2) node[ground](gnd){} to[dcisource, l = $hfe \cdot I_B$] ++(0,2);
+	\draw (v2) to[open] ++(0,-2) node[ground](gnd){} to[dcisource, l = $hfe \cdot i_b$] ++(0,2);
 	\draw (v2) to[short, -*] ++(1.5,0) to[R, l= $\frac{1}{hoe}$] ++(0,-2) node[ground](){};
 	
 	\draw (v2) to[short, -*] ++(3,0) to[R, l= $R_1$] ++(0,-2) node[ground](){};
@@ -137,7 +137,7 @@ Redibujando convenientemente y utilizado el pasaje a nivel de corriente, se pued
 	\node [ocirc,label=left:$V_i$](vi){};
 	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S + \left( R_3 // hie \right)$] ++(2,0) to[open] ++(0,-2) node[ground](){} to[R, l= $R_{d}$, v = $V_o$] ++(0,2);
 \end{circuitikz}
-	\caption{Circuito incremental final.}
+	\caption{Circuito incremental ganancia de tensión.}
 	\label{fig:circinc2}
 \end{center}
 \end{figure}
@@ -156,15 +156,77 @@ Una pequeña modificación que se hace a la expresión del circuito es definir u
 \right.
 \end{equation*}
 
+En esta instancia se puede observar como la ganancia de tensión del sistema será el divisor de tensión calculado como:
+
+\begin{equation}
+	\Delta V_s \triangleq \frac{V_o}{V_s} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) }
+\end{equation}
+
+Luego, para hallar la ganancia de corriente del sistema, se redibuja la Figura (\ref{fig:circinc}), obteniendo:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\node [ocirc,label=left:$V_i$](vi){};
+	\draw (vi) to[short] ++(0.5,0) to[R, l = $R_S + \left( R_3 // hie \right)$] ++(2,0) to[short, i_=$i_s$] ++ (0.5, 0) to[short] ++ (0.2,0) to[open] ++(0,-2) node[ground](){} to[dcisource, l= $i_s \cdot hfe^*$] ++(0,2)
+	to[short, *-*]++(5,0)
+	to[R, l_=$\left(\frac{1}{hoe} // R_1 // R_2 // R_E  \right)$] ++ (0,-2)
+	node[ground]{}
+	to[open] ++ (0,2)
+	to[short, i=$i_o$] ++ (2, 0)
+	to[R, l_=$R_L$] ++ (0, -2)
+	node[ground]{}
+	;
+\end{circuitikz}
+	\caption{Circuito incremental ganancia de corriente.}
+	\label{fig:circinc3}
+\end{center}
+\end{figure}
+
+Finalmente, se redibuja una última vez, resumiendo el cálculo de la ganancia de corriente a un divisor de corriente
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}[european voltages]
+	\draw
+	to[short, -*, i=$i_s(1+hfe^*)$]++(3,0)
+	to[R, l_=$\left(\frac{1}{hoe} // R_1 // R_2 // R_E  \right)$] ++ (0,-2)
+	node[ground]{}
+	to[open] ++ (0,2)
+	to[short, i=$i_o$] ++ (2, 0)
+	to[R, l_=$R_L$] ++ (0, -2)
+	node[ground]{}
+	;
+\end{circuitikz}
+	\caption{Circuito incremental ganancia de corriente redibujado.}
+	\label{fig:circinc3}
+\end{center}
+\end{figure}
+
+Obteniendo finalmente
+
+\begin{equation}
+\Delta i_s \triangleq \frac{i_o}{i_s} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*)
+\end{equation}
+
+Luego las impedancias de entrada y salida se calculan de la Figura (\ref{fig:circinc}) mediante pasaje a nivel de corriente resultando en:
+
+\begin{equation}
+	R_{is} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
+\end{equation}
+\begin{equation}
+	R_{os} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)
+\end{equation}
+
 \section{Desarrollo Práctico}
 
-Se realizaron dos ensayos con el circuito, uno con $R_s = 50\Omega$ y otro con $R_s = 10k\Omega$ llegando a la conclusión de que para valores pequeños de $R_s$ el circuito se comporta perfectamente como un seguidor de tensión mientras que si el valor de $R_s$ aumenta, la característica de seguidor de tensión disminuye en calidad. Primero se analizó el caso de $R_s = 50\Omega$ y luego el caso de $R_s=10k\Omega$. A continuación se destacaran los valores de componentes elegidos. 
+Se realizaron dos ensayos con el circuito, uno con $R_s = 50\Omega$ y otro con $R_s = 10k\Omega$ llegando a la conclusión de que para valores pequeños de $R_s$ el circuito se comporta como un muy buen seguidor de tensión mientras que si el valor de $R_s$ aumenta, la característica de seguidor de tensión disminuye en calidad. Primero se analizó el caso de $R_s = 50\Omega$ y luego el caso de $R_s=10k\Omega$. A continuación se destaca los valores de componentes elegidos. 
 
 \subsection{Elección de componentes}
 
 Lo primero fue definir una tensión de alimentación $Vcc = 10 \ V$. A partir de esta, se eligió un punto de operación \textbf{Q} tal que el transistor se encuentre en modo activo directo, siendo así la tensión colector-emisor $V_{ce} = 5 \ V$, mientras que la corriente de colector $I_{cq} = 2 \ mA$.  A partir de la elección de Vcc se obtuvieron valroes de resistencia que cumplan dicho punto de polarización, recorriedo la malla de entrada y salida para determinarlos. Es así que se llegó a los siguientes valores: $R_1 = 10 \ k\Omega$, $R_2 = 14.7 \ k\Omega$, $R_3 = 1 \ k\Omega$ y $R_E = 2.2 \ k\Omega$. Luego, se seleccionó el transistor a utilizar, el cual fue un \href{https://www.futurlec.com/Transistors/BC548.shtml}{BC548}\footnote{Motorola, ``Amplifier Transistors NPN Silicon'', BC548 Datasheet.}.
 
-Por otro lado, se tomó como resistencia del generador $R_s \approx 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
+Por otro lado, se tomó como resistencia del generador $R_s = 50 \ \Omega$, mientras que para la carga se consideró $R_L \approx 10 \ k\Omega$. Para los capacitores, sus valores nominales fueron elegidos tal que su impedancia sea despreciable frente a las resistencias frente a frecuencias medias.
 Se llevo a cabo la placa en un Protoboard siendo este el mismo:
 \begin{figure}[H]
 \centering
@@ -190,16 +252,16 @@ Una vez elegidos los valores de los componentes a utilizar, se calcularon los va
 Se calcularon los valores de la ganancia de tensión, corriente, impedancia de entrada y de salida para una $R_s=50\Omega$, siendo estos presentados a continuación:
 
 \begin{equation}
-	\Delta V_s \triangleq \frac{V_o}{V_s} = \frac{ \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*)}{R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe*) } = 0.99
+	\Delta V_s \triangleq \frac{V_o}{V_s} = 0.99
 \end{equation}
 \begin{equation}
-	\Delta I_s \triangleq \frac{I_o}{I_s} =  \frac{\frac{1}{hoe} // R_1 // R_2 // R_E}{(\frac{1}{hoe} // R_1 // R_2 // R_E)+R_L} \cdot (1+hfe^*) = 9
+	\Delta i_s \triangleq \frac{i_o}{i_s} = 9
 \end{equation}
 \begin{equation}
-	R_{is} = R_s + hie^* + \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*) = 91k\Omega
+	R_{is} = 91k\Omega
 \end{equation}
 \begin{equation}
-	R_{os} = (R_s + hie^*) //  \left(\frac{1}{hoe} // R_1 // R_2 // R_E // R_L  \right)\cdot (1+hfe^*) = 867.65\Omega
+	R_{os} = 867.65\Omega
 \end{equation}
 
 Luego se graficó la ganancia de tensión en función de la frecuencia:
@@ -210,13 +272,14 @@ Luego se graficó la ganancia de tensión en función de la frecuencia:
 	\label{fig:transmod}
 \end{figure}
 
-Una cualidad a notar es que esta configuración tiene una ganancia de tensión menor a 1 y que, para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente, al continuar aumentando la frecuencia, eventualmente decaerá en un pasa-banda. Algunas posibles aplicaciones para el circuito son las de amplificador de corriente o como seguidor de tensión, circuito también es conocido como ``Seguidor por Emisor''.
 \begin{figure} [H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{imagenes/avsp.png}
 	\caption{Transferencia Fase.}
 	\label{fig:transph}
 \end{figure}
+
+Una cualidad a notar es que esta configuración tiene una ganancia de tensión menor a 1 y que, para el rango de frecuencias utilizadas, el circuito se comporta como un pasa-altos, si bien realmente, al continuar aumentando la frecuencia, eventualmente decaerá en un pasa-banda aún así despreciando las puntas del osciloscopio y capacitancias parásitas del protoboard. Esto se debe al efecto de las capacitancias internas del transistor. Algunas posibles aplicaciones para el circuito son las de amplificador de corriente o como seguidor de tensión. El circuito también es conocido como ``seguidor por emisor''.
 
 Otro aspecto de interés se puede ver en la fase, dado a que el circuito no invierte a esta.
 \begin{table}[H]
@@ -233,7 +296,7 @@ Otro aspecto de interés se puede ver en la fase, dado a que el circuito no invi
 \label{tabla:comparacion}
 \end{table}
 
-Se puede observar como la ganancia de tensión atenúa pero no en gran cantidad, pudiendo ser utilizado como seguidor de tensión. Por otra parte, las impedancias de entrada y salida medidas son similares a las calculadas, pero no iguales. Estas variaciones se deben a efectos no considerados en el modelo del transistor. A pesar de ello no son realmente un problema, dado a que como la impedancia de entrada es grande en los 3 casos, y la de salida es pequeña se toman como válidos los resultados. Finalmente se destaca que este tipo de resultados era esperable ya que el circuito trabajado es una modificación del colector común, siendo así los resultados obtenidos similares a los de dicha configuración.
+
 
 \subsection{Resultados de Interés: Segundo Ensayo}
 Se repitió la experiencia con una resistencia $R_s = 10k\Omega$, obteniéndose los siguientes resultados:
@@ -251,12 +314,23 @@ R_{os} = 9664.5\Omega
 \end{equation}
 A continuación se graficó la transferencia del circuito en módulo y fase:
 
-%\begin{figure} [H]
-%	\centering
-%	\includegraphics[width=0.9\textwidth]{imagenes/avs.png}
-%	\caption{Transferencia Módulo.}
-%	\label{fig:transmod}
-%\end{figure}
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{imagenes/avs10k.png}
+	\caption{Transferencia Módulo con $R_s = 10k\Omega$.}
+	\label{fig:transmod}
+\end{figure}
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{imagenes/avsp10k.png}
+	\caption{Transferencia Fase con $R_s = 10k\Omega$.}
+	\label{fig:transmod}
+\end{figure}
+
+Se puede observar como la respuesta en frecuencia del circuito posee un polo alrededor de $1MHz$. Esto se debe a las puntas utilizadas para medir el circuito, ya que la simulación sin el modelo de puntas del osciloscopio carecía de esta característica. Además, se observa como la transferencia medida discrepa de la simulada para altas frecuencias y esto se debe a los efectos capacitivos despreciados del transistor y a capacitancias parásitas del protoboard utilizado. 
+
+Luego, se armó una tabla con las diferencias en las características de interés de ambos ensayos.
 
 \begin{table}[H]
 \centering
@@ -267,10 +341,16 @@ A continuación se graficó la transferencia del circuito en módulo y fase:
 \textbf{$10k\Omega$}  & 0.8927            & 100.9 [$k\Omega$]   & 9664.5 [$\Omega$]     \\
 \hline
 \end{tabular}
-\caption{Comparación de valores obtenidos de diversos enfoques.}
+\caption{Comparación de valores interesantes obtenidos en ambos ensayos.}
 \label{tabla:comparacion}
 \end{table}
 
 Como se puede observar, la ganancia del sistema empeoró en casi un 10\% mientras que la resistencia de entrada empeoró en más de un 100\%. Esto muestra como el circuito se comporta mucho más cercano al ideal cuanto más baja sea la impedancia de salida de la etapa anterior a la que esta conectado.
 
+\section{Conclusiones}
+Se puede observar como la ganancia de tensión atenúa pero no en gran cantidad. Además, la impedancia de entrada del circuito es muy alta mientras que la impedancia de salida es muy baja, resultando ser el circuito una muy buena opción para acoplar impedancias o como seguidor de tensión. 
+
+Las impedancias de entrada y salida medidas son similares a las calculadas, pero no iguales. Estas variaciones se deben a efectos no considerados en el modelo del transistor. A pesar de ello no son realmente un problema, dado a que como la impedancia de entrada es grande en los 3 casos, y la de salida es pequeña se toman como válidos los resultados. 
+
+Finalmente se destaca que el tipo de resultados obtenido era esperable ya que el circuito analizado es una modificación del colector común, siendo así los resultados obtenidos similares a los de dicha configuración.
 \end{document}

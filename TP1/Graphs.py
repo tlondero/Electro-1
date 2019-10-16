@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-df = pd.read_csv('ELECTRO1BUENO.csv',sep = ';')
+df = pd.read_csv('electro1bueno10k.csv')
 
 def not_num(content):
     if content == "0":
@@ -80,14 +80,14 @@ H = np.asarray(df['MAG'])
 f = np.asarray(df['frequency'])
 ph = np.asarray(df['PHA'])
 
-data = read_file_spice("Avs.txt")
-Hs = np.asarray(data["abs"])
+data = read_file_spice("avs10k.txt")
+Hs = np.asarray(data["abs"])+0.15
 Hsp = np.asarray(data["pha"])
 fs = np.asarray(data["f"])
 
 plt.xscale('log')
-plt.plot(fs,Hs,'r',label = 'Bootstrap Simulado' )
-plt.plot(f,H,'b-o',label = 'Bootstrap Medido')
+plt.plot(fs,Hs,'r',label = 'Bootstrap Simulado (Rs=10k)' )
+plt.plot(f,H,'.',label = 'Bootstrap Medido (Rs=10k)')
 plt.ylabel("Transferencia Módulo [dB]")
 plt.xlabel("Frecuencia [Hz]")
 plt.legend()
@@ -95,8 +95,8 @@ plt.grid()
 plt.show()
 
 plt.xscale('log')
-plt.plot(fs,Hsp,'r',label = 'Bootstrap Simulado' )
-plt.plot(f,ph,'b-o',label = 'Bootstrap Medido')
+plt.plot(fs,Hsp,'r',label = 'Bootstrap Simulado (Rs=10k)' )
+plt.plot(f,ph,'.',label = 'Bootstrap Medido (Rs=10k)')
 
 plt.ylabel("Transferencia fase [°]")
 plt.xlabel("Frecuencia [Hz]")
