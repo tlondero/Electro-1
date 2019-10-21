@@ -19,8 +19,46 @@
 %		Informe		%
 %%%%%%%%%%%%%%%%%%%%%
 \section{Introducción}
+En el siguiente informe se busca analizar, desarrollar y confeccionar algún circuito estudiado a lo largo del cuatrimestre. Se destaca la existencia de una dificultad adicional, la cual se basa en el método mediante el cual se fueron adquiriendo los componentes. Estos fueron subastados durante la cursada, entre los diversos grupos. De esta forma, se condiciona el circuito final, ya que no se pudieron elegir libremente los componentes a utilizar.
 
 \section{Desarrollo}
+
+\subsection{Componentes dispuestos}
+El presente grupo se valió de los siguientes componentes:
+\begin{itemize}
+	\item Dos pares de resistencias de $6.8 \ K\omega$ y de $680 \ K\omega$.
+	\item Un transistor BJT NPN. 
+	\item Un diodo 1N4148.
+	\item Un JFET.
+	\item Un par Darlington NPN.
+	\item Una placa de 5x5.
+\end{itemize}
+
+\subsection{Circuitos considerados}
+Como primer opción se consideró utilizar el par Darlington y mediante el uso de las resistencias, configurarlo de forma tal tal que este quede compensado. Una alternativa a lo previamente mencionado es el uso de JFET como una fuente de corriente, con el mismo objetivo que se mencionó anteriormente, ya que colocar una fuente de corriente es la solución optima a la compensación.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.4\textwidth}
+\centering
+	\includegraphics[width=0.6\textwidth, page=1]{Imagenes/ParDarlington.pdf}
+	\caption{Par Darlington.}
+	\label{fig:pardar1}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+\centering
+	\includegraphics[width=0.5\textwidth, page=2]{Imagenes/ParDarlington.pdf}
+	\caption{Par Darlington compensado con $R$.}
+	\label{fig:pardar2}
+\end{subfigure}
+
+\begin{subfigure}{.5\textwidth}
+\centering
+	\includegraphics[width=0.5\textwidth, page=3]{Imagenes/ParDarlington.pdf}
+	\label{fig:pardar3}
+	\caption{Par Darlington compensado con fuente de corriente.}
+\end{subfigure}
+\end{figure}
 
 \section{Conclusiones}
 	

@@ -1,0 +1,42 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+\begin{page}
+\begin{circuitikz}
+	\node [npn](n1){};
+	\draw (n1.B) -- ++(-1,0) to[R, l=$R_B$] ++(0,2) node[circ, label=above:$V_{CC}$](){};
+	\draw (n1.C) -- ++(0,1.25) node[circ, label=above:$V_{CC}$](){};
+	\draw (n1.E) |- ++(0.5,-0.5) node[npn, anchor=B](n2){};
+	\draw (n2.C) -- ++(0,2.5) node[circ, label=above:$V_{CC}$](){};
+	\draw (n2.E) to[R, l=$R_C$] ++(0,-2) node[ground](){};
+\end{circuitikz}
+\end{page}
+
+\begin{page}
+\begin{circuitikz}
+	\node [npn](n1){};
+	\draw (n1.B) -- ++(-1,0) to[R, l=$R_B$] ++(0,2) node[circ, label=above:$V_{CC}$](){};
+	\draw (n1.C) -- ++(0,1.25) node[circ, label=above:$V_{CC}$](){};
+	\draw (n1.E) -- ++(0,-0.5) node[](aux1){};
+	\draw (aux1) to[R] ++(2,0) node[npn, anchor=B](n2){};
+	\draw (n2.E) -- ++(0,-0.5) node[](aux2){};
+	\draw (n2.C) -- ++(0,2.5) node[circ, label=above:$V_{CC}$](){};
+	\draw (aux2) to[R, l=$R_C$] ++(0,-2) node[ground](){};
+	\draw (aux2.center) to[R] ++(-2.5,0) -| (aux1.center); 
+\end{circuitikz}
+\end{page}
+
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [npn](n1){};
+	\draw (n1.B) -- ++(-1,0) to[R, l=$R_B$] ++(0,2) node[circ, label=above:$V_{CC}$](){};
+	\draw (n1.C) -- ++(0,1.25) node[circ, label=above:$V_{CC}$](){};
+	\draw (n1.E) |- ++(0.5,-0.5) node[npn, anchor=B](n2){};
+	\draw (n2.C) -- ++(0,2.5) node[circ, label=above:$V_{CC}$](){};
+	\draw (n2.E) to[R, l=$R_C$] ++(0,-2) node[ground](){};
+	\draw (n1.E) to[dcisource] ++(0,-3.25) node[ground](){};
+\end{circuitikz}
+\end{page}
+
+\end{document}
