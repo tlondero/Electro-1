@@ -7,7 +7,7 @@
 	\node [npn](n1){};
 	\draw (n1.E) |- ++(0.5,-0.5) node[npn, anchor=B](n2){};
 	\draw (n2.C) -- ++(0,2) node[](we){};
-	\draw (we.center) -- ++(0,1) node[circ, label=above:$V_{CC}$](){};
+	\draw (we.center) -- ++(0,1) node[ocirc, label=above:$V_{CC}$](){};
 	\draw (n2.E) to[R, l=$R_C$] ++(0,-1.5) node[ground](){};
 	\draw (n1.B) -- ++(-1,0) to[R, l=$R_B$] ++(0,1.5) |- (we.center);
 	\draw (n1.C) |- (we.center);
@@ -20,7 +20,7 @@
 	\draw (n1.E) -- ++(0,-0.5) node[](aux1){};
 	\draw (aux1) to[R] ++(2,0) node[npn, anchor=B](n2){};
 	\draw (n2.C) -- ++(0,2) node[](we){};
-	\draw (we.center) -- ++(0,1) node[circ, label=above:$V_{CC}$](){};
+	\draw (we.center) -- ++(0,1) node[ocirc, label=above:$V_{CC}$](){};
 	\draw (n2.E) -- ++(0,-0.5) node[](aux2){};
 	\draw (aux2) to[R, l=$R_C$] ++(0,-2.5) node[ground](){};
 	\draw (aux2.center) to[R] ++(-2.5,0) -| (aux1.center); 
@@ -34,7 +34,7 @@
 	\node [npn](n1){};
 	\draw (n1.E) |- ++(0.5,-0.5) node[npn, anchor=B](n2){};
 	\draw (n2.C) -- ++(0,2) node[](we){};
-	\draw (we.center) -- ++(0,1) node[circ, label=above:$V_{CC}$](){};
+	\draw (we.center) -- ++(0,1) node[ocirc, label=above:$V_{CC}$](){};
 	\draw (n2.E) to[R, l=$R_C$] ++(0,-1.5) node[ground](){};
 	\draw (n1.B) -- ++(-1,0) to[R, l=$R_B$] ++(0,1.5) |- (we.center);
 	\draw (n1.C) |- (we.center);
@@ -45,8 +45,8 @@
 \begin{page}
 \begin{circuitikz}[european voltages]
 	\node [njfet](jf){};
-	\draw (jf.S) to[R, l=$R$] ++(0,-2) node[](aux1){} -- ++(0,-0.5) node[label=right:$-V_{SS}$, circ](vss){};
-	\draw (jf.D) to[R, f<_=$I_o$, l=$R_L$] ++(0,2) node[circ](){};
+	\draw (jf.S) to[R, l=$R$] ++(0,-2) node[](aux1){} -- ++(0,-0.5) node[label=right:$-V_{SS}$, ocirc](vss){};
+	\draw (jf.D) to[R, f<_=$I_o$, l=$R_L$] ++(0,2) node[ocirc](){};
 	\draw (jf.G) |- (aux1.center);
 	
 \end{circuitikz}
