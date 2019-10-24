@@ -26,7 +26,7 @@ En el siguiente informe se busca analizar, desarrollar y confeccionar algún cir
 \subsection{Componentes dispuestos}
 El presente grupo se valió de los siguientes componentes:
 \begin{itemize}
-	\item Dos pares de resistencias de $6.8 \ K\omega$ y de $680 \ K\omega$.
+	\item Dos pares de resistencias de $6.8 \ k\Omega$ y de $680 \ k\Omega$.
 	\item Un transistor BJT NPN. 
 	\item Un diodo 1N4148.
 	\item Un JFET.
@@ -35,11 +35,10 @@ El presente grupo se valió de los siguientes componentes:
 \end{itemize}
 
 \subsection{Circuitos considerados}
-Como primer opción se consideró utilizar el par Darlington y mediante el uso de las resistencias, configurarlo de forma tal tal que este quede compensado. Una alternativa a lo previamente mencionado es el uso de una fuente de corriente, con el mismo objetivo que se mencionó anteriormente, ya que colocar una fuente de corriente es la solución optima a la compensación.
-
+Como primer opción se consideró utilizar el par Darlington y mediante el uso de las resistencias, configurarlo de forma tal que este quede compensado. Una alternativa a lo previamente mencionado es el uso de una fuente de corriente, con el mismo objetivo que se mencionó anteriormente, ya que colocar una fuente de corriente para polarizar es la solución optima a la compensación.
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.4\textwidth}
+\begin{subfigure}{.\textwidth}
 \centering
 	\includegraphics[width=0.6\textwidth, page=1]{Imagenes/ParDarlington.pdf}
 	\caption{Par Darlington.}
@@ -62,13 +61,21 @@ Como primer opción se consideró utilizar el par Darlington y mediante el uso d
 \label{fig:pardar}
 \end{figure}
 
-La conexión representada en la Figura(\ref{fig:pardar1}) no es conveniente ya que ambos transistores consumen mucha corriente. Estrictamente hablando, la disposición presentada en la Figura (\ref{fig:pardar2}) es la más económica. Dadas las condiciones, dicho consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito. Esta fuente de corriente puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice.
+La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya que ambos transistores consumen mucha corriente. Estrictamente hablando, la disposición presentada en la Figura (\ref{fig:pardar2}) es la más económica. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito. Esta fuente de corriente puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.15\textwidth, page=4]{Imagenes/ParDarlington.pdf}
+	\includegraphics[width=0.2\textwidth, page=4]{Imagenes/ParDarlington.pdf}
 	\caption{Par Darlington.}
 	\label{fig:fuentei}
 \end{figure}
+
+Analizando el circuito de la Figura (\ref{fig:fuentei}), se obtiene
+\begin{equation}
+	V_{GS} = V_{SS} - I_{D} R_{S}
+\end{equation}
+\begin{equation}
+	V_{DS} = V_{DD} + V_{SS} - I_{D} \left( R_{D} + R_{S} \right)
+\end{equation}
 
 
 \section{Conclusiones}

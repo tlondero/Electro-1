@@ -45,9 +45,9 @@
 \begin{page}
 \begin{circuitikz}[european voltages]
 	\node [njfet](jf){};
-	\draw (jf.S) to[R, l=$R$] ++(0,-2) node[](aux1){} -- ++(0,-0.5) node[label=right:$-V_{SS}$, ocirc](vss){};
-	\draw (jf.D) to[R, f<_=$I_o$, l=$R_L$] ++(0,2) node[ocirc](){};
-	\draw (jf.G) |- (aux1.center);
+	\draw (jf.S) to[R, l=$R$] ++(0,-2) node[](aux1){} -- ++(0,-0.5) node[label=right:$V_{SS}$, ocirc](vss){};
+	\draw (jf.D) to[R, f<_=$I_o$, l=$R_L$] ++(0,2) node[ocirc, label=right:$V_{DD}$](){};
+	\draw (jf.G) -- ++(-1,0) -- ++(0,-2.5) node[ground](){};
 	
 \end{circuitikz}
 \end{page}
