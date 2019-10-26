@@ -2,6 +2,7 @@
 
 \begin{document}
 
+%Darlington sin compensar
 \begin{page}
 \begin{circuitikz}
 	\node [npn](n1){};
@@ -14,6 +15,7 @@
 \end{circuitikz}
 \end{page}
 
+%Darlington compensado por R
 \begin{page}
 \begin{circuitikz}
 	\node [npn](n1){};
@@ -29,6 +31,7 @@
 \end{circuitikz}
 \end{page}
 
+%Darlington compensado por fuente de I
 \begin{page}
 \begin{circuitikz}[european voltages]
 	\node [npn](n1){};
@@ -42,15 +45,17 @@
 \end{circuitikz}
 \end{page}
 
+%Fuente de I
 \begin{page}
 \begin{circuitikz}[european voltages]
 	\node [njfet](jf){};
 	\draw (jf.S) to[R, l=$R_S$] ++(0,-2) node[](aux1){} -- ++(0,-0.5) node[label=right:$V_{SS}$, ocirc](vss){};
-	\draw (jf.D) to[R, f<_=$I_o$, l=$R_L$] ++(0,2) node[ocirc, label=right:$V_{DD}$](){};
+	\draw (jf.D) to[R, f<_=$I_o$, l=$R_D$] ++(0,2) node[ocirc, label=right:$V_{DD}$](){};
 	\draw (jf.G) -- ++(-1,0) -- ++(0,-2.5) node[ground](){};
 \end{circuitikz}
 \end{page}
 
+%Darlington reemplazando I por Rof
 \begin{page}
 \begin{circuitikz}[european voltages]
 	\node [npn, label=right:$Q_1$](n1){};

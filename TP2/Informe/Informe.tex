@@ -62,7 +62,7 @@ Como primer opción se consideró utilizar el par Darlington y mediante el uso d
 
 La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya que ambos transistores consumen mucha corriente. Estrictamente hablando, la disposición presentada en la Figura (\ref{fig:pardar2}) es la más económica. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
 \begin{center}
-	\Huge{\textcolor{red}{Mejorar chamuyo de porqué a y b son peores que c.}}
+	\LARGE{\textcolor{red}{Mejorar justificación de porqué a y b son peores que c.}}
 \end{center}
 
 \subsection{Fuente de corriente}
@@ -118,20 +118,20 @@ Se define $R_S^* = R_S // R_{GS}$, para luego analizar el circuito presentado en
 
 Planteando
 \begin{equation*}
-	I_S^* = \frac{V_S}{R_S^*}
+	I^* = \frac{V_S}{R_S^*}
 \end{equation*}
 \begin{equation*}
-	V_o = -I^* R_D
+	V_o = -I^* R_D = -I_o R_D
 \end{equation*}
 \begin{equation*}
-	I_o + gm V_S + I^* - I_{DS} = 0
+	I_{DS} = \frac{V_D - V_S}{R_{DS}}
 \end{equation*}
 y operando algebraicamente se obtiene la variable deseada de la forma:
 \begin{equation}
-	R_{OF} = \frac{1}{\frac{1}{R_{DS}} + \frac{R_S^*}{R_D} \left( \frac{1}{gm} + \frac{1}{R_S^*} + \frac{1}{R_{DS}} \right)}
+	R_{OF} = R_{DS} \left( 1 + gm R_S^* \right) + R_S^*
 \end{equation}
 
-\subsection{Análisis del circuito Darlington}
+\subsection{Darlington polarizado por corriente}
 Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$.
 \begin{figure}[H]
 \centering
@@ -139,6 +139,38 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 	\caption{Circuito equivalente al reemplazar la fuente de corriente.}
 	\label{fig:pardar4}
 \end{figure}
+
+Planteando la malla de entrada y salida para cada transistor, se obtienen las siguientes ecuaciones:
+\begin{equation*}
+	V_{CC} - V_{BEON} = I_{CE1} R_{OF}
+\end{equation*}
+\begin{equation*}
+	V_{CC} - 2V_{BEON} = I_{CE2} R_{OF}
+\end{equation*}
+\begin{equation*}
+	V_{CC} - V_{CE1} = I_{CE1} R_{OF}
+\end{equation*}
+\begin{equation*}
+	V_{CC} - V_{CE2} = I_{CE2} R_{C}
+\end{equation*}
+
+Cabe destacar que, por el uso de la fuente de corriente, $I_{CE1} = I_{D}$ del JFET. Además, se seleccionar transistores NPN XX
+\begin{center}
+	\LARGE{\textcolor{red}{Poner que NPNs se usaron, datasheet y reemplazar valores.}} \\
+	\LARGE{\textcolor{red}{Seleccionar que resistencias usar, $V_{CC}$.}}
+\end{center}
+
+Planteando su respectivo modelo incrementa, se llega al circuito presentado a continuación: 
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth, page=3]{Imagenes/ModeloIncremental.pdf}
+	\caption{Modelo incremental del par Darlington.}
+\label{fig:incdar}
+\end{figure}
+
+\subsection{Desarrollo y armado de la placa}
+
+\subsection{Mediciones}
 
 \section{Conclusiones}
 	
