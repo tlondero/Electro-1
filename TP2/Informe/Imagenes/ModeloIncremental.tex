@@ -1,0 +1,25 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [ground](g1){};
+	\draw (g1) to[R, l=$R_{GS}$] ++(0,2) -- ++(2,0) node[circ,label=above left:$S$](s){} to[R, l_=$R_S$] ++(0,-2) node[ground](){};
+	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l_=$R_D$] ++(0,-2) node[ground](){};
+	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$] ++(2.5,0) -- (d);
+\end{circuitikz}
+\end{page}
+
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [circ,label=above left:$S$](s){};
+	\draw (s) to[R, l_=$R_S^*$, f>=$I^*$] ++(0,-2) node[ground](){};
+	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l_=$R_D$] ++(0,-2) node[ground](){};
+	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$, f<=$I_{DS}$] ++(2.5,0) -- (d);
+	\draw (d) to[short, f<_=$I_o$] ++(2,0) node[ocirc](vo){} ++(0,-2.5) node[](-vo){};
+	\draw (-vo) to[open, v = $V_o$] (vo);
+\end{circuitikz}
+\end{page}
+
+\end{document}

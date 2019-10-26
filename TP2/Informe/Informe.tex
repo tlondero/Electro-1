@@ -19,7 +19,7 @@
 %		Informe		%
 %%%%%%%%%%%%%%%%%%%%%
 \section{Introducción}
-En el siguiente informe se busca analizar, desarrollar y confeccionar algún circuito estudiado a lo largo del cuatrimestre. Se destaca la existencia de una dificultad adicional, la cual se basa en el método mediante el cual se fueron adquiriendo los componentes. Estos fueron subastados durante la cursada, entre los diversos grupos. De esta forma, se condiciona el circuito final, ya que no se pudieron elegir libremente los componentes a utilizar.
+En el siguiente informe se busca analizar, desarrollar y confeccionar algún circuito estudiado a lo largo del cuatrimestre. Se destaca la existencia de una dificultad adicional, la cual se basa en el método mediante el cual se fueron adquiriendo los componentes. Estos fueron subastados durante la cursada, entre los diversos grupos. De esta forma, se condiciona el circuito final, ya que se posee acceso limitado a estos, los cuales no se pudieron elegir libremente.
 
 \section{Desarrollo}
 
@@ -35,22 +35,21 @@ El presente grupo se valió de los siguientes componentes:
 \end{itemize}
 
 \subsection{Circuitos considerados}
-Como primer opción se consideró utilizar el par Darlington y mediante el uso de las resistencias, configurarlo de forma tal que este quede compensado. Una alternativa a lo previamente mencionado es el uso de una fuente de corriente, con el mismo objetivo que se mencionó anteriormente, ya que colocar una fuente de corriente para polarizar es la solución optima a la compensación.
+Como primer opción se consideró utilizar el par Darlington y mediante el uso de las resistencias, configurarlo de forma tal que este quede compensado. Una alternativa es el uso de una fuente de corriente, con el mismo objetivo que se mencionó anteriormenten.
 \begin{figure}[H]
 \centering
-\begin{subfigure}{.\textwidth}
+\begin{subfigure}{.4\textwidth}
 \centering
-	\includegraphics[width=0.6\textwidth, page=1]{Imagenes/ParDarlington.pdf}
+	\includegraphics[width=0.5\textwidth, page=1]{Imagenes/ParDarlington.pdf}
 	\caption{Par Darlington.}
 	\label{fig:pardar1}
 \end{subfigure}
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.4\textwidth}
 \centering
 	\includegraphics[width=0.5\textwidth, page=2]{Imagenes/ParDarlington.pdf}
 	\caption{Par Darlington compensado con $R$.}
 	\label{fig:pardar2}
 \end{subfigure}
-
 \begin{subfigure}{.5\textwidth}
 \centering
 	\includegraphics[width=0.5\textwidth, page=3]{Imagenes/ParDarlington.pdf}
@@ -61,7 +60,13 @@ Como primer opción se consideró utilizar el par Darlington y mediante el uso d
 \label{fig:pardar}
 \end{figure}
 
-La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya que ambos transistores consumen mucha corriente. Estrictamente hablando, la disposición presentada en la Figura (\ref{fig:pardar2}) es la más económica. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito. Esta fuente de corriente puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice.
+La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya que ambos transistores consumen mucha corriente. Estrictamente hablando, la disposición presentada en la Figura (\ref{fig:pardar2}) es la más económica. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
+\begin{center}
+	\Huge{\textcolor{red}{Mejorar chamuyo de porqué a y b son peores que c.}}
+\end{center}
+
+\subsection{Fuente de corriente}
+Una vez determinado que la implementación optima, con los componentes disponibles, es la presentada en la Figura~(\ref{fig:pardar3}), se decide confeccionarla. Para ello, primero se opta por analizar la fuente de corriente. Esta puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice, como se presenta a continuación.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.2\textwidth, page=4]{Imagenes/ParDarlington.pdf}
@@ -69,7 +74,7 @@ La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya 
 	\label{fig:fuentei}
 \end{figure}
 
-Analizando el circuito de la Figura (\ref{fig:fuentei}), se obtiene
+Analizando el circuito de la Figura (\ref{fig:fuentei}), se obtienen las siguientes ecuaciones:
 \begin{equation}
 	V_{GS} = V_{SS} - I_{D} R_{S}
 \end{equation}
@@ -77,6 +82,53 @@ Analizando el circuito de la Figura (\ref{fig:fuentei}), se obtiene
 	V_{DS} = V_{DD} + V_{SS} - I_{D} \left( R_{D} + R_{S} \right)
 \end{equation}
 
+Sabiendo que para un JFET se cumple que
+\begin{equation}
+\begin{split}
+	I_D = I_{DSS} \left( 1- \frac{V_{GS}}{V_P} \right)^2 \\
+	gm = 2\frac{\sqrt{I_D I_{DSS}}}{|V_P|}
+\end{split}
+\end{equation}
+
+De esta forma, seleccionando el componente XX %\href{}{}
+y estableciendo $V_{SS} = XX \ V$, $V_{DD} = XX \ V$, $R_S = XX \ \Omega$ y $R_D = XX \ \Omega$ se obtiene
+\begin{center}
+	\LARGE{\textcolor{red}{Poner que JFET se usó, datasheet y reemplazar valores.}} \\
+	\LARGE{\textcolor{red}{Seleccionar que resistencias usar, $V_{SS}$ y $V_{DD}$.}}
+\end{center}
+
+Con lo establecido previamente, se prosigue a plantear el circuito incremental. Cabe aclarar que, como es de interés calcular la impedancia de salida, no se puede consideran tanto $R_{DS}$ como $R_{GS}$ despreciables. Es por ello que son tenidas en cuenta para este cálculo.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth, page=1]{Imagenes/ModeloIncremental.pdf}
+	\caption{Circuito incremental de la Figura (\ref{fig:fuentei}).}
+\label{fig:incfuente1}
+\end{figure}
+
+Se destaca que, como el Gate queda a tierra, se cumple que $V_{GS} = V_G - V_S = - V_S$, por lo tanto, se da vuelta la fuente de corriente y se reemplaza con lo mencionado anteriormente. 
+
+Se define $R_S^* = R_S // R_{GS}$, para luego analizar el circuito presentado en la Figura (\ref{fig:incfuente2}).
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth, page=2]{Imagenes/ModeloIncremental.pdf}
+	\caption{Análisis de la impedancia de salida del circuito de la Figura (\ref{fig:incfuente1}).}
+\label{fig:incfuente2}
+\end{figure}
+
+Planteando
+\begin{equation*}
+	I_S^* = \frac{V_S}{R_S^*}
+\end{equation*}
+\begin{equation*}
+	V_o = -I^* R_D
+\end{equation*}
+\begin{equation*}
+	I_o + gm V_S + I^* - I_{DS} = 0
+\end{equation*}
+y operando algebraicamente se obtiene la variable deseada de la forma:
+\begin{equation}
+	R_{OF} = \frac{1}{\frac{1}{R_{DS}} + \frac{R_S^*}{R_D} \left( \frac{1}{gm} + \frac{1}{R_S^*} + \frac{1}{R_{DS}} \right)}
+\end{equation}
 
 \section{Conclusiones}
 	
