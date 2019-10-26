@@ -66,6 +66,7 @@ La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya 
 \end{center}
 
 \subsection{Fuente de corriente}
+\label{subsec:fdei}
 Una vez determinado que la implementación optima, con los componentes disponibles, es la presentada en la Figura~(\ref{fig:pardar3}), se decide confeccionarla. Para ello, primero se opta por analizar la fuente de corriente. Esta puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice, como se presenta a continuación.
 \begin{figure}[H]
 \centering
@@ -74,7 +75,7 @@ Una vez determinado que la implementación optima, con los componentes disponibl
 	\label{fig:fuentei}
 \end{figure}
 
-Analizando el circuito de la Figura (\ref{fig:fuentei}), se obtienen las siguientes ecuaciones:
+Recorriendo la malla de entrada y de salida del circuito de la Figura (\ref{fig:fuentei}), se obtienen las siguientes ecuaciones:
 \begin{equation}
 	V_{GS} = V_{SS} - I_{D} R_{S}
 \end{equation}
@@ -129,6 +130,9 @@ y operando algebraicamente se obtiene la variable deseada de la forma:
 \begin{equation}
 	R_{OF} = \frac{1}{\frac{1}{R_{DS}} + \frac{R_S^*}{R_D} \left( \frac{1}{gm} + \frac{1}{R_S^*} + \frac{1}{R_{DS}} \right)}
 \end{equation}
+
+\subsection{Análisis del circuito Darlington}
+Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$.
 
 \section{Conclusiones}
 	
