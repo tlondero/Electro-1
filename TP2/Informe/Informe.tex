@@ -64,12 +64,14 @@ La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente, ya
 
 Estrictamente hablando, esta disposición es la más económica al problema anterior. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
 
+Se puede colocar un diodo entre el colector y el emisor de $Q_2$. Este tipo de configuración es utilizada para trabajar con potencias altas. Dado que este enfoque no es de interés, se reserva dicho componente.
+
 \subsection{Fuente de corriente}
 \label{subsec:fdei}
 Una vez determinado que la implementación optima, con los componentes disponibles, es la presentada en la Figura~(\ref{fig:pardar3}), se decide confeccionarla. Para ello, primero se opta por analizar la fuente de corriente. Esta puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice, como se presenta a continuación.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.2\textwidth, page=4]{Imagenes/ParDarlington.pdf}
+	\includegraphics[width=0.25\textwidth, page=4]{Imagenes/ParDarlington.pdf}
 	\caption{Par Darlington.}
 	\label{fig:fuentei}
 \end{figure}
@@ -91,11 +93,13 @@ Sabiendo que para un JFET se cumple que
 \end{equation}
 
 De esta forma, seleccionando el componente XX %\href{}{}
-y estableciendo $V_{SS} = XX \ V$, $V_{DD} = XX \ V$, $R_S = XX \ \Omega$ y $R_D = XX \ \Omega$ se obtiene
+y estableciendo $V_{SS} = XX \ V$, $R_S = XX \ \Omega$ y $R_D = XX \ \Omega$ se obtiene
 \begin{center}
 	\LARGE{\textcolor{red}{Poner que JFET se usó, datasheet y reemplazar valores.}} \\
 	\LARGE{\textcolor{red}{Seleccionar que resistencias usar, $V_{SS}$ y $V_{DD}$.}}
 \end{center}
+
+Por otro lado, $V_{DD}$ queda fijado por el circuito del Darlington, siendo esta $V_{DD} = V_{BEON} = 0.7 \ V$.
 
 Con lo establecido previamente, se prosigue a plantear el circuito incremental. Cabe aclarar que, como es de interés calcular la impedancia de salida, no se puede consideran tanto $R_{DS}$ como $R_{GS}$ despreciables. Es por ello que son tenidas en cuenta para este cálculo.
 \begin{figure}[H]
@@ -118,24 +122,21 @@ Se define $R_S^* = R_S // R_{GS}$, para luego analizar el circuito presentado en
 
 Planteando
 \begin{equation*}
-	I^* = \frac{V_S}{R_S^*}
+	V_o = I_{DS} R_{DS} + I_o \left( R_D + R_S^* \right)
 \end{equation*}
 \begin{equation*}
-	V_o = -I^* R_D = -I_o R_D
-\end{equation*}
-\begin{equation*}
-	I_{DS} = \frac{V_D - V_S}{R_{DS}}
+	I_{DS} = gm V_S + I_o = \left( gm R_S^* + 1 \right) I_o
 \end{equation*}
 y operando algebraicamente se obtiene la variable deseada de la forma:
 \begin{equation}
 \begin{split}
-	R_{OF} & = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* \\
-		   & = R_{DS} \left( 1 + gm R_S//R_{GS} \right) + R_S//R_{GS}
+	R_{OF} = \frac{V_o}{I_o} & = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* + R_D \\
+		   & = R_{DS} \left( 1 + gm R_S//R_{GS} \right) + R_S//R_{GS} + R_D
 \end{split}
 \end{equation}
 
 \subsection{Darlington polarizado por corriente}
-Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$.
+Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se considera también la carga y la fuente del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}).
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.35\textwidth, page=5]{Imagenes/ParDarlington.pdf}

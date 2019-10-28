@@ -7,8 +7,9 @@
 \begin{circuitikz}[european voltages]
 	\node [ground, label=below left:$G$](g1){};
 	\draw (g1) to[R, l=$R_{GS}$] ++(0,2) -- ++(2,0) node[circ,label=above left:$S$](s){} to[R, l_=$R_S$] ++(0,-2) node[ground](){};
-	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l_=$R_D$] ++(0,-2) node[ground](){};
-	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$] ++(2.5,0) -- (d);
+	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l=$R_D$, f<=$I_o$] ++(2.5,0) node[ocirc](vo){} ++(0,-2.5) node[](-vo){};
+	\draw (-vo) to[open, v = $V_o$] (vo);
+	\draw (s) -- ++(0,1.5) to[R, l=$R_{DS}$] ++(2.5,0) -- (d);
 \end{circuitikz}
 \end{page}
 
@@ -17,25 +18,41 @@
 \begin{circuitikz}[european voltages]
 	\node [circ,label=above left:$S$](s){};
 	\draw (s) to[R, l_=$R_S^*$, f>=$I^*$] ++(0,-2) node[ground, label=below left:$G$](){};
-	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l_=$R_D$, f<=$I_o$] ++(0,-2) node[ground](){};
-	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$, f<=$I_{DS}$] ++(2.5,0) -- (d);
-	\draw (d) ++(0.75,0) node[](vo){} ++(0,-2.5) node[](-vo){};
+	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l=$R_D$, f<=$I_o$] ++(2.5,0) node[ocirc](vo){} ++(0,-2.5) node[](-vo){};
 	\draw (-vo) to[open, v = $V_o$] (vo);
+	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$, f<=$I_{DS}$] ++(2.5,0) -- (d);
 \end{circuitikz}
 \end{page}
 
 %Modelo incremental Darlington
 \begin{page}
 \begin{circuitikz}[european voltages]
-	\node [circ,label=above left:$B_1$](b1){};
-	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
+	\node [circ,label=above:$B_1$](b1){};
+	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground](){};
 	\draw (b1) to[R, l=$h_{ie1}$, f=$I_{B1}$] ++(2,0) node[](aux1){} ++(0,-2) node[ground](aux2){};
 	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) -- ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){} to[R, l=$\frac{1}{h_{oe1}}$] ++(0,-2) node[ground](){};
 	\draw (aux3) -- ++(1.5,0) to[R, l=$R_{OF}$] ++(0,-2) node[ground](){};
 	\draw (aux3) ++(1.5,0) to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(2,0) ++(0,-2) node[ground](){} to[dcisource, l_=$h_{fe2} I_{B2}$] ++(0,2) -- ++(2.5,0) node[circ, label=above:$E_2$](aux4){} to[R, l=$R_C$] ++(0,-2) node[ground](){};
 	\draw (aux4.center) -- ++(1.5,0) to[R, l=$\frac{1}{h_{oe2}}$] ++(0,-2) node[ground](){};
+	
+	\draw (b1) to[R, l=$R_S$] ++(-2,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
+	\draw (aux4.center) ++(1.5,0) -- ++(1.5,0) to[R, l=$R_L$] ++(0,-2) node[ground](){};
 \end{circuitikz}
 \end{page}
 
+%Modelo incremental Darlington DESPRECIANDO 1/hoe
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [circ,label=above:$B_1$](b1){};
+	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground](){};
+	\draw (b1) to[R, l=$h_{ie1}$, f=$I_{B1}$] ++(2,0) node[](aux1){} ++(0,-2) node[ground](aux2){};
+	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) -- ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){};
+	\draw (aux3) to[R, l=$R_{OF}$] ++(0,-2) node[ground](){};
+	\draw (aux3) to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(3,0) ++(0,-2) node[ground](){} to[dcisource, l_=$h_{fe2} I_{B2}$] ++(0,2) -- ++(2.5,0) node[circ, label=above:$E_2$](aux4){} to[R, l=$R_C$] ++(0,-2) node[ground](){};
+	
+	\draw (b1) to[R, l=$R_S$] ++(-2,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
+	\draw (aux4.center) -- ++(1.5,0) to[R, l=$R_L$] ++(0,-2) node[ground](){};
+\end{circuitikz}
+\end{page}
 
 \end{document}
