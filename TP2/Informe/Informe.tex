@@ -60,10 +60,9 @@ Como primer opción se consideró utilizar el par Darlington y mediante el uso d
 \label{fig:pardar}
 \end{figure}
 
-La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente ya que ambos transistores consumen mucha corriente. Estrictamente hablando, la disposición presentada en la Figura (\ref{fig:pardar2}) es la más económica. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
-\begin{center}
-	\LARGE{\textcolor{red}{Mejorar justificación de porqué a y b son peores que c.}}
-\end{center}
+La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente, ya que la caída de tensión entre la base y el emisor se encuentra entre $0.6 \ V$ y $1.5 \ V$, siendo esta resultante de la suma de las tensiones base-emisor de ambos transistores. Esto genera a su vez que el dispositivo consuma más corriente y aumente su temperatura, además de generar respuestas más lentas frente a cambios en la entrada. Una solución a lo ya expresado se presenta en la Figura (\ref{fig:pardar2}).
+
+Estrictamente hablando, esta disposición es la más económica al problema anterior. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
 
 \subsection{Fuente de corriente}
 \label{subsec:fdei}
@@ -86,8 +85,8 @@ Recorriendo la malla de entrada y de salida del circuito de la Figura (\ref{fig:
 Sabiendo que para un JFET se cumple que
 \begin{equation}
 \begin{split}
-	I_D = I_{DSS} \left( 1- \frac{V_{GS}}{V_P} \right)^2 \\
-	gm = 2\frac{\sqrt{I_D I_{DSS}}}{|V_P|}
+	I_D = I_{DSS} & \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
+	gm = & \ 2\frac{\sqrt{I_D I_{DSS}}}{|V_P|}
 \end{split}
 \end{equation}
 
@@ -101,17 +100,18 @@ y estableciendo $V_{SS} = XX \ V$, $V_{DD} = XX \ V$, $R_S = XX \ \Omega$ y $R_D
 Con lo establecido previamente, se prosigue a plantear el circuito incremental. Cabe aclarar que, como es de interés calcular la impedancia de salida, no se puede consideran tanto $R_{DS}$ como $R_{GS}$ despreciables. Es por ello que son tenidas en cuenta para este cálculo.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.5\textwidth, page=1]{Imagenes/ModeloIncremental.pdf}
+	\includegraphics[width=0.4\textwidth, page=1]{Imagenes/ModeloIncremental.pdf}
 	\caption{Circuito incremental de la Figura (\ref{fig:fuentei}).}
 \label{fig:incfuente1}
 \end{figure}
 
-Se destaca que, como el Gate queda a tierra, se cumple que $V_{GS} = V_G - V_S = - V_S$, por lo tanto, se da vuelta la fuente de corriente y se reemplaza con lo mencionado anteriormente. 
+Se destaca que, como el gate queda a tierra, se cumple que $V_{GS} = V_G - V_S = - V_S$, por lo tanto, se da vuelta la fuente de corriente y se reemplaza con lo mencionado anteriormente. 
 
 Se define $R_S^* = R_S // R_{GS}$, para luego analizar el circuito presentado en la Figura (\ref{fig:incfuente2}).
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.5\textwidth, page=2]{Imagenes/ModeloIncremental.pdf}
+\hspace*{2cm}
+	\includegraphics[width=0.4\textwidth, page=2]{Imagenes/ModeloIncremental.pdf}
 	\caption{Análisis de la impedancia de salida del circuito de la Figura (\ref{fig:incfuente1}).}
 \label{fig:incfuente2}
 \end{figure}
@@ -128,14 +128,17 @@ Planteando
 \end{equation*}
 y operando algebraicamente se obtiene la variable deseada de la forma:
 \begin{equation}
-	R_{OF} = R_{DS} \left( 1 + gm R_S^* \right) + R_S^*
+\begin{split}
+	R_{OF} & = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* \\
+		   & = R_{DS} \left( 1 + gm R_S//R_{GS} \right) + R_S//R_{GS}
+\end{split}
 \end{equation}
 
 \subsection{Darlington polarizado por corriente}
 Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.4\textwidth, page=5]{Imagenes/ParDarlington.pdf}
+	\includegraphics[width=0.35\textwidth, page=5]{Imagenes/ParDarlington.pdf}
 	\caption{Circuito equivalente al reemplazar la fuente de corriente.}
 	\label{fig:pardar4}
 \end{figure}
@@ -169,9 +172,14 @@ Planteando su respectivo modelo incrementa, se llega al circuito presentado a co
 \end{figure}
 
 \subsection{Desarrollo y armado de la placa}
+\begin{center}
+	\LARGE{\textcolor{red}{Esquemático, PCB y foto.}}\\
+	\LARGE{\textcolor{red}{Consideraciones necesarias para medir.}}
+\end{center}
 
 \subsection{Mediciones}
 
 \section{Conclusiones}
+Dado que se optó por confeccionar una configuración Darlington, se puede afirmar que la ganancia de corriente del circuito, la cual ya de por sí es grande, como se demostró en \textcolor{red}{\textbf{(...)}}, es mayor que la de los demás grupos, ya que la principal característica de este es la alta ganancia de dicha variable. Por otro lado, también es posible afirmar que la polarización resulta altamente estable, ya que se logró efectuar la polarización mediante una fuente de corriente.
 	
 \end{document}
