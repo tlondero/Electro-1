@@ -139,7 +139,7 @@ y operando algebraicamente se obtiene la variable deseada de la forma:
 Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se considera también la carga y la fuente del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}).
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.35\textwidth, page=5]{Imagenes/ParDarlington.pdf}
+	\includegraphics[width=0.5\textwidth, page=5]{Imagenes/ParDarlington.pdf}
 	\caption{Circuito equivalente al reemplazar la fuente de corriente.}
 	\label{fig:pardar4}
 \end{figure}
@@ -171,6 +171,61 @@ Planteando su respectivo modelo incremental, se llega al circuito presentado a c
 	\caption{Modelo incremental del par Darlington.}
 \label{fig:incdar}
 \end{figure}
+
+Definiéndose $R_{OF}^* = R_{OF} // \frac{1}{h_{oe1}}$ y $R_d = R_C // \frac{1}{h_{oe2}} // R_L$, se obtiene
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth, page=4]{Imagenes/ModeloIncremental.pdf}
+\end{figure}
+Donde $I_{B1}^* = I_{B1} \left( 1 + h_{fe1} \right)$ y $I_{B2}^* = I_{B2} \left( 1 + h_{fe2} \right)$. Aplicando paso a nivel de corriente se llega a
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth, page=5]{Imagenes/ModeloIncremental.pdf}
+\end{figure}
+Por un lado se destaca que 
+\begin{equation}
+	V_o = I_{B2} R_d \left( 1 + h_{fe2} \right)
+\label{equ:vo-ib2}
+\end{equation}
+
+Por otro lado, se analiza la relación entre $I_{B1}^*$ e $I_{B2}^*$ mediante un divisor de corrientes, consiguiéndose
+\begin{equation}
+	I_{B2} = I_{B1}^* \frac{R_{OF}^*}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)} = I_{B1} \frac{R_{OF}^* \left( 1 + h_{fe1} \right)}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)} 
+\label{equ:ib2-ib1}
+\end{equation}
+
+Por último, se observa que
+\begin{equation}
+	V_i = I_{B1} h_{ie1} + I_{B2} \left[ h_{ie2} + R_d \left( 1 + h_{fe2} \right) \right]
+\label{equ:vi-ib1-ib2}
+\end{equation}
+
+Utilizando (\ref{equ:ib2-ib1}) en (\ref{equ:vi-ib1-ib2}), se llega a la expresión
+\begin{equation}
+	\frac{V_i}{I_{B1}} =  h_{ie1} + \frac{ R_{OF}^* \left[ h_{ie2} + R_d \left( 1 + h_{fe2} \right) \right] \left( 1 + h_{fe1} \right)}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)}
+\label{equ:vi-ib1}
+\end{equation}
+
+Con todo lo calculado anteriormente, se procede a calcular la transferencia $\Delta V$, siendo esta de la forma
+\begin{equation}
+\begin{split}
+	\Delta V \triangleq \frac{V_o}{V_i} = \frac{V_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{V_i} = \frac{R_d R_{OF}^* \left( 1 + h_{fe1} \right) \left( 1 + h_{fe2} \right)}{ h_{ie1} \left[ R_{OF}^* + R_d \left( 1 + h_{fe2} \right) + h_{ie2} \right] + R_{OF}^* \left( 1 + h_{fe1} \right) \left[ R_d \left( 1 + h_{fe2} \right) + h_{ie2} \right]}
+\end{split}
+\label{equ:v}
+\end{equation}
+
+\begin{center}
+	\LARGE{\textcolor{red}{Ri}}
+\end{center}
+
+A su vez, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
+\begin{equation}
+\begin{split}
+	\Delta V_S \triangleq \frac{V_S}{V_i} = \frac{V_S}{V_o} \frac{V_o}{V_i} = \frac{V_o}{V_i} \frac{R_i}{R_S + R_i}
+\end{split}
+\label{equ:vs}
+\end{equation}
+ 
 
 \subsection{Desarrollo y armado de la placa}
 \begin{center}
