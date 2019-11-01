@@ -92,11 +92,12 @@ Sabiendo que para un JFET se cumple que
 \end{split}
 \end{equation}
 
-De esta forma, seleccionando el componente XX %\href{}{}
-y estableciendo $V_{SS} = XX \ V$, $R_S = XX \ \Omega$ y $R_D = XX \ \Omega$ se obtiene
+De esta forma, seleccionando el componente \href{https://www.mouser.com/datasheet/2/149/2n3819-286408.pdf}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como % $I_{DSS_{min}} = 2 \ mA$, $V_P = 8.0 \ V$, 
+% http://www2.eng.cam.ac.uk/~dmh/ptialcd/jfet/2N3819.pdf  https://www.onsemi.com/pub/Collateral/2N3819-D.PDF
+y estableciendo $V_{SS} = 15 \ V$, $R_S = XX \ \Omega$ y $R_D = XX \ \Omega$ se obtiene
 \begin{center}
-	\LARGE{\textcolor{red}{Poner que JFET se usó, datasheet y reemplazar valores.}} \\
-	\LARGE{\textcolor{red}{Seleccionar que resistencias usar, $V_{SS}$ y $V_{DD}$.}}
+	\LARGE{\textcolor{red}{\textbf{Poner que JFET se usó, datasheet y reemplazar valores.}}} \\
+	\LARGE{\textcolor{red}{\textbf{Seleccionar que resistencias usar, $V_{SS}$ y $V_{DD}$.}}}
 \end{center}
 
 Por otro lado, $V_{DD}$ queda fijado por el circuito del Darlington, siendo esta $V_{DD} = V_{BEON} = 0.7 \ V$.
@@ -160,8 +161,8 @@ Planteando la malla de entrada y salida para cada transistor, se obtienen las si
 
 Cabe destacar que, por el uso de la fuente de corriente, $I_{CE1} = I_{D}$ del JFET. Además, se seleccionar transistores NPN XX
 \begin{center}
-	\LARGE{\textcolor{red}{Poner que NPNs se usaron, datasheet y reemplazar valores.}} \\
-	\LARGE{\textcolor{red}{Seleccionar que resistencias usar, $V_{CC}$.}}
+	\LARGE{\textcolor{red}{\textbf{Poner que NPNs se usaron, datasheet y reemplazar valores.}}} \\
+	\LARGE{\textcolor{red}{\textbf{Seleccionar que resistencias usar, $V_{CC}$.}}}
 \end{center}
 
 Planteando su respectivo modelo incremental, se llega al circuito presentado a continuación: 
@@ -229,8 +230,8 @@ A su vez, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
 
 \subsection{Desarrollo y armado de la placa}
 \begin{center}
-	\LARGE{\textcolor{red}{Esquemático, PCB y foto.}}\\
-	\LARGE{\textcolor{red}{Consideraciones necesarias para medir.}}
+	\LARGE{\textcolor{red}{\textbf{Esquemático, PCB y foto.}}}\\
+	\LARGE{\textcolor{red}{\textbf{Consideraciones necesarias para medir.}}}
 \end{center}
 
 \subsection{Mediciones}

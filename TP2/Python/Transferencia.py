@@ -22,9 +22,12 @@ rs = 6.8E3
 rl = 10E3
 
 #JFET
+
 rds =
 rgs =
-gmj =
+idss = 2E-3
+vp =
+gmj = 2*np.sqrt(id*idss)/vp
 rof = rds*(1+gmj*(rs*rgs/(rs + rgs))) + (rs*rgs/(rs + rgs)) + rdd
 
 #Q1
