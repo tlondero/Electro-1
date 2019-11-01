@@ -72,35 +72,47 @@ Una vez determinado que la implementación optima, con los componentes disponibl
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.25\textwidth, page=4]{Imagenes/ParDarlington.pdf}
-	\caption{Par Darlington.}
+	\caption{Fuente de corriente.}
 	\label{fig:fuentei}
 \end{figure}
 
 Recorriendo la malla de entrada y de salida del circuito de la Figura (\ref{fig:fuentei}), se obtienen las siguientes ecuaciones:
 \begin{equation}
-	V_{GS} = V_{SS} - I_{D} R_{S}
+	V_{GS} = V_{SS} - I_{DS} R_{S}
 \end{equation}
 \begin{equation}
-	V_{DS} = V_{DD} + V_{SS} - I_{D} \left( R_{D} + R_{S} \right)
+	V_{DS} = V_{DD} + V_{SS} - I_{DS} \left( R_{D} + R_{S} \right)
 \end{equation}
 
-Sabiendo que para un JFET se cumple que
+Además, se plantean las ecuaciones del JFET:
 \begin{equation}
 \begin{split}
-	I_D = I_{DSS} & \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
-	gm = & \ 2\frac{\sqrt{I_D I_{DSS}}}{|V_P|}
+	I_{DS} = I_{DSS} & \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
+	gm = & \ 2\frac{\sqrt{I_{DS} I_{DSS}}}{|V_P|}
 \end{split}
 \end{equation}
 
-De esta forma, seleccionando el componente \href{https://www.mouser.com/datasheet/2/149/2n3819-286408.pdf}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como % $I_{DSS_{min}} = 2 \ mA$, $V_P = 8.0 \ V$, 
-% http://www2.eng.cam.ac.uk/~dmh/ptialcd/jfet/2N3819.pdf  https://www.onsemi.com/pub/Collateral/2N3819-D.PDF
-y estableciendo $V_{SS} = 15 \ V$, $R_S = XX \ \Omega$ y $R_D = XX \ \Omega$ se obtiene
-\begin{center}
-	\LARGE{\textcolor{red}{\textbf{Poner que JFET se usó, datasheet y reemplazar valores.}}} \\
-	\LARGE{\textcolor{red}{\textbf{Seleccionar que resistencias usar, $V_{SS}$ y $V_{DD}$.}}}
-\end{center}
+De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS_{min}} = 2 \ mA$ y $V_P = -8 \ V$. Luego, estableciendo $V_{SS} = 10 \ V$, $R_S = 6.8 \ K\Omega$ y $R_D = 6.8 \ K\Omega$ se calculan los valores de interés. Es así que se obtienen los siguientes valores:    
+\begin{equation*}
+I_{DS} = \left\lbrace
+\begin{split}
+	& 4.39 \ mA \\
+	& 1.60 \ mA
+\end{split}
+\right.
+\ \ \
+V_{GS} = \left\lbrace
+\begin{split}
+	& -19.85 \ V \\
+	& -0.88 \ V
+\end{split}
+\right.
+\end{equation*}
 
-Por otro lado, $V_{DD}$ queda fijado por el circuito del Darlington, siendo esta $V_{DD} = V_{BEON} = 0.7 \ V$.
+Sabiendo que se debe cumplir que $|I_{DSS}| \geq |I_{DS}|$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$. De esta forma se garantiza que esté polarizado adecuadamente. \textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > 
+V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por el circuito total, por lo que este análisis es expuesto más adelante.}  
+% http://www2.eng.cam.ac.uk/~dmh/ptialcd/jfet/2N3819.pdf https://www.mouser.com/datasheet/2/149/2n3819-286408.pdf
+%Por otro lado, $V_{DD}$ queda fijado por el circuito del Darlington, siendo esta $V_{DD} = V_{BEON} = 0.7 \ V$.
 
 Con lo establecido previamente, se prosigue a plantear el circuito incremental. Cabe aclarar que, como es de interés calcular la impedancia de salida, no se puede consideran tanto $R_{DS}$ como $R_{GS}$ despreciables. Es por ello que son tenidas en cuenta para este cálculo.
 \begin{figure}[H]
@@ -131,13 +143,16 @@ Planteando
 y operando algebraicamente se obtiene la variable deseada de la forma:
 \begin{equation}
 \begin{split}
-	R_{OF} = \frac{V_o}{I_o} & = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* + R_D \\
+	R_{OF} & = \frac{V_o}{I_o} = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* + R_D \\
 		   & = R_{DS} \left( 1 + gm R_S//R_{GS} \right) + R_S//R_{GS} + R_D
 \end{split}
+\label{equ:rof}
 \end{equation}
 
+Para poder continuar, se toma $R_{GS} \longrightarrow \infty$, luego se asume $V_A = -90 \ V$, estimando así $R_{DS} = \frac{V_A}{I_{DS}} = 56.25 \ K\Omega$. De esta forma se obtiene de (\ref{equ:rof}) el valor de la impedancia de salida $R_{OF} \approx XX \Omega$.
+
 \subsection{Darlington polarizado por corriente}
-Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se considera también la carga y la fuente del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}).
+Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se considera también la carga y la fuente del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por simplicidad.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth, page=5]{Imagenes/ParDarlington.pdf}
@@ -159,7 +174,7 @@ Planteando la malla de entrada y salida para cada transistor, se obtienen las si
 	V_{CC} - V_{CE2} = I_{CE2} R_{C}
 \end{equation*}
 
-Cabe destacar que, por el uso de la fuente de corriente, $I_{CE1} = I_{D}$ del JFET. Además, se seleccionar transistores NPN XX
+Cabe destacar que, por el uso de la fuente de corriente, $I_{CE1} = I_{DS}$ del JFET. Además, se seleccionar transistores NPN XX
 \begin{center}
 	\LARGE{\textcolor{red}{\textbf{Poner que NPNs se usaron, datasheet y reemplazar valores.}}} \\
 	\LARGE{\textcolor{red}{\textbf{Seleccionar que resistencias usar, $V_{CC}$.}}}
@@ -215,10 +230,6 @@ Con todo lo calculado anteriormente, se procede a calcular la transferencia $\De
 \label{equ:v}
 \end{equation}
 
-\begin{center}
-	\LARGE{\textcolor{red}{$\mathbf{R_{ia}, R_{oa}, \Delta I}$}}
-\end{center}
-
 A su vez, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
 \begin{equation}
 \begin{split}
@@ -226,7 +237,41 @@ A su vez, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
 \end{split}
 \label{equ:vs}
 \end{equation}
- 
+
+Para la ganancia de corriente se observa nuevamente la Figura (\ref{fig:incdar}). Aplicando un divisor de corriente a la salida se obtiene una expresión que relaciona $I_{B2}$ con $I_o$.
+\begin{equation}
+	I_o = I_{B2} \left( 1 + h_{fe2} \right) \frac{R_C // \frac{1}{h_{oe2}}}{R_C // \frac{1}{h_{oe2}} + R_L}
+	\label{equ:io-ib2}
+\end{equation}
+
+Luego, se plantean las corrientes para el nodo $B_1$.
+\begin{equation}
+\begin{split}
+	I_i + \frac{V_i}{R_B} = I_{B1}	\\
+	\frac{I_i}{I_{B1}} = 1 - \frac{V_i}{I_{B1}} \frac{1}{R_B}
+\end{split}
+\label{equ:ii-ib1}
+\end{equation}
+
+Por lo tanto, de la misma forma que se realizó para la ganancia de tensión, mediante el uso de (\ref{equ:ib2-ib1}), (\ref{equ:vi-ib1}), (\ref{equ:io-ib2}) y (\ref{equ:ii-ib1}), se calcula la ganancia de corriente.
+\begin{equation*}
+	\Delta I \triangleq \frac{I_o}{I_i} = \frac{I_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{I_i}
+\end{equation*}
+\begin{equation}
+	\Delta I = \frac { \left( 1+h_{fe2} \right) R_C R_{OF}^* \left( 1+h_{fe1} \right) R_B}{D}
+\end{equation}
+
+Siendo
+\begin{equation}
+\begin{split}
+D = \left( R_C R_L  h_{oe2}+R_C+R_L \right) \left\lbrace -R_{OF}^*  \left[ 1+h_{fe2} \left( 1+h_{fe1} \right) \right] R_D \left( 1+h_{fe1} \right) \right. \\
+ \left. - R_{OF}^* h_{ie2} \left( 1+h_{fe1} \right) + \left[ R_{OF}^*+h_{ie2}+R_D \left( 1+h_{fe2} \right)  \right] \left( R_B-h_{ie1} \right) \right\rbrace
+\end{split}
+\end{equation}
+
+\begin{center}
+	\LARGE{\textcolor{red}{$\mathbf{R_{ia}, R_{oa}}$}}
+\end{center}
 
 \subsection{Desarrollo y armado de la placa}
 \begin{center}
