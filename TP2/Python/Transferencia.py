@@ -21,6 +21,8 @@ rd = 6.8E3
 rs = 6.8E3
 rl = 10E3
 
+vt = 25.85202837E-3
+
 #JFET
 
 vpoff = -8
@@ -37,35 +39,63 @@ print("Rof = ", rof)
 #Q1
 
 ice1 = ids
-vce1 = vcc - ice1*rof
-print("Vce1 = ", vce1)
+ice2 = (vcc - 2*0.7)/rc
+vce1 = vcc - 0.7 - ice2*rc
+vce2 = vcc - ice2*rc
 
-hfe1 =
-hie1 =
-hoe1 =
+print("Vce1 = ", vce1)
+print("Vce2 = ", vce2)
+print("Ice1 = ", ice1)
+print("Ice2 = ", ice2)
+
+gm1 = ice1/vt
+hfe1 = 110
+hie1 = hfe1/gm1
+hoe1 = ice1/90
+
+print("gm1 = ", gm1)
+print("hie1 = ", hie1)
+print("hoe1 = ", hoe1)
 
 #Q2
-hfe2 =
-hie2 =
-hoe2 =
+gm2 = ice2/vt
+hfe2 = 110
+hie2 = hfe2/gm2
+hoe2 = ice2/90
+
+print("gm2 = ", gm2)
+print("hie2 = ", hie2)
+print("hoe2 = ", hoe2)
 
 rofp = rof*(1/hoe1)/(rof + 1/hoe1)
 rd = 1/(1/rc + hoe2 + 1/rl)
+rcp = rc*(1/hoe1)/(rc + 1/hoe1)
+rsp = rb*rs/(rb + rs) + hie1
 
 #IMPEDANCIAS DE ENTRADA Y SALIDA
-ri =
-ro =
+rin = ((rd*(1 + hfe2)*(1 + hfe1) + hfe1*hie2 + hie1 + hie2)*rofp + hie1*(hie2 + rd*(1 + hfe2)))*rb
+rid = (rd*(1 + hfe2)*(1 + hfe1) + hie1 + (1 + hfe1)*hie2 + rb)*rofp + (hie2 + rd*(1 + hfe2))*(rb + hie1)
+ri = rin/rid
+ron = rcp*((hfe1 + 1)*rofp + rsp)*(1 + hfe2)
+rod = ((hie2*rcp + 3*hfe2 + 3)*hfe1 + hie2*rcp + hfe2 + 1)*rofp + (hie2*rcp + hfe2 + 1)*rsp
+ro = ron/rod
+
+print("Ria = ", ri)
+print("Roa = ", ro)
 
 #GANACIA DE TENSIÓN
-v = rofp*rd*(1+hfe1)*(1+hfe2)/(hie1*(rofp + rd*(1+hfe2)+hie2)+rofp*(1+hfe1)*(rd*(1+hfe2)+hie2))
+v = rofp*rd*(1+hfe1)*(1+hfe2)/((rd*(1+hfe2)*(1 + hfe1) + hfe1*hie2 + hie1 + hie2)*rofp + hie1*(hie2 + rd*(1 + hfe2)))
 vs = v*ri/(ri + rs)
+
+print("Av = ", v)
+print("Avs = ", vs)
 
 #GANANCIA DE CORRIENTE
 
-D = (rc*rl*hoe2 + rc + rl)*(-rofp*(1 + hfe2*(1 + hfe1))*rd(1 + hfe1) - rofp*hie2*(1 + hfe1) + (rofp + hie2 + rd*(1 + hfe2))(rb - hie1))
-
+D = (rc*rl*hoe2 + rc + rl)*(-1*rofp*(1 + hfe2*(1 + hfe1))*rd*(1 + hfe1) - rofp*hie2*(1 + hfe1) + (rofp + hie2 + rd*(1 + hfe2))*(rb - hie1))
 i = (1 + hfe2)*rc*rofp*(1 + hfe1)*rb/D
 
+print("Ai = ", i)
 
 # mag_teot = 20*np.log10(np.abs(v))
 # # mag_teot = mag_teot - mag_teot[0]

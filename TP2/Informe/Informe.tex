@@ -178,17 +178,10 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 \end{figure}
 
 De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_C = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_1$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$.
-%, por lo tanto solo resta calcular $V_{CE1}$. Recorriendo la malla de salida de $Q_1$ se obtiene
-%\begin{equation*}
-%	V_{CC} - V_{CE1} = I_{CE1} R_{OF}
-%\end{equation*}
-%\begin{equation}
-%	V_{CE1} = V_{CC} - I_{CE1} R_{OF} =  
-%\end{equation}
 
 Por otro lado, para el transistor $Q_2$ se plantea
 \begin{equation*}
-	V_{CC} - V_{BEON_1} - V_{BEON_2} = I_{CE2} R_{C}
+	V_{CC} - 2 V_{BEON} = I_{CE2} R_{C}
 \end{equation*}
 \begin{equation}
 	I_{CE2} = \frac{V_{CC} - 2 V_{BEON}}{R_{C}} = 2 \ mA
@@ -196,18 +189,17 @@ Por otro lado, para el transistor $Q_2$ se plantea
 
 Habiendo establecido esto, se puede calcular $V_{CE1}$ y $V_{CE2}$ de la forma
 \begin{equation*}
-	V_{CE1} = V_{CC} - V_{BEON_2} - I_{CE2} R_{C} = 0.7 \ V
+	V_{CE1} = V_{CC} - V_{BEON} - I_{CE2} R_{C} = 0.7 \ V
 \end{equation*}
 \begin{equation}
 	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.4 \ V
 \end{equation}
 
+\begin{center}
+	\LARGE{\textcolor{red}{\textbf{VERIFICAR POLARIZACIÓN.}}}
+\end{center}
 
-%\begin{equation*}
-%	V_{CC} - V_{CE2} = I_{CE2} R_{C}
-%\end{equation*}
-
-Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos. De manera similar al caso realizado con el JFT. Es así que se procede al modelo incremental, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
+Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos. Es así que se procede al modelo incremental, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
 \begin{table}[H]
 \centering
 \begin{tabular}{cccc}
@@ -221,10 +213,6 @@ $Q_2$ & 77.36 & 1.42 & 45	\\
 \caption{Estimadores del modelo incremental del circuito Darlington.}
 \label{tab:estim}
 \end{table}
-
-\begin{center}
-	\LARGE{\textcolor{red}{\textbf{VERIFICAR POLARIZACIÓN.}}}
-\end{center}
 
 Planteando su respectivo modelo incremental, se llega al circuito presentado a continuación: 
 \begin{figure}[H]
@@ -361,7 +349,7 @@ y se plantea para el nodo $C_1$, utilizando (\ref{equ:roa1}), llegándose a la e
 De esta forma, con (\ref{equ:roa2}), (\ref{equ:roa3}) y (\ref{equ:roa4}), se opera algebraicamente y se obtiene finalmente la impedancia de salida del circuito
 \begin{equation}
 R_{oa} = \frac{V_o}{I_o} = 
-\frac {R_{C}^* \left[ \left( h_{fe1} + 1 \right) R_{OF}^* + R_{S} \right] \left( 1 + h_{fe2} \right) }{ \left[ \left( h_{ie2} R_{C}^* + 3 h_{fe2} + 3 \right) h_{fe1} + h_{ie2} R_{C}^* + h_{fe2} + 1 \right] R_{OF}^* + \left( h_{ie2} R_{C}^* + h_{fe2} + 1 \right) R_{S} }
+\frac {R_{C}^* \left[ \left( h_{fe1} + 1 \right) R_{OF}^* + R_{S}^* \right] \left( 1 + h_{fe2} \right) }{ \left[ \left( h_{ie2} R_{C}^* + 3 h_{fe2} + 3 \right) h_{fe1} + h_{ie2} R_{C}^* + h_{fe2} + 1 \right] R_{OF}^* + \left( h_{ie2} R_{C}^* + h_{fe2} + 1 \right) R_{S}^* }
 \end{equation}
 
 Una vez calculada $\Delta V$, $\Delta I$ y $R_{ia}$, se puede calcular la ganancia de tensión del sistema $\Delta V_S$, siendo esta
