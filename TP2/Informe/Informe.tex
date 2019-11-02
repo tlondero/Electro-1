@@ -189,7 +189,7 @@ Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/C
 \end{equation*}
 
 \begin{center}
-	\LARGE{\textcolor{red}{\textbf{$V_{V_{BEON_1}}$ no es 0.7?}}}
+	\LARGE{\textcolor{red}{\textbf{$V_{BEON_1}$ no es 0.7?}}}
 \end{center}
 
 Planteando su respectivo modelo incremental, se llega al circuito presentado a continuación: 
@@ -296,11 +296,41 @@ A continuación, se calcula la impedancia de entrada del amplificador, mediante 
 R_{ia} = \frac{\left\lbrace  \left[ R_{d} \left( 1+h_{fe2} \right) \left( 1+h_{fe1} \right) + h_{fe1}h_{ie2} + h_{ie1} + h_{ie2} \right] R_{OF}^* + h_{ie1} \left[ h_{ie2} + R_{d} \left( 1 + h_{fe2} \right) \right] \right\rbrace R_{B}}{\left[ R_{d} \left( 1+h_{fe2} \right) \left( 1 + h_{fe1} \right) + h_{ie1} + \left( 1 + h_{fe1} \right) h_{ie2} + R_{B} \right] R_{OF}^* + \left[ h_{ie2} + R_{d} \left( 1 + h_{fe2} \right) \right] \left( R_{B} + h_{ie1} \right)}
 \end{equation}
 
-\begin{center}
-	\LARGE{\textcolor{red}{$\mathbf{R_{oa}}$}}
-\end{center}
+Por otro lado, para el calculo de la impedancia de salida $R_{oa}$ se considera el circuito de la siguiente forma:
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth, page=6]{Imagenes/ModeloIncremental.pdf}
+\end{figure}
+Se definen $R_{S}^* = \left( R_B // R_S \right) + h_{ie1}$ y $R_C^* = R_C // \frac{1}{h_{oe1}}$. Luego, sabiendo que la tensión sobre $R_{OF}^*$ y $R_{S}^*$ es la misma, se obtiene
+\begin{equation}
+	I_{OF} = I_{B1} \frac{R_{S}^*}{R_{OF}^*}
+	\label{equ:roa1}
+\end{equation}
 
-Una vez calculada $\Delta V$ y $R_{ia}$, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
+Luego, observando el nodo $E_2$, se llega a
+\begin{equation}
+	I_{B2} \left( 1 + h_{fe2} \right) + I_o = \frac{V_o}{R_{C}^*}
+	\label{equ:roa2}
+\end{equation}
+
+Se expresa la tensión $V_o$ como
+\begin{equation}
+	V_o = - \left( I_{B1} h_{ie1} + I_{B2} h_{ie2} \right)
+	\label{equ:roa3}
+\end{equation}
+y se plantea para el nodo $C_1$, utilizando (\ref{equ:roa1}), llegándose a la expresión
+\begin{equation}
+	I_{B1} \left( 1 + h_{fe1} \right) + I_{OF} + I_{B2} h_{ie2} + I_o = \frac{V_o}{R_{C}^*}
+	\label{equ:roa4}
+\end{equation}
+
+De esta forma, con (\ref{equ:roa2}), (\ref{equ:roa3}) y (\ref{equ:roa4}), se opera algebraicamente y se obtiene finalmente la impedancia de salida del circuito
+\begin{equation}
+R_{oa} = \frac{V_o}{I_o} = 
+\frac {R_{C}^* \left[ \left( h_{fe1} + 1 \right) R_{OF}^* + R_{S} \right] \left( 1 + h_{fe2} \right) }{ \left[ \left( h_{ie2} R_{C}^* + 3 h_{fe2} + 3 \right) h_{fe1} + h_{ie2} R_{C}^* + h_{fe2} + 1 \right] R_{OF}^* + \left( h_{ie2} R_{C}^* + h_{fe2} + 1 \right) R_{S} }
+\end{equation}
+
+Una vez calculada $\Delta V$, $\Delta I$ y $R_{ia}$, se puede calcular la ganancia de tensión del sistema $\Delta V_S$, siendo esta
 \begin{equation}
 \begin{split}
 	\Delta V_S \triangleq \frac{V_S}{V_i} = \frac{V_S}{V_o} \frac{V_o}{V_i} = \frac{V_o}{V_i} \frac{R_i}{R_S + R_{ia}}

@@ -71,4 +71,18 @@
 \end{circuitikz}
 \end{page}
 
+%Modelo incremental Darlington Roa
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [circ,label=above:$B_1$](b1){};
+	\draw (b1) to[R, l_=$R_B // R_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$ ](){};
+	\draw (b1) to[R, l=$h_{ie1}$, f=$I_{B1}$] ++(2,0) node[](aux1){} ++(0,-2) node[ground](aux2){};
+	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) -- ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){} to[R, l=$R_{OF}^*$, f_<=$I_{OF}$] ++(0,-2) node[ground](){};
+	\draw (aux3)  to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(3,0) ++(0,-2) node[ground](){} to[dcisource, l_=$h_{fe2} I_{B2}$] ++(0,2) -- ++(2.5,0) node[circ, label=above:$E_2$](aux4){} to[R, l=$R_C // \frac{1}{h_{oe2}}$] ++(0,-2) node[ground](){};
+	\draw (aux4.center) to[short, f<=$I_o$] ++(1.5,0) node[ocirc](+vo){};
+	\draw (+vo) ++(0.5,0) to[open, v^<= $V_o$] ++(0,-2);
+\end{circuitikz}
+\end{page}
+
+
 \end{document}
