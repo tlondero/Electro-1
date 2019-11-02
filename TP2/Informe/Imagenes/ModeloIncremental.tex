@@ -67,6 +67,7 @@
 	\draw (aux3) to[R, l=$R_{OF}^*$] ++(0,-2) node[ground](){};
 	\draw (aux3) to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(3,0) node[circ, label=above right:$E_2$](aux4){} to[R, l=$R_d \left(1 + h_{fe2} \right)$] ++(0,-2) node[ground](){};
 	\draw (b1) to[R, l_=$R_S$, f_<=$I_i$] ++(-2,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
+	\draw (b1) ++(-0.25,-2) to[open, v^= $V_i$] ++(0,2);
 \end{circuitikz}
 \end{page}
 

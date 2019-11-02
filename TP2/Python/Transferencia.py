@@ -10,25 +10,29 @@ s = (1j)*2*np.pi*freq_teo
 
 #Tensiones
 vcc = 15
-vss = -15
-vdd = 0.7
+vss = -10
+# vdd =
 
 #Resistencias
 r2 = 50
 rb = 680
 rc = 680
-rdd = 6.8E3
+rd = 6.8E3
 rs = 6.8E3
 rl = 10E3
 
 #JFET
 
-rds =
-rgs =
+vpoff = -8
 idss = 2E-3
-vp =
-gmj = 2*np.sqrt(id*idss)/vp
-rof = rds*(1+gmj*(rs*rgs/(rs + rgs))) + (rs*rgs/(rs + rgs)) + rdd
+
+ids = 1.6E-3
+vgs = -0.88
+rds = 90/ids
+gmj = 2*np.sqrt(ids*idss)/np.abs(vpoff)
+rof = rds*(1+gmj*rs) + rs + rd
+
+print("Rof = ", rof)
 
 #Q1
 hfe1 =
@@ -53,9 +57,14 @@ vs = v*ri/(ri + rs)
 
 #GANANCIA DE CORRIENTE
 
-mag_teot = 20*np.log10(np.abs(v))
-# mag_teot = mag_teot - mag_teot[0]
-pha_teot = (360/(2*np.pi))*np.arctan((np.imag(v))/(np.real(v)))
+D = (rc*rl*hoe2 + rc + rl)*(-rofp*(1 + hfe2*(1 + hfe1))*rd(1 + hfe1) - rofp*hie2*(1 + hfe1) + (rofp + hie2 + rd*(1 + hfe2))(rb - hie1))
+
+i = (1 + hfe2)*rc*rofp*(1 + hfe1)*rb/D
+
+
+# mag_teot = 20*np.log10(np.abs(v))
+# # mag_teot = mag_teot - mag_teot[0]
+# pha_teot = (360/(2*np.pi))*np.arctan((np.imag(v))/(np.real(v)))
 
 # for i, element in enumerate(pha_teot):
 #     if ((freq_teo[i] < 4.38E4) & (freq_teo[i] > 2.89025E4)):
@@ -63,41 +72,36 @@ pha_teot = (360/(2*np.pi))*np.arctan((np.imag(v))/(np.real(v)))
 
 #MEDICION
 
-df = pnd.read_csv('./FT/M-Bode-T-CB_8.csv', sep=',')
-freq_mt = np.asarray(df["Frequency (Hz)"])
-mag_mt = np.asarray(df["Channel 2 Magnitude (dB)"])
-pha_mt = np.asarray(df["Channel 2 Phase (*)"])
+# df = pnd.read_csv('M-Bode-T-CB_8.csv', sep=',')
+# freq_mt = np.asarray(df["Frequency (Hz)"])
+# mag_mt = np.asarray(df["Channel 2 Magnitude (dB)"])
+# pha_mt = np.asarray(df["Channel 2 Phase (*)"])
 
 #SIMULACION
 
 lt_parser = SpiceParser()
-data = lt_parser.parse('./FT/S-Bode-T_3.txt')
-freq_st = np.array(data[1].index)
-mag_st = np.array(data[0]["V(vout) MAG"])
-# mag_st = mag_st - mag_st[0]
-pha_st = np.array(data[1]["V(vout) PHA"])
+data = lt_parser.parse('Ganancia de I.txt')
+freq_s_i = np.array(data[1].index)
+mag_s_i = -np.array(data[0]["-I(R)/I(Rl) MAG"])
+pha_s_i = -np.array(data[1]["-I(R)/I(Rl) PHA"])
 
 # for i, element in enumerate(pha_st):
 #     if ((freq_st[i] < 3.7586E4) & (freq_st[i] > 3.49945E4)):
 #         pha_st[i] = pha_st[i] - 360
 
-plt.title("Ganancia del circuito en módulo")
+plt.title("Ganancia de corriente en módulo")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Amplitud [dB]")
-plt.plot(freq_teo, mag_teot, label = "Teórico")
-plt.plot(freq_st, mag_st, label = "Simulado")
-plt.plot(freq_mt, mag_mt, label = "Medido")
+plt.plot(freq_s_i, mag_s_i, label = "Simulado")
 plt.xscale('log')
 plt.legend()
 plt.grid()
 plt.show()
 
-plt.title("Ganancia del circuito en fase")
+plt.title("Ganancia de corriente en fase")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Fase [°]")
-plt.plot(freq_teo, pha_teot, label = "Teórico")
-plt.plot(freq_st, pha_st, label = "Simulado")
-plt.plot(freq_mt, pha_mt, label = "Medido")
+plt.plot(freq_s_i, pha_s_i, label = "Simulado")
 plt.xscale('log')
 plt.legend()
 plt.grid()
