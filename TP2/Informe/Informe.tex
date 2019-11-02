@@ -92,33 +92,45 @@ Además, se plantean las ecuaciones del JFET:
 \end{split}
 \end{equation}
 
-De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS_{min}} = 2 \ mA$ y $V_P = -8 \ V$. Luego, estableciendo $V_{SS} = 10 \ V$ y $R_S = R_D = 6.8 \ K\Omega$ se calculan la corriente de drain y la tensión gate-source. Como es de esperarse, se obtienen dos valores posibles para cada variable:
+De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS} = 2 \ mA$ y $V_P = -8 \ V$ (para el peor caso). Luego, estableciendo $V_{SS} = 10 \ V$, $R_S = 6.8 \ K\Omega$ y $R_D = 680 \ \Omega$ se calculan la corriente de drain y la tensión gate-source. Como es de esperarse, se obtienen dos valores posibles para cada variable:
 
-\begin{center}
-	\LARGE{\textcolor{red}{\textbf{Queda claro que los dos de arriba se corresponden?}}}
-\end{center}
+%\begin{equation*}
+%I_{DS} = \left\lbrace
+%\begin{split}
+%	& 4.39 \ mA \\
+%	& 1.60 \ mA
+%\end{split}
+%\right.
+%\ \ \
+%V_{GS} = \left\lbrace
+%\begin{split}
+%	& -19.85 \ V \\
+%	& -0.88 \ V
+%\end{split}
+%\right.
+%\end{equation*}
 
 \begin{equation*}
-I_{DS} = \left\lbrace
+\left\lbrace
 \begin{split}
-	& 4.39 \ mA \\
-	& 1.60 \ mA
+	&I_{DS} =  4.39 \ mA \\
+	&V_{GS} =  -19.85 \ V
 \end{split}
 \right.
-\ \ \
-V_{GS} = \left\lbrace
+\ \ y \ \
+\left\lbrace
 \begin{split}
-	& -19.85 \ V \\
-	& -0.88 \ V
+	&I_{DS} =  1.60 \ mA \\
+	&V_{GS} =  -0.88 \ V
 \end{split}
 \right.
 \end{equation*}
 
-Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente. \textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por el circuito total, por lo que este análisis es expuesto más adelante.}  
+Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente. \textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por la totalidad del circuito, por lo que este análisis es expuesto más adelante.}  
 % http://www2.eng.cam.ac.uk/~dmh/ptialcd/jfet/2N3819.pdf https://www.mouser.com/datasheet/2/149/2n3819-286408.pdf
 %Por otro lado, $V_{DD}$ queda fijado por el circuito del Darlington, siendo esta $V_{DD} = V_{BEON} = 0.7 \ V$.
 
-Con lo establecido previamente, se prosigue a plantear el circuito incremental. Cabe aclarar que, como es de interés calcular la impedancia de salida, no se puede consideran tanto $R_{DS}$ como $R_{GS}$ despreciables. Es por ello que son tenidas en cuenta para este cálculo.
+Con lo establecido previamente, se prosigue a plantear el circuito incremental. Es de interés calcular la impedancia de salida, para luego emplearla para calcular las variables pertinentes en el circuito de la Figura (\ref{fig:pardar3}).
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.45\textwidth, page=1]{Imagenes/ModeloIncremental.pdf}
@@ -133,18 +145,19 @@ Se define $R_S^* = R_S // R_{GS}$, para luego analizar el circuito presentado en
 \centering
 \hspace*{2cm}
 	\includegraphics[width=0.4\textwidth, page=2]{Imagenes/ModeloIncremental.pdf}
-	\caption{Análisis de la impedancia de salida del circuito de la Figura (\ref{fig:incfuente1}).}
+	\caption{Análisis de la impedancia de salida del circuito de la fuente de corriente.}
 \label{fig:incfuente2}
 \end{figure}
 
-Planteando
+Planteando la tensión $V_o$ y las corrientes del nodo $D$, se obtienen las siguientes expresiones respectivamente.
 \begin{equation*}
 	V_o = I_{DS} R_{DS} + I_o \left( R_D + R_S^* \right)
 \end{equation*}
 \begin{equation*}
 	I_{DS} = gm V_S + I_o = \left( gm R_S^* + 1 \right) I_o
 \end{equation*}
-y operando algebraicamente se obtiene la variable deseada de la forma:
+
+Operando algebraicamente se obtiene la variable deseada de la forma:
 \begin{equation}
 \begin{split}
 	R_{OF} & = \frac{V_o}{I_o} = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* + R_D \\
@@ -156,7 +169,7 @@ y operando algebraicamente se obtiene la variable deseada de la forma:
 Para poder continuar, se toma $R_{GS} \longrightarrow \infty$, luego se asume $V_A = -90 \ V$, estimando así $R_{DS} = \frac{V_A}{I_{DS}} = 56.25 \ K\Omega$. De esta forma se obtiene de (\ref{equ:rof}) el valor de la impedancia de salida $R_{OF} \approx 240.91 \ K\Omega$.
 
 \subsection{Darlington polarizado por corriente}
-Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se considera también la carga y la fuente del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por simplicidad.
+Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se presentan la carga y la alimentación del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por cuestiones de simplicidad.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth, page=5]{Imagenes/ParDarlington.pdf}
@@ -164,32 +177,53 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 	\label{fig:pardar4}
 \end{figure}
 
-Planteando la malla de entrada y salida para cada transistor, se obtienen las siguientes ecuaciones:
-\begin{equation*}
-	V_{CC} - V_{BEON_1} = I_{CE1} R_{OF}
-\end{equation*}
+De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_C = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_1$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$.
+%, por lo tanto solo resta calcular $V_{CE1}$. Recorriendo la malla de salida de $Q_1$ se obtiene
+%\begin{equation*}
+%	V_{CC} - V_{CE1} = I_{CE1} R_{OF}
+%\end{equation*}
+%\begin{equation}
+%	V_{CE1} = V_{CC} - I_{CE1} R_{OF} =  
+%\end{equation}
+
+Por otro lado, para el transistor $Q_2$ se plantea
 \begin{equation*}
 	V_{CC} - V_{BEON_1} - V_{BEON_2} = I_{CE2} R_{C}
 \end{equation*}
-\begin{equation*}
-	V_{CC} - V_{CE1} = I_{CE1} R_{OF}
-\end{equation*}
-\begin{equation*}
-	V_{CC} - V_{CE2} = I_{CE2} R_{C}
-\end{equation*}
+\begin{equation}
+	I_{CE2} = \frac{V_{CC} - 2 V_{BEON}}{R_{C}} = 2 \ mA
+\end{equation}
 
-Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE} = 110$ de la hoja de datos. De manera similar al caso realizado con el JFT, se establecen $V_{CC} = 15 \ V$ y $R_B = R_C = 680 \ \Omega$. Cabe destacar que, por el uso de la fuente de corriente, $I_{CE1} = I_{DS} = 1.60 \ mA$ del JFET. 
+Habiendo establecido esto, se puede calcular $V_{CE1}$ y $V_{CE2}$ de la forma
 \begin{equation*}
-\begin{split}
-	I_{CE1} = \\
-	I_{CE2} = \\
-	V_{CE1} = \\
-	V_{CE2} = 
-\end{split}
+	V_{CE1} = V_{CC} - V_{BEON_2} - I_{CE2} R_{C} = 0.7 \ V
 \end{equation*}
+\begin{equation}
+	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.4 \ V
+\end{equation}
+
+
+%\begin{equation*}
+%	V_{CC} - V_{CE2} = I_{CE2} R_{C}
+%\end{equation*}
+
+Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos. De manera similar al caso realizado con el JFT. Es así que se procede al modelo incremental, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{Transistor} & $\mathbf{gm \ \left[ \frac{mA}{V} \right]}$ & $\mathbf{h_{ie} \ \left[ K\Omega \right]}$ & $\mathbf{\frac{1}{h_{oe}} \ \left[ K\Omega \right]}$ \\
+\hline
+$Q_1$ & 61.89 & 1.78 & 56.25 \\
+$Q_2$ & 77.36 & 1.42 & 45	\\
+\hline
+\end{tabular}
+\caption{Estimadores del modelo incremental del circuito Darlington.}
+\label{tab:estim}
+\end{table}
 
 \begin{center}
-	\LARGE{\textcolor{red}{\textbf{$V_{BEON_1}$ no es 0.7?}}}
+	\LARGE{\textcolor{red}{\textbf{VERIFICAR POLARIZACIÓN.}}}
 \end{center}
 
 Planteando su respectivo modelo incremental, se llega al circuito presentado a continuación: 

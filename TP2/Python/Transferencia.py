@@ -35,6 +35,11 @@ rof = rds*(1+gmj*rs) + rs + rd
 print("Rof = ", rof)
 
 #Q1
+
+ice1 = ids
+vce1 = vcc - ice1*rof
+print("Vce1 = ", vce1)
+
 hfe1 =
 hie1 =
 hoe1 =
