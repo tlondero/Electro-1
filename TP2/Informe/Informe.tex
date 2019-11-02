@@ -213,18 +213,28 @@ Donde $I_{B1}^* = I_{B1} \left( 1 + h_{fe1} \right)$ y $I_{B2}^* = I_{B2} \left(
 \end{figure}
 
 Por un lado se destaca que 
-\begin{equation}
+\begin{equation*}
 	V_o = I_{B2} R_d \left( 1 + h_{fe2} \right)
+\end{equation*}
+
+Siendo así
+\begin{equation}
+	\frac{V_o}{I_{B2}} = R_d \left( 1 + h_{fe2} \right)
 \label{equ:vo-ib2}
 \end{equation}
 
 Por otro lado, se analiza la relación entre $I_{B1}^*$ e $I_{B2}^*$ mediante un divisor de corrientes, consiguiéndose
+\begin{equation*}
+	I_{B2} = I_{B1}^* \frac{R_{OF}^*}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)} = I_{B1} \frac{R_{OF}^* \left( 1 + h_{fe1} \right)}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)}
+\end{equation*}
+
+Dividiéndose a ambos lados por $I_{B1}$
 \begin{equation}
-	I_{B2} = I_{B1}^* \frac{R_{OF}^*}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)} = I_{B1} \frac{R_{OF}^* \left( 1 + h_{fe1} \right)}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)} 
+	\frac{I_{B2}}{I_{B1}} = \frac{R_{OF}^* \left( 1 + h_{fe1} \right)}{R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right)} 
 \label{equ:ib2-ib1}
 \end{equation}
 
-Por último, se observa que
+Luego, se observa que
 \begin{equation}
 	V_i = I_{B1} h_{ie1} + I_{B2} \left[ h_{ie2} + R_d \left( 1 + h_{fe2} \right) \right]
 \label{equ:vi-ib1-ib2}
@@ -236,34 +246,29 @@ Utilizando (\ref{equ:ib2-ib1}) en (\ref{equ:vi-ib1-ib2}), se llega a la expresi�
 \label{equ:vi-ib1}
 \end{equation}
 
-Con todo lo calculado anteriormente, se procede a calcular la transferencia $\Delta V$, siendo esta de la forma
+Con lo obtenido en (\ref{equ:vo-ib2}), (\ref{equ:ib2-ib1}) y (\ref{equ:vi-ib1}), se procede a calcular la transferencia $\Delta V$, siendo esta de la forma
 \begin{equation}
 \begin{split}
-	\Delta V \triangleq \frac{V_o}{V_i} = \frac{V_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{V_i} = \frac{R_d R_{OF}^* \left( 1 + h_{fe1} \right) \left( 1 + h_{fe2} \right)}{ h_{ie1} \left[ R_{OF}^* + R_d \left( 1 + h_{fe2} \right) + h_{ie2} \right] + R_{OF}^* \left( 1 + h_{fe1} \right) \left[ R_d \left( 1 + h_{fe2} \right) + h_{ie2} \right]}
+	\Delta V \triangleq \frac{V_o}{V_i} = \frac{V_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{V_i} = \frac {R_d R_{OF}^* \left( 1+h_{fe2} \right) \left( 1+h_{fe1} \right) }{ \left[ R_d \left( 1+h_{fe2} \right) \left( 1+h_{fe1} \right) +h_{fe1}h_{ie2}+h_{ie1}+h_{ie2} \right] R_{OF}^*+h_{ie1} \left[ h_{ie2}+R_d \left( 1+h_{fe2} \right)  \right] }
 \end{split}
 \label{equ:v}
 \end{equation}
 
-A su vez, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
-\begin{equation}
-\begin{split}
-	\Delta V_S \triangleq \frac{V_S}{V_i} = \frac{V_S}{V_o} \frac{V_o}{V_i} = \frac{V_o}{V_i} \frac{R_i}{R_S + R_i}
-\end{split}
-\label{equ:vs}
-\end{equation}
-
 Para la ganancia de corriente se observa nuevamente la Figura (\ref{fig:incdar}). Aplicando un divisor de corriente a la salida se obtiene una expresión que relaciona $I_{B2}$ con $I_o$.
-\begin{equation}
+\begin{equation*}
 	I_o = I_{B2} \left( 1 + h_{fe2} \right) \frac{R_C // \frac{1}{h_{oe2}}}{R_C // \frac{1}{h_{oe2}} + R_L}
+\end{equation*}
+\begin{equation}
+	\frac{I_o}{I_{B2}} = \left( 1 + h_{fe2} \right) \frac{R_C // \frac{1}{h_{oe2}}}{R_C // \frac{1}{h_{oe2}} + R_L}
 	\label{equ:io-ib2}
 \end{equation}
 
 Luego, se plantean las corrientes para el nodo $B_1$.
+\begin{equation*}
+	I_i = \frac{V_i}{R_B} + I_{B1}
+\end{equation*}
 \begin{equation}
-\begin{split}
-	I_i + \frac{V_i}{R_B} = I_{B1}	\\
-	\frac{I_i}{I_{B1}} = 1 - \frac{V_i}{I_{B1}} \frac{1}{R_B}
-\end{split}
+	\frac{I_i}{I_{B1}} = 1 + \frac{V_i}{I_{B1}} \frac{1}{R_B}
 \label{equ:ii-ib1}
 \end{equation}
 
@@ -272,20 +277,36 @@ Por lo tanto, de la misma forma que se realizó para la ganancia de tensión, me
 	\Delta I \triangleq \frac{I_o}{I_i} = \frac{I_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{I_i}
 \end{equation*}
 \begin{equation}
-	\Delta I = \frac { \left( 1+h_{fe2} \right) R_C R_{OF}^* \left( 1+h_{fe1} \right) R_B}{D}
+	\Delta I = \frac { R_C R_{OF}^* R_B \left( 1+h_{fe2} \right) \left( 1+h_{fe1} \right)}{D}
 \end{equation}
 
 Siendo
 \begin{equation}
 \begin{split}
-D = \left( R_C R_L  h_{oe2}+R_C+R_L \right) \left\lbrace -R_{OF}^*  \left[ 1+h_{fe2} \left( 1+h_{fe1} \right) \right] R_D \left( 1+h_{fe1} \right) \right. \\
- \left. - R_{OF}^* h_{ie2} \left( 1+h_{fe1} \right) + \left[ R_{OF}^*+h_{ie2}+R_D \left( 1+h_{fe2} \right)  \right] \left( R_B-h_{ie1} \right) \right\rbrace
+D = & \left( R_C R_L h_{oe2}+R_C+R_L \right)  \left\lbrace \left[ h_{ie2} + R_d \left( 1+h_{fe2} \right) \right] \left( R_B+h_{ie1} \right) + \right. \\
+& \left. \left[ R_d \left( 1+h_{fe2} \right)  \left( 1+h_{fe1} \right) + h_{fe1} h_{ie2} + R_B + h_{ie1} + h_{ie2} \right] R_{OF}^* \right\rbrace
 \end{split}
 \end{equation}
 
+A continuación, se calcula la impedancia de entrada del amplificador, mediante el uso de (\ref{equ:vi-ib1}) y (\ref{equ:ii-ib1}), siendo esta
+\begin{equation*}
+	R_{ia} = \frac{V_i}{I_i} =  \frac{V_i}{I_{B1}}\frac{I_{B1}}{I_i}
+\end{equation*}
+\begin{equation}
+R_{ia} = \frac{\left\lbrace  \left[ R_{d} \left( 1+h_{fe2} \right) \left( 1+h_{fe1} \right) + h_{fe1}h_{ie2} + h_{ie1} + h_{ie2} \right] R_{OF}^* + h_{ie1} \left[ h_{ie2} + R_{d} \left( 1 + h_{fe2} \right) \right] \right\rbrace R_{B}}{\left[ R_{d} \left( 1+h_{fe2} \right) \left( 1 + h_{fe1} \right) + h_{ie1} + \left( 1 + h_{fe1} \right) h_{ie2} + R_{B} \right] R_{OF}^* + \left[ h_{ie2} + R_{d} \left( 1 + h_{fe2} \right) \right] \left( R_{B} + h_{ie1} \right)}
+\end{equation}
+
 \begin{center}
-	\LARGE{\textcolor{red}{$\mathbf{R_{ia}, R_{oa}}$}}
+	\LARGE{\textcolor{red}{$\mathbf{R_{oa}}$}}
 \end{center}
+
+Una vez calculada $\Delta V$ y $R_{ia}$, se puede calcular la ganancia del sistema $\Delta V_S$, siendo esta
+\begin{equation}
+\begin{split}
+	\Delta V_S \triangleq \frac{V_S}{V_i} = \frac{V_S}{V_o} \frac{V_o}{V_i} = \frac{V_o}{V_i} \frac{R_i}{R_S + R_{ia}}
+\end{split}
+\label{equ:vs}
+\end{equation}
 
 \subsection{Desarrollo y armado de la placa}
 \begin{center}
