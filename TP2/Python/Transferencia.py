@@ -16,8 +16,8 @@ vss = -10
 #Resistencias
 r2 = 50
 rb = 680
-rc = 680
-rd = 6.8E3
+rc = 6.8E3
+rd = 680
 rs = 6.8E3
 rl = 10E3
 
@@ -92,10 +92,11 @@ print("Avs = ", vs)
 
 #GANANCIA DE CORRIENTE
 
-D = (rc*rl*hoe2 + rc + rl)*(-1*rofp*(1 + hfe2*(1 + hfe1))*rd*(1 + hfe1) - rofp*hie2*(1 + hfe1) + (rofp + hie2 + rd*(1 + hfe2))*(rb - hie1))
+D = (rc*rl*hoe2 + rc + rl)*((hie2 + rd*(1 + hfe2))*(rb + hie1) + (rd*(1 + hfe2)*(1 + hfe1) + hfe1*hie2 + rb + hie1 + hie2)*rofp)
 i = (1 + hfe2)*rc*rofp*(1 + hfe1)*rb/D
 
 print("Ai = ", i)
+print("Ai db= ", 20*np.log10(i))
 
 # mag_teot = 20*np.log10(np.abs(v))
 # # mag_teot = mag_teot - mag_teot[0]
@@ -117,12 +118,8 @@ print("Ai = ", i)
 lt_parser = SpiceParser()
 data = lt_parser.parse('Ganancia de I.txt')
 freq_s_i = np.array(data[1].index)
-mag_s_i = -np.array(data[0]["-I(R)/I(Rl) MAG"])
-pha_s_i = -np.array(data[1]["-I(R)/I(Rl) PHA"])
-
-# for i, element in enumerate(pha_st):
-#     if ((freq_st[i] < 3.7586E4) & (freq_st[i] > 3.49945E4)):
-#         pha_st[i] = pha_st[i] - 360
+mag_s_i = np.array(data[0]["-I(R)/I(Rl) MAG"])
+pha_s_i = np.array(data[1]["-I(R)/I(Rl) PHA"])
 
 plt.title("Ganancia de corriente en módulo")
 plt.xlabel("Frecuencia [Hz]")
