@@ -1,10 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pnd
 from SpiceParser import SpiceParser
 # from sympy import *
 
-freq_teo = np.logspace(1, 6, 300)
+freq_teo = np.logspace(0, 6, 300)
 
 s = (1j)*2*np.pi*freq_teo
 
@@ -34,6 +33,7 @@ rds = 90/ids
 gmj = 2*np.sqrt(ids*idss)/np.abs(vpoff)
 rof = rds*(1+gmj*rs) + rs + rd
 
+print("gmj = ", gmj)
 print("Rof = ", rof)
 
 #Q1
@@ -84,11 +84,15 @@ print("Ria = ", ri)
 print("Roa = ", ro)
 
 #GANACIA DE TENSIÓN
-v = rofp*rd*(1+hfe1)*(1+hfe2)/((rd*(1+hfe2)*(1 + hfe1) + hfe1*hie2 + hie1 + hie2)*rofp + hie1*(hie2 + rd*(1 + hfe2)))
+numv = rofp*rd*(1+hfe1)*(1+hfe2)
+denv = ((rd*(1+hfe2)*(1 + hfe1) + hfe1*hie2 + hie1 + hie2)*rofp + hie1*(hie2 + rd*(1 + hfe2)))
+v = numv/denv
 vs = v*ri/(ri + rs)
 
 print("Av = ", v)
+print("Av db = ", 20*np.log10(v))
 print("Avs = ", vs)
+print("Avs db = ", 20*np.log10(vs))
 
 #GANANCIA DE CORRIENTE
 
@@ -115,26 +119,26 @@ print("Ai db= ", 20*np.log10(i))
 
 #SIMULACION
 
-lt_parser = SpiceParser()
-data = lt_parser.parse('Ganancia de I.txt')
-freq_s_i = np.array(data[1].index)
-mag_s_i = np.array(data[0]["-I(R)/I(Rl) MAG"])
-pha_s_i = np.array(data[1]["-I(R)/I(Rl) PHA"])
-
-plt.title("Ganancia de corriente en módulo")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Amplitud [dB]")
-plt.plot(freq_s_i, mag_s_i, label = "Simulado")
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
-
-plt.title("Ganancia de corriente en fase")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Fase [°]")
-plt.plot(freq_s_i, pha_s_i, label = "Simulado")
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
+# lt_parser = SpiceParser()
+# data = lt_parser.parse('Ganancia de I.txt')
+# freq_s_i = np.array(data[1].index)
+# mag_s_i = np.array(data[0]["-I(R)/I(Rl) MAG"])
+# pha_s_i = np.array(data[1]["-I(R)/I(Rl) PHA"])
+#
+# plt.title("Ganancia de corriente en módulo")
+# plt.xlabel("Frecuencia [Hz]")
+# plt.ylabel("Amplitud [dB]")
+# plt.plot(freq_s_i, mag_s_i, label = "Simulado")
+# plt.xscale('log')
+# plt.legend()
+# plt.grid()
+# plt.show()
+#
+# plt.title("Ganancia de corriente en fase")
+# plt.xlabel("Frecuencia [Hz]")
+# plt.ylabel("Fase [°]")
+# plt.plot(freq_s_i, pha_s_i, label = "Simulado")
+# plt.xscale('log')
+# plt.legend()
+# plt.grid()
+# plt.show()

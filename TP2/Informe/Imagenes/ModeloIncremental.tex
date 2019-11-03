@@ -48,9 +48,9 @@
 	\node [circ,label=above:$B_1$](b1){};
 	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground](){};
 	\draw (b1) to[R, l=$h_{ie1}$, f=$I_{B1}$] ++(2,0) node[](aux1){} ++(0,-2) node[ground](aux2){};
-	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) to[short, f=$I_{B1}^*$] ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){};
+	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) to[short] ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){};
 	\draw (aux3) to[R, l=$R_{OF}^*$] ++(0,-2) node[ground](){};
-	\draw (aux3) to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(3,0) ++(0,-2) node[ground](){} to[dcisource, l_=$h_{fe2} I_{B2}$] ++(0,2) to[short, f=$I_{B2}^*$] ++(2.5,0) node[circ, label=above:$E_2$](aux4){} to[R, l=$R_d$] ++(0,-2) node[ground](){} ++(1,0) node[](-vo){};
+	\draw (aux3) to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(3,0) ++(0,-2) node[ground](){} to[dcisource, l_=$h_{fe2} I_{B2}$] ++(0,2) to[short] ++(2.5,0) node[circ, label=above:$E_2$](aux4){} to[R, l=$R_d$] ++(0,-2) node[ground](){} ++(1,0) node[](-vo){};
 	\draw (-vo) to[open, v = $V_o$] ++(0,2);
 	\draw (b1) to[R, l_=$R_S$, f_<=$I_i$] ++(-2.5,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
 	\draw (b1) ++(-0.25,-2) to[open, v^= $V_i$] ++(0,2);
@@ -63,10 +63,22 @@
 	\node [circ,label=above:$B_1$](b1){};
 	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground](){};
 	\draw (b1) to[R, l=$h_{ie1}$, f=$I_{B1}$] ++(2,0) node[](aux1){} ++(0,-2) node[ground](aux2){};
-	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) to[short, f=$I_{B1}^*$] ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){};
+	\draw (aux2) to[dcisource, l_=$h_{fe1} I_{B1}$] (aux1) to[short] ++(2.5,0) node[circ, label=above:$E_1 \equiv B_2$](aux3){};
 	\draw (aux3) to[R, l=$R_{OF}^*$] ++(0,-2) node[ground](){};
 	\draw (aux3) to[R, l=$h_{ie2}$, f=$I_{B2}$] ++(3,0) node[circ, label=above right:$E_2$](aux4){} to[R, l=$R_d \left(1 + h_{fe2} \right)$] ++(0,-2) node[ground](){};
 	\draw (b1) to[R, l_=$R_S$, f_<=$I_i$] ++(-2,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
+	\draw (b1) ++(-0.25,-2) to[open, v^= $V_i$] ++(0,2);
+\end{circuitikz}
+\end{page}
+
+%Modelo incremental Darlington con paralelos 3
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [circ,label=above:$B_1$](b1){};
+	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground](){};
+	\draw (b1) to[short, f=$I_{B1}$] ++(2,0) node[](aux3){};
+	\draw (aux3) to[R, l=$R_{d}^* \left( 1 + h_{fe1} \right)$] ++(0,-2) node[ground](){};
+	\draw (b1) to[R, l_=$R_S$, f_<=$I_i$] ++(-3,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
 	\draw (b1) ++(-0.25,-2) to[open, v^= $V_i$] ++(0,2);
 \end{circuitikz}
 \end{page}
