@@ -13,7 +13,7 @@ vss = -10
 # vdd =
 
 #Resistencias
-r2 = 50
+rg = 50
 rb = 680
 rc = 6.8E3
 rd = 680
@@ -73,9 +73,8 @@ rcp = rc*(1/hoe1)/(rc + 1/hoe1)
 rsp = rb*rs/(rb + rs) + hie1
 
 #IMPEDANCIAS DE ENTRADA Y SALIDA
-rin = ((rd*(1 + hfe2)*(1 + hfe1) + hfe1*hie2 + hie1 + hie2)*rofp + hie1*(hie2 + rd*(1 + hfe2)))*rb
-rid = (rd*(1 + hfe2)*(1 + hfe1) + hie1 + (1 + hfe1)*hie2 + rb)*rofp + (hie2 + rd*(1 + hfe2))*(rb + hie1)
-ri = rin/rid
+ri = rb*(hie2+(1+hfe2)*rd)*rofp*(1+hfe1)/(((1+hfe2)*(1+hfe1)*rd+hfe1*hie2+rb+hie2)*rofp+rb*(hie2+(1+hfe2)*rd))
+
 ron = rcp*((hfe1 + 1)*rofp + rsp)*(1 + hfe2)
 rod = ((hie2*rcp + 3*hfe2 + 3)*hfe1 + hie2*rcp + hfe2 + 1)*rofp + (hie2*rcp + hfe2 + 1)*rsp
 ro = ron/rod
@@ -84,10 +83,8 @@ print("Ria = ", ri)
 print("Roa = ", ro)
 
 #GANACIA DE TENSIÓN
-numv = rofp*rd*(1+hfe1)*(1+hfe2)
-denv = ((rd*(1+hfe2)*(1 + hfe1) + hfe1*hie2 + hie1 + hie2)*rofp + hie1*(hie2 + rd*(1 + hfe2)))
-v = numv/denv
-vs = v*ri/(ri + rs)
+v = (1+hfe2)*rd/(hie2+(1+hfe2)*rd)
+vs = v*ri/(ri + rg)
 
 print("Av = ", v)
 print("Av db = ", 20*np.log10(v))
@@ -96,11 +93,10 @@ print("Avs db = ", 20*np.log10(vs))
 
 #GANANCIA DE CORRIENTE
 
-D = (rc*rl*hoe2 + rc + rl)*((hie2 + rd*(1 + hfe2))*(rb + hie1) + (rd*(1 + hfe2)*(1 + hfe1) + hfe1*hie2 + rb + hie1 + hie2)*rofp)
-i = (1 + hfe2)*rc*rofp*(1 + hfe1)*rb/D
+i = (1+hfe1)/((1/rofp+1/(hie2+(1+hfe2)*rd))*(1+(1+hfe1)/((1/rofp+1/(hie2+(1+hfe2)*rd))*rb)))
 
 print("Ai = ", i)
-print("Ai db= ", 20*np.log10(i))
+print("Ai db= ", 10*np.log10(i))
 
 # mag_teot = 20*np.log10(np.abs(v))
 # # mag_teot = mag_teot - mag_teot[0]
