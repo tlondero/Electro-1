@@ -168,8 +168,8 @@ Operando algebraicamente se obtiene la variable deseada de la forma:
 
 Para poder continuar, se toma $R_{GS} \longrightarrow \infty$, luego se asume $V_A = -90 \ V$, estimando así $R_{DS} = \frac{V_A}{I_{DS}} = 56.25 \ K\Omega$. De esta forma se obtiene de (\ref{equ:rof}) el valor de la impedancia de salida $R_{OF} \approx 234.79 \ K\Omega$.
 
-\subsection{Darlington polarizado por corriente}
-Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). El primer paso, consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. En el análisis que se muestra a continuación se presentan la carga y la alimentación del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por cuestiones de simplicidad.
+\subsection{Darlington compensado por corriente}
+Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). En el análisis que se muestra a continuación se presentan la carga y la alimentación del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por cuestiones de simplicidad.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth, page=5]{Imagenes/ParDarlington.pdf}
@@ -177,29 +177,36 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 	\label{fig:pardar4}
 \end{figure}
 
-De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_C = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_1$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$.
+De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_C = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_1$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$. Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos.
 
-Por otro lado, para el transistor $Q_2$ se plantea
+Por otro lado, sabiendo que $I_{CE1} = I_{B1} h{fe1}$, y planteando las mallas de entrada y salida para el transistor $Q_2$, se obtienen las siguientes expresiones:
 \begin{equation*}
-	V_{CC} - 2 V_{BEON} = I_{CE2} R_{C}
+	V_{CC} - I_{B1} R_B - 2 V_{BEON} - I_{CE2} R_{C} = 0
 \end{equation*}
 \begin{equation}
-	I_{CE2} = \frac{V_{CC} - 2 V_{BEON}}{R_{C}} = 2 \ mA
+	I_{CE2} = \frac{V_{CC} - 2 V_{BEON} - I_{CE1} \frac{R_B}{h_{fe1}}}{R_{C}} = 2 \ mA
 \end{equation}
 
-Habiendo establecido esto, se puede calcular $V_{CE1}$ y $V_{CE2}$ de la forma
 \begin{equation*}
-	V_{CE1} = V_{CC} - V_{BEON} - I_{CE2} R_{C} = 0.7 \ V
+	V_{CC} - V_{CE2} - I_{CE2} R_{C} = 0
 \end{equation*}
 \begin{equation}
-	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.4 \ V
+	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.41 \ V
+\end{equation}
+
+Luego, para $Q_1$, recorriendo la malla de salida, se obtiene el valor de $V_{CE1}$.
+\begin{equation*}
+	V_{CC} - V_{CE1} - V_{BEON} - I_{CE2} R_{C} = 0
+\end{equation*}
+\begin{equation}
+	V_{CE1} = V_{CC} - V_{BEON} - I_{CE2} R_{C} = 0.71 \ V
 \end{equation}
 
 \begin{center}
 	\LARGE{\textcolor{red}{\textbf{VERIFICAR POLARIZACIÓN, CREO QUE NO ME ESTÁ DANDO.}}}
 \end{center}
 
-Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos. Es así que se procede al modelo incremental, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
+Es así que se procede al modelo incremental, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
 \begin{table}[H]
 \centering
 \begin{tabular}{cccc}
@@ -214,7 +221,7 @@ $Q_2$ & 77.36 & 1.42 & 45	\\
 \label{tab:estim}
 \end{table}
 
-Planteando su respectivo modelo incremental, se llega al circuito presentado a continuación: 
+El siguiente paso consiste en reemplazar la fuente de corriente por su respectiva impedancia de salida $R_{OF}$. Planteando su respectivo modelo incremental, se llega al circuito presentado a continuación: 
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.85\textwidth, page=3]{Imagenes/ModeloIncremental.pdf}
@@ -264,7 +271,7 @@ Por otro lado, se puede hallar una relación entre $I_{B1}$ e $I_{B2}$, de la mi
 De manera análoga, se toma el equivalente al paralelo entre $R_{OF}^*$ con $h_{ie2}$ y $R_d \left( 1 + h_{fe2} \right)$. Por lo tanto, se define $R_{d}^* = R_{OF}^* // \left[ h_{ie2} + R_d \left( 1 + h_{fe2} \right) \right]$ para luego aplicar paso a nivel de corriente con la segunda fuente.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth, page=6]{Imagenes/ModeloIncremental.pdf}
+	\includegraphics[width=0.6\textwidth, page=6]{Imagenes/ModeloIncremental.pdf}
 \end{figure}
 
 De esta forma, se observa que

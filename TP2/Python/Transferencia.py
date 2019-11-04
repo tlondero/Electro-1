@@ -33,15 +33,25 @@ rds = 90/ids
 gmj = 2*np.sqrt(ids*idss)/np.abs(vpoff)
 rof = rds*(1+gmj*rs) + rs + rd
 
+print("-----------JFET-----------")
+
 print("gmj = ", gmj)
 print("Rof = ", rof)
 
 #Q1
 
+hfe1 = 110
+hfe2 = 110
 ice1 = ids
-ice2 = (vcc - 2*0.7)/rc
+
+# ice2 = (vcc - 2*0.7 - rb*ice1/hfe1)/rc
+
+ice2 = (vcc - 2*0.)/(rc + rb/hfe1**2)
+
 vce1 = vcc - 0.7 - ice2*rc
 vce2 = vcc - ice2*rc
+
+print("-----------POLARIZACIÓN-----------")
 
 print("Vce1 = ", vce1)
 print("Vce2 = ", vce2)
@@ -49,9 +59,10 @@ print("Ice1 = ", ice1)
 print("Ice2 = ", ice2)
 
 gm1 = ice1/vt
-hfe1 = 110
 hie1 = hfe1/gm1
 hoe1 = ice1/90
+
+print("-----------Q1-----------")
 
 print("gm1 = ", gm1)
 print("hie1 = ", hie1)
@@ -59,9 +70,10 @@ print("hoe1 = ", hoe1)
 
 #Q2
 gm2 = ice2/vt
-hfe2 = 110
 hie2 = hfe2/gm2
 hoe2 = ice2/90
+
+print("-----------Q2-----------")
 
 print("gm2 = ", gm2)
 print("hie2 = ", hie2)
@@ -79,12 +91,16 @@ ron = rcp*((hfe1 + 1)*rofp + rsp)*(1 + hfe2)
 rod = ((hie2*rcp + 3*hfe2 + 3)*hfe1 + hie2*rcp + hfe2 + 1)*rofp + (hie2*rcp + hfe2 + 1)*rsp
 ro = ron/rod
 
+print("-----------R-----------")
+
 print("Ria = ", ri)
 print("Roa = ", ro)
 
 #GANACIA DE TENSIÓN
 v = (1+hfe2)*rd/(hie2+(1+hfe2)*rd)
 vs = v*ri/(ri + rg)
+
+print("-----------GANANCIAS-----------")
 
 print("Av = ", v)
 print("Av db = ", 20*np.log10(v))
