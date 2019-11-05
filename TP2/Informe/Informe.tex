@@ -60,11 +60,13 @@ Como primer opción se consideró utilizar el par Darlington y mediante el uso d
 \label{fig:pardar}
 \end{figure}
 
-La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente, ya que la caída de tensión entre la base y el emisor se encuentra entre $0.6 \ V$ y $1.5 \ V$, siendo esta resultante de la suma de las tensiones base-emisor de ambos transistores. Esto genera a su vez que el dispositivo consuma más corriente y aumente su temperatura, además de generar respuestas más lentas frente a cambios en la entrada. Una solución a lo ya expresado se presenta en la Figura (\ref{fig:pardar2}).
+La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente. Una de las principales desventajas es el hecho de que no se puede garantizar que el factor $h_{fe1}$ sea igual al $h_{fe2}$, sin importar que sean los mismos transistores, ya que la corriente de polarización de ambos es distinta. Otra desventaja importante consiste en que si es deseable aumentar la ganancia de tensión del sistema, se debe modificar el valor de $R_E$, modificando también la polarización del sistema.
 
-Estrictamente hablando, esta disposición es la más económica al problema anterior. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es más optima para compensar el circuito, ya que permite aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
+%la caída de tensión existente entre la base y el emisor, ya que esta se encuentra entre $0.6 \ V$ y $1.5 \ V$, siendo resultante de la suma de las tensiones base-emisor de ambos transistores. Esto genera a su vez que el dispositivo consuma más corriente y aumente su temperatura, además de generar respuestas más lentas frente a cambios en la entrada.
 
-Se puede colocar un diodo entre el colector y el emisor de $Q_2$. Este tipo de configuración es utilizada para trabajar con potencias altas. Dado que este enfoque no es de interés, se reserva dicho componente.
+Por otro lado, la mostrada en la Figura (\ref{fig:pardar3}) es la más optima para compensar el circuito, ya que permite emparejar mejor las corrientes de polarización de ambos transistores, de forma que sí se pueda garantizar que ambos posean un mismo $h_{fe}$. Además, de esta forma, es posible aumentar $I_{CEQ}$ sin modificar otros factores del propio circuito.
+
+Cabe aclarar que, la disposición presentada en la Figura (\ref{fig:pardar2}), estrictamente hablando, es la más económica al problema anterior. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. También se destaca que se puede colocar un diodo entre el colector y el emisor de $Q_2$. Este tipo de configuración es utilizada para trabajar con potencias altas. Dado que este enfoque no es de interés, se reserva dicho componente.
 
 \subsection{Fuente de corriente}
 \label{subsec:fdei}
@@ -93,23 +95,6 @@ Además, se plantean las ecuaciones del JFET:
 \end{equation}
 
 De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS} = 2 \ mA$ y $V_P = -8 \ V$ (para el peor caso). Luego, estableciendo $V_{SS} = 10 \ V$, $R_S = 6.8 \ K\Omega$ y $R_D = 680 \ \Omega$ se calculan la corriente de drain y la tensión gate-source. Como es de esperarse, se obtienen dos valores posibles para cada variable:
-
-%\begin{equation*}
-%I_{DS} = \left\lbrace
-%\begin{split}
-%	& 4.39 \ mA \\
-%	& 1.60 \ mA
-%\end{split}
-%\right.
-%\ \ \
-%V_{GS} = \left\lbrace
-%\begin{split}
-%	& -19.85 \ V \\
-%	& -0.88 \ V
-%\end{split}
-%\right.
-%\end{equation*}
-
 \begin{equation*}
 \left\lbrace
 \begin{split}
@@ -126,9 +111,7 @@ De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Coll
 \right.
 \end{equation*}
 
-Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente. \textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por la totalidad del circuito, por lo que este análisis es expuesto más adelante.}  
-% http://www2.eng.cam.ac.uk/~dmh/ptialcd/jfet/2N3819.pdf https://www.mouser.com/datasheet/2/149/2n3819-286408.pdf
-%Por otro lado, $V_{DD}$ queda fijado por el circuito del Darlington, siendo esta $V_{DD} = V_{BEON} = 0.7 \ V$.
+Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente. \textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por la totalidad del circuito, por lo que este análisis es expuesto más adelante.}
 
 Con lo establecido previamente, se prosigue a plantear el circuito incremental. Es de interés calcular la impedancia de salida, para luego emplearla para calcular las variables pertinentes en el circuito de la Figura (\ref{fig:pardar3}).
 \begin{figure}[H]
@@ -177,47 +160,43 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 	\label{fig:pardar4}
 \end{figure}
 
-De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_C = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_1$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$. Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos.
+%De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_E = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_2$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$. Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos.
+%
+%Por otro lado, sabiendo que $I_{CE1} = I_{B1} h{fe1}$, y planteando las mallas de entrada y salida para el transistor $Q_2$, se obtienen las siguientes expresiones:
+%\begin{equation*}
+%	V_{CC} - I_{B1} R_B - 2 V_{BEON} - I_{CE2} R_{C} = 0
+%\end{equation*}
+%\begin{equation}
+%	I_{CE2} = \frac{V_{CC} - 2 V_{BEON} - I_{CE1} \frac{R_B}{h_{fe1}}}{R_{C}} = 2 \ mA
+%\end{equation}
+%
+%\begin{equation*}
+%	V_{CC} - V_{CE2} - I_{CE2} R_{C} = 0
+%\end{equation*}
+%\begin{equation}
+%	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.41 \ V
+%\end{equation}
+%
+%Luego, para $Q_1$, recorriendo la malla de salida, se obtiene el valor de $V_{CE1}$.
+%\begin{equation*}
+%	V_{CC} - V_{CE1} - V_{BEON} - I_{CE2} R_{C} = 0
+%\end{equation*}
+%\begin{equation}
+%	V_{CE1} = V_{CC} - V_{BEON} - I_{CE2} R_{C} = 0.71 \ V
+%\end{equation}
 
-Por otro lado, sabiendo que $I_{CE1} = I_{B1} h{fe1}$, y planteando las mallas de entrada y salida para el transistor $Q_2$, se obtienen las siguientes expresiones:
-\begin{equation*}
-	V_{CC} - I_{B1} R_B - 2 V_{BEON} - I_{CE2} R_{C} = 0
-\end{equation*}
-\begin{equation}
-	I_{CE2} = \frac{V_{CC} - 2 V_{BEON} - I_{CE1} \frac{R_B}{h_{fe1}}}{R_{C}} = 2 \ mA
-\end{equation}
-
-\begin{equation*}
-	V_{CC} - V_{CE2} - I_{CE2} R_{C} = 0
-\end{equation*}
-\begin{equation}
-	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.41 \ V
-\end{equation}
-
-Luego, para $Q_1$, recorriendo la malla de salida, se obtiene el valor de $V_{CE1}$.
-\begin{equation*}
-	V_{CC} - V_{CE1} - V_{BEON} - I_{CE2} R_{C} = 0
-\end{equation*}
-\begin{equation}
-	V_{CE1} = V_{CC} - V_{BEON} - I_{CE2} R_{C} = 0.71 \ V
-\end{equation}
-
-\begin{center}
-	\LARGE{\textcolor{red}{\textbf{VERIFICAR POLARIZACIÓN, CREO QUE NO ME ESTÁ DANDO.}}}
-\end{center}
-
-Es así que se procede al modelo incremental, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
+A continuación, se seleccionan los transistores a utilizar en el par Darlington, siendo siendo así transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547}, tomando para ambos $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos. Observando que $I_{CE1} h_{fe} = I_{CE2}$ y que $I_{CE2} = 1.6 \ mA$, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
 \begin{table}[H]
 \centering
-\begin{tabular}{cccc}
+\begin{tabular}{cccccc}
 \hline
-\textbf{Transistor} & $\mathbf{gm \ \left[ \frac{mA}{V} \right]}$ & $\mathbf{h_{ie} \ \left[ K\Omega \right]}$ & $\mathbf{\frac{1}{h_{oe}} \ \left[ K\Omega \right]}$ \\
+\textbf{Transistor} & $\mathbf{I_{CEQ} \ [mA]}$ & $\mathbf{V_{CEQ} \ [V]}$ & $\mathbf{gm \ \left[ \frac{mA}{V} \right]}$ & $\mathbf{h_{ie} \ \left[ K\Omega \right]}$ & $\mathbf{\frac{1}{h_{oe} \ \left[ K\Omega \right]}}$ \\
 \hline
-$Q_1$ & 61.89 & 1.78 & 56.25 \\
-$Q_2$ & 77.36 & 1.42 & 45	\\
+$Q_1$ & 176 & XX & 61.89 & 1.78 & 56.25 \\
+$Q_2$ & 1.60 & XX & 77.36 & 1.42 & 45	\\
 \hline
 \end{tabular}
-\caption{Estimadores del modelo incremental del circuito Darlington.}
+\caption{Estimadores y datos pertinentes del modelo incremental del circuito Darlington.}
 \label{tab:estim}
 \end{table}
 
@@ -238,7 +217,7 @@ Se observa en la Figura (\ref{fig:incdar}) que, se puede obtener una relación e
 	\label{equ:io-ib2}
 \end{equation}
 
-Luego, definiéndose $R_{OF}^* = R_{OF} // \frac{1}{h_{oe1}}$ y $R_d = R_C // \frac{1}{h_{oe2}} // R_L$, se obtiene
+Luego, definiéndose $R_{E}^* = R_{E} // \frac{1}{h_{oe1}}$ y $R_d = R_{OF} // \frac{1}{h_{oe2}} // R_L$, se obtiene
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.8\textwidth, page=4]{Imagenes/ModeloIncremental.pdf}
@@ -261,14 +240,14 @@ Por un lado se destaca que
 
 Por otro lado, se puede hallar una relación entre $I_{B1}$ e $I_{B2}$, de la misma forma que se realizó con $I_o$ e $I_{B2}$, siendo así
 \begin{equation*}
-	I_{B2} = I_{B1} \left( 1 + h_{fe1} \right) \frac{R_{OF}^*}{ R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right) }
+	I_{B2} = I_{B1} \left( 1 + h_{fe1} \right) \frac{R_{E}^*}{ R_{E}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right) }
 \end{equation*}
 \begin{equation}
-	\frac{I_{B2}}{I_{B1}} = \left( 1 + h_{fe1} \right) \frac{R_{OF}^*}{ R_{OF}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right) }
+	\frac{I_{B2}}{I_{B1}} = \left( 1 + h_{fe1} \right) \frac{R_{E}^*}{ R_{E}^* + h_{ie2} + R_d \left( 1 + h_{fe2} \right) }
 	\label{equ:ib2-ib1}
 \end{equation}
 
-De manera análoga, se toma el equivalente al paralelo entre $R_{OF}^*$ con $h_{ie2}$ y $R_d \left( 1 + h_{fe2} \right)$. Por lo tanto, se define $R_{d}^* = R_{OF}^* // \left[ h_{ie2} + R_d \left( 1 + h_{fe2} \right) \right]$ para luego aplicar paso a nivel de corriente con la segunda fuente.
+De manera análoga, se toma el equivalente al paralelo entre $R_{E}^*$ con $h_{ie2}$ y $R_d \left( 1 + h_{fe2} \right)$. Por lo tanto, se define $R_{d}^* = R_{E}^* // \left[ h_{ie2} + R_d \left( 1 + h_{fe2} \right) \right]$ para luego aplicar paso a nivel de corriente con la segunda fuente.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.6\textwidth, page=6]{Imagenes/ModeloIncremental.pdf}
@@ -306,13 +285,13 @@ Se calcula la ganancia de corriente de manera similar. Utilizando (\ref{equ:io-i
 	\Delta I \triangleq \frac{I_o}{I_i} = \frac{I_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{I_i}
 \end{equation*}
 \begin{equation}
-	\Delta I = \frac{R_C R_{OF}^* R_B \left( 1 + h_{fe2} \right) \left( 1+h_{fe1} \right)}{ \left( R_C R_L h_{oe2} + R_C + R_L \right)  \left\lbrace \left[ \left( 1 + h_{fe2} \right) \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{OF}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right]  \right\rbrace }
+	\Delta I = \frac{R_C R_{E}^* R_B \left( 1 + h_{fe2} \right) \left( 1+h_{fe1} \right)}{ \left( R_{OF} R_L h_{oe2} + R_{OF} + R_L \right)  \left\lbrace \left[ \left( 1 + h_{fe2} \right) \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{E}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right]  \right\rbrace }
 	\label{equ:Ai}
 \end{equation}
 
 A continuación, se calcula la impedancia de entrada del amplificador, mediante el uso de (\ref{equ:vi-ib1}) y (\ref{equ:ii-ib1}), siendo esta
 \begin{equation}
-	R_{ia} = \frac{V_i}{I_i} =  \frac{V_i}{I_{B1}}\frac{I_{B1}}{I_i} = \frac{ R_B R_{OF}^* \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] \left( 1 + h_{fe1} \right) }{ \left[ \left( 1 + h_{fe2} \right)  \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{OF}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] }
+	R_{ia} = \frac{V_i}{I_i} =  \frac{V_i}{I_{B1}}\frac{I_{B1}}{I_i} = \frac{ R_B R_{E}^* \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] \left( 1 + h_{fe1} \right) }{ \left[ \left( 1 + h_{fe2} \right)  \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{E}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] }
 	\label{equ:Ria}
 \end{equation}
 
@@ -329,15 +308,15 @@ Por otro lado, para el calculo de la impedancia de salida $R_{oa}$ se considera 
 \centering
 	\includegraphics[width=0.8\textwidth, page=7]{Imagenes/ModeloIncremental.pdf}
 \end{figure}
-Se definen $R_{S}^* = \left( R_B // R_S \right) + h_{ie1}$ y $R_C^* = R_C // \frac{1}{h_{oe1}}$. Luego, sabiendo que la tensión sobre $R_{OF}^*$ y $R_{S}^*$ es la misma, se obtiene
+Se definen $R_{S}^* = \left( R_B // R_S \right) + h_{ie1}$ y $R_{OF}^* = R_{OF} // \frac{1}{h_{oe1}}$. Luego, sabiendo que la tensión sobre $R_{E}^*$ y $R_{S}^*$ es la misma, se obtiene
 \begin{equation}
-	I_{OF} = I_{B1} \frac{R_{S}^*}{R_{OF}^*}
+	I_{OF} = I_{B1} \frac{R_{S}^*}{R_{E}^*}
 	\label{equ:roa1}
 \end{equation}
 
 Luego, observando el nodo $E_2$, se llega a
 \begin{equation}
-	I_{B2} \left( 1 + h_{fe2} \right) + I_o = \frac{V_o}{R_{C}^*}
+	I_{B2} \left( 1 + h_{fe2} \right) + I_o = \frac{V_o}{R_{OF}^*}
 	\label{equ:roa2}
 \end{equation}
 
@@ -348,17 +327,15 @@ Se expresa la tensión $V_o$ como
 \end{equation}
 y se plantea para el nodo $C_1$, utilizando (\ref{equ:roa1}), llegándose a la expresión
 \begin{equation}
-	I_{B1} \left( 1 + h_{fe1} \right) + I_{OF} + I_{B2} h_{ie2} + I_o = \frac{V_o}{R_{C}^*}
+	I_{B1} \left( 1 + h_{fe1} \right) + I_{OF} + I_{B2} h_{ie2} + I_o = \frac{V_o}{R_{OF}^*}
 	\label{equ:roa4}
 \end{equation}
 
 De esta forma, con (\ref{equ:roa2}), (\ref{equ:roa3}) y (\ref{equ:roa4}), se opera algebraicamente y se obtiene finalmente la impedancia de salida del circuito
 \begin{equation}
 R_{oa} = \frac{V_o}{I_o} = 
-\frac {R_{C}^* \left[ \left( h_{fe1} + 1 \right) R_{OF}^* + R_{S}^* \right] \left( 1 + h_{fe2} \right) }{ \left[ \left( h_{ie2} R_{C}^* + 3 h_{fe2} + 3 \right) h_{fe1} + h_{ie2} R_{C}^* + h_{fe2} + 1 \right] R_{OF}^* + \left( h_{ie2} R_{C}^* + h_{fe2} + 1 \right) R_{S}^* }
+\frac {R_{OF}^* \left[ \left( h_{fe1} + 1 \right) R_{E}^* + R_{S}^* \right] \left( 1 + h_{fe2} \right) }{ \left[ \left( h_{ie2} R_{OF}^* + 3 h_{fe2} + 3 \right) h_{fe1} + h_{ie2} R_{OF}^* + h_{fe2} + 1 \right] R_{E}^* + \left( h_{ie2} R_{OF}^* + h_{fe2} + 1 \right) R_{S}^* }
 \end{equation}
-
-
 
 \subsection{Desarrollo y armado de la placa}
 \begin{center}
