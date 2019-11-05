@@ -160,40 +160,31 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 	\label{fig:pardar4}
 \end{figure}
 
-%De manera análoga al análisis presentado para la fuente de corriente, se parte por la polarización. Primero se establecen $V_{CC} = 15 \ V$, $R_E = 6.8 \ K\Omega$ y $R_B = 680 \ \Omega$. Como se está polarizando $Q_2$ con una fuente de corriente, queda definido que $I_{CE1} = I_{DS} = 1.60 \ mA$. Se decidió seleccionar transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este par, tomando $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos.
-%
-%Por otro lado, sabiendo que $I_{CE1} = I_{B1} h{fe1}$, y planteando las mallas de entrada y salida para el transistor $Q_2$, se obtienen las siguientes expresiones:
-%\begin{equation*}
-%	V_{CC} - I_{B1} R_B - 2 V_{BEON} - I_{CE2} R_{C} = 0
-%\end{equation*}
-%\begin{equation}
-%	I_{CE2} = \frac{V_{CC} - 2 V_{BEON} - I_{CE1} \frac{R_B}{h_{fe1}}}{R_{C}} = 2 \ mA
-%\end{equation}
-%
-%\begin{equation*}
-%	V_{CC} - V_{CE2} - I_{CE2} R_{C} = 0
-%\end{equation*}
-%\begin{equation}
-%	V_{CE2} = V_{CC} - I_{CE2} R_{C} = 1.41 \ V
-%\end{equation}
-%
-%Luego, para $Q_1$, recorriendo la malla de salida, se obtiene el valor de $V_{CE1}$.
-%\begin{equation*}
-%	V_{CC} - V_{CE1} - V_{BEON} - I_{CE2} R_{C} = 0
-%\end{equation*}
-%\begin{equation}
-%	V_{CE1} = V_{CC} - V_{BEON} - I_{CE2} R_{C} = 0.71 \ V
-%\end{equation}
+A continuación, se seleccionan los transistores a utilizar en el par Darlington, siendo siendo así transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547}, tomando para $Q_2$ $h_{FE2} = 110$ de la hoja de datos. Por un lado, como se está polarizando este transistor por corriente, se garantiza que $I_{CE2} = 1.60 \ mA$. Por otro lado, para el caso de $Q_1$, se plantea la malla de entrada, obteniéndose así la corriente $I_{CQ1}$ de la forma
+\begin{equation*}
+	V_{CC} - I_{B1} R_B - V_{BEON} - \left( I_{CQ1} - I_{B2} \right) R_E = 0
+\end{equation*}
+\begin{equation*}
+	V_{CC} - V_{BEON} - I_{B2} R_E = I_{B1} R_B + I_{CQ1} R_E = I_{CQ1} \left( \frac{R_B}{h_{fe1}} + R_E \right)
+\end{equation*}
+\begin{equation}
+	I_{CQ1} = \left( V_{CC} - V_{BEON} + I_{CQ2} \frac{R_E}{h_{FE2}} \right) \left( \frac{R_B}{h_{fe1}} + R_E \right)^{-1}
+\end{equation}
 
-A continuación, se seleccionan los transistores a utilizar en el par Darlington, siendo siendo así transistores \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547}, tomando para ambos $h_{FE1} = h_{FE2} = h_{FE} = 110$ de la hoja de datos. Observando que $I_{CE1} h_{fe} = I_{CE2}$ y que $I_{CE2} = 1.6 \ mA$, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
+Por otro lado, para la tensión $V_{CE1}$, se obtiene
+\begin{equation}
+	V_{CE1} = V_{CC} - I_{CQ1} R_E
+\end{equation}
+
+De esta forma, se tomando $V_{CC} = 12 \ V$, $R_E = 6.8 \ k\Omega$ y $R_B = 680 \ \Omega$, se obtiene $I_{CE1} = 1.67 \ mA$ y $V_{CE1} = 0.61 \ V$. Por otro lado, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$, y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{o1}} = \frac{V_A}{I_{CE}}$, se consiguen los siguientes valores:
 \begin{table}[H]
 \centering
-\begin{tabular}{cccccc}
+\begin{tabular}{cccc}
 \hline
-\textbf{Transistor} & $\mathbf{I_{CEQ} \ [mA]}$ & $\mathbf{V_{CEQ} \ [V]}$ & $\mathbf{gm \ \left[ \frac{mA}{V} \right]}$ & $\mathbf{h_{ie} \ \left[ K\Omega \right]}$ & $\mathbf{\frac{1}{h_{oe} \ \left[ K\Omega \right]}}$ \\
+\textbf{Transistor} & $\mathbf{gm \ \left[ \frac{mA}{V} \right]}$ & $\mathbf{h_{ie} \ \left[ K\Omega \right]}$ & $\mathbf{\frac{1}{h_{oe} \ \left[ K\Omega \right]}}$ \\
 \hline
-$Q_1$ & 176 & XX & 61.89 & 1.78 & 56.25 \\
-$Q_2$ & 1.60 & XX & 77.36 & 1.42 & 45	\\
+$Q_1$ & 61.89 & 1.78 & 56.25 \\
+$Q_2$ & 77.36 & 1.42 & 45	\\
 \hline
 \end{tabular}
 \caption{Estimadores y datos pertinentes del modelo incremental del circuito Darlington.}
