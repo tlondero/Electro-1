@@ -6,7 +6,7 @@ freq_teo = np.logspace(0, 6, 300)
 s = (1j)*2*np.pi*freq_teo
 
 #Tensiones
-vcc = 15
+vcc = 12
 vss = -10
 
 #Resistencias
@@ -15,7 +15,7 @@ RB = 680
 re = 6.8E3
 rd = 680
 rs = 6.8E3
-RL = 2.2E3
+RL = 2.21E3
 
 vt = 25.85202837E-3
 
@@ -64,17 +64,26 @@ print("gm2 = ", gm2)
 print("hie2 = ", hie2)
 print("hoe2 = ", hoe2)
 
-print("-----------GANANCIA-----------")
+print("-----------GANANCIAS-----------")
 
 RE = 1/(1/re + hoe1)
-
 Rd = 1/(1/Rof + 1/RL + hoe2)
 
 Av = Rd * (1 + hfe2) * (1 + hfe1) * RE / (((1 + hfe2) * (1 + hfe1) * Rd + hfe1 * hie2 + hie1 + hie2) * RE + (hie2 + Rd * (1 + hfe2)) * hie1)
-print("Av =", Av)
-print("Av dB =", 20*np.log10(Av))
 
 Ai = (1 + hfe2) * Rof * (1 + hfe1) * RE * RB / (RL * Rof * hoe2 + RL + Rof) / (((1 + hfe2) * (1 + hfe1) * Rd + hfe1 * hie2 + RB + hie1 + hie2) * RE + (hie2 + Rd * (1 + hfe2)) * (RB + hie1))
 
+Zi = RB * (RE * Rd * hfe1 * hfe2 + RE * Rd * hfe1 + RE * Rd * hfe2 + RE * hfe1 * hie2 + Rd * hfe2 * hie1 + RE * Rd + RE * hie1 + RE * hie2 + Rd * hie1 + hie1 * hie2) / (RE * Rd * hfe1 * hfe2 + RB * Rd * hfe2 + RE * Rd * hfe1 + RE * Rd * hfe2 + RE * hfe1 * hie2 + Rd * hfe2 * hie1 + RB * RE + RB * Rd + RB * hie2 + RE * Rd + RE * hie1 + RE * hie2 + Rd * hie1 + hie1 * hie2)
+Avs = Av * Zi/(Zi + rg)
+
+print("Av =", Av)
+print("Av dB =", 20*np.log10(Av))
+
+print("Avs =", Avs)
+print("Avs dB =", 20*np.log10(Avs))
+
+print("Zi =", Zi)
+
 print("Ai =", Ai)
 print("Ai dB =", 20*np.log10(Ai))
+
