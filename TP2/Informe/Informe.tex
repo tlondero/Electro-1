@@ -201,10 +201,10 @@ El siguiente paso consiste en reemplazar la fuente de corriente por su respectiv
 
 Se observa en la Figura (\ref{fig:incdar}) que, se puede obtener una relación entre $I_{B2}$ y $I_o$, mediante el uso de un divisor resistivo, siendo esta
 \begin{equation*}
-	I_o = I_{B2} \left( 1 + h_{fe2} \right) \frac{R_C // \frac{1}{h_{oe2}}}{R_L + R_C // \frac{1}{h_{oe2}}}
+	I_o = I_{B2} \left( 1 + h_{fe2} \right) \frac{R_{OF} // \frac{1}{h_{oe2}}}{R_L + R_{OF} // \frac{1}{h_{oe2}}}
 \end{equation*}
 \begin{equation}
-	\frac{I_o}{I_{B2}} = \left( 1 + h_{fe2} \right) \frac{R_C // \frac{1}{h_{oe2}}}{R_L + R_C // \frac{1}{h_{oe2}}}
+	\frac{I_o}{I_{B2}} = \left( 1 + h_{fe2} \right) \frac{R_{OF} // \frac{1}{h_{oe2}}}{R_L + R_{OF} // \frac{1}{h_{oe2}}}
 	\label{equ:io-ib2}
 \end{equation}
 
@@ -246,23 +246,20 @@ De manera análoga, se toma el equivalente al paralelo entre $R_{E}^*$ con $h_{i
 
 De esta forma, se observa que
 \begin{equation*}
-	V_i = I_{B1} R_{d}^* \left( 1 + h_{fe1} \right)
+	V_i = I_{B1} \left[ h_{ie1} + R_{d}^* \left( 1 + h_{fe1} \right) \right]
 \end{equation*}
 \begin{equation}
-	\frac{V_i}{I_{B1}} = R_{d}^* \left( 1 + h_{fe1} \right)
+	\frac{V_i}{I_{B1}} = h_{ie1} + R_{d}^* \left( 1 + h_{fe1} \right)
 	\label{equ:vi-ib1}
 \end{equation}
 
-Finalmente, se plantean las corrientes para el nodo $B_1$, llegandose así a
+Finalmente, se planteando nuevamente un divisor de corrientes, se obtiene
 \begin{equation*}
-	I_i = I_{B1} + \frac{V_i}{R_B}
-\end{equation*} 
-\begin{equation*}
-	\frac{I_i}{I_{B1}} = 1 + \frac{V_i}{I_{B1}} \frac{1}{R_B}
+	I_{B1} = I_i \frac{R_B}{R_B + h_{ie1} + R_{d}^* \left(1 + h_{fe1} \right)}
 \end{equation*}
 \begin{equation}
-	\frac{I_i}{I_{B1}} = 1 + \frac{R_{d}^*}{R_B}  \left( 1 + h_{fe1} \right)
-	\label{equ:ii-ib1}
+	\frac{I_{B1}}{I_i} = \frac{R_B}{R_B + h_{ie1} + R_{d}^* \left(1 + h_{fe1} \right)}
+	\label{equ:ib1-ii}
 \end{equation}
 
 Con lo obtenido en (\ref{equ:vo-ib2}), (\ref{equ:ib2-ib1}) y (\ref{equ:vi-ib1}), se procede a calcular la transferencia $\Delta V$, siendo esta de la forma
@@ -271,7 +268,7 @@ Con lo obtenido en (\ref{equ:vo-ib2}), (\ref{equ:ib2-ib1}) y (\ref{equ:vi-ib1}),
 \label{equ:Av}
 \end{equation}
 
-Se calcula la ganancia de corriente de manera similar. Utilizando (\ref{equ:io-ib2}), (\ref{equ:ib2-ib1}) y (\ref{equ:ii-ib1}), se obtiene
+Se calcula la ganancia de corriente de manera similar. Utilizando (\ref{equ:io-ib2}), (\ref{equ:ib2-ib1}) y (\ref{equ:ib1-ii}), se obtiene
 \begin{equation*}
 	\Delta I \triangleq \frac{I_o}{I_i} = \frac{I_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{I_i}
 \end{equation*}
@@ -280,7 +277,7 @@ Se calcula la ganancia de corriente de manera similar. Utilizando (\ref{equ:io-i
 	\label{equ:Ai}
 \end{equation}
 
-A continuación, se calcula la impedancia de entrada del amplificador, mediante el uso de (\ref{equ:vi-ib1}) y (\ref{equ:ii-ib1}), siendo esta
+A continuación, se calcula la impedancia de entrada del amplificador, mediante el uso de (\ref{equ:vi-ib1}) y (\ref{equ:ib1-ii}), siendo esta
 \begin{equation}
 	R_{ia} = \frac{V_i}{I_i} =  \frac{V_i}{I_{B1}}\frac{I_{B1}}{I_i} = \frac{ R_B R_{E}^* \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] \left( 1 + h_{fe1} \right) }{ \left[ \left( 1 + h_{fe2} \right)  \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{E}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] }
 	\label{equ:Ria}

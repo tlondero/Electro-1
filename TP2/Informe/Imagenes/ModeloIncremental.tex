@@ -76,7 +76,7 @@
 \begin{circuitikz}[european voltages]
 	\node [circ,label=above:$B_1$](b1){};
 	\draw (b1) to[R, l=$R_B$] ++(0,-2) node[ground](){};
-	\draw (b1) to[short, f=$I_{B1}$] ++(2,0) node[](aux3){};
+	\draw (b1) to[R, l=$h_{ie1}$, f=$I_{B1}$] ++(2,0) node[](aux3){};
 	\draw (aux3) to[R, l=$R_{d}^* \left( 1 + h_{fe1} \right)$] ++(0,-2) node[ground](){};
 	\draw (b1) to[R, l_=$R_S$, f_<=$I_i$] ++(-3,0) to[sV, l_=$V_S$] ++(0,-2) node[ground, label=left:$C_1 \equiv C_2$](){};
 	\draw (b1) ++(-0.25,-2) to[open, v^= $V_i$] ++(0,2);
