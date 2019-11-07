@@ -41,16 +41,15 @@ pha_m_ris = np.asarray(df["Trace th (*)"])
 lt_parser = SpiceParser()
 data = lt_parser.parse('./Darlington/Ria.txt')
 freq_s_ria = np.array(data[1].index)
-mag_s_ria = 10**(np.array(data[0]["V(n002)/-I(R) MAG"])/20)
-pha_s_ria = np.array(data[1]["V(n002)/-I(R) PHA"])
+mag_s_ria = 10**(np.array(data[0]["V(n002)/I(I1) MAG"])/20)
+pha_s_ria = np.array(data[1]["V(n002)/I(I1) PHA"])
 
 data = lt_parser.parse('./Darlington/Ris.txt')
 freq_s_ris = np.array(data[1].index)
-mag_s_ris = 10**(np.array(data[0]["V(vin)/-I(R) MAG"])/20)
-pha_s_ris = np.array(data[1]["V(vin)/-I(R) PHA"])
+mag_s_ris = 10**(np.array(data[0]["V(vin)/I(I1) MAG"])/20)
+pha_s_ris = np.array(data[1]["V(vin)/I(I1) PHA"])
 
 #IMPEDANCIA DE SALIDA
-#IMPEDANCIA DE ENTRADA
 
 df = pnd.read_csv('./Darlington/Ros.csv', sep=',')
 freq_m_ros = np.asarray(df["Frequency (Hz)"])
