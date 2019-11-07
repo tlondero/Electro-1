@@ -51,7 +51,7 @@ print("-----------Q1-----------")
 
 print("gm1 = ", gm1)
 print("hie1 = ", hie1)
-print("hoe1 = ", hoe1)
+print("1/hoe1 = ", 1/hoe1)
 
 #Q2
 gm2 = ice2/vt
@@ -62,7 +62,7 @@ print("-----------Q2-----------")
 
 print("gm2 = ", gm2)
 print("hie2 = ", hie2)
-print("hoe2 = ", hoe2)
+print("1/hoe2 = ", 1/hoe2)
 
 print("-----------GANANCIAS-----------")
 
