@@ -11,8 +11,8 @@ vss = -10
 
 #Resistencias
 rg = 560
-RB = 680
-re = 6.8E3
+RB = 6.8E3
+re = 680
 rd = 680
 rs = 6.8E3
 RL = 2.21E3
@@ -37,7 +37,7 @@ print("Rof = ", Rof)
 
 #Q1 y Q2
 
-ice1 = 1.67E-3
+ice1 = 15.25E-3
 ice2 = ids
 
 hfe1 = 110
