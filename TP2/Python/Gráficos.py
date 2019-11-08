@@ -24,7 +24,7 @@ pha_m_av = np.asarray(df["Channel 2 Phase (*)"])
 
 df = pnd.read_csv('./Darlington/Avs.csv', sep=',')
 freq_m_avs = np.asarray(df["Frequency (Hz)"])
-mag_m_avs = np.asarray(df["Channel 2 Magnitude (dB)"])
+mag_m_avs = np.asarray(df["Channel 2 Magnitude (dB)"]) #+ 0.65
 pha_m_avs = np.asarray(df["Channel 2 Phase (*)"])
 
 lt_parser = SpiceParser()
@@ -75,31 +75,31 @@ pha_s_ros = np.array(data[1]["V(vout)/I(I1) PHA"])
 
 #GRÁFICOS
 
-plt.title("Ganancia de tesión del amplificador $\Delta V$")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Amplitud [dB]")
-plt.plot(freq_m_av, mag_m_av, label = "Medido")
-plt.plot(freq_s_av, mag_s_av, label = "Simulado")
-
-plt.plot(freq_teo_1, av_db, label = "Teórico", color='r')
-
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
-
-plt.title("Ganancia de tesión del sistema $\Delta V_S$")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Amplitud [dB]")
-plt.plot(freq_m_avs, mag_m_avs, label = "Medido")
-plt.plot(freq_s_avs, mag_s_avs, label = "Simulado")
-
-plt.plot(freq_teo_1, avs_db, label = "Teórico", color='r')
-
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
+# plt.plot(freq_s_av, mag_s_av, label = "Simulado")
+# plt.title("Ganancia de tesión del amplificador $\Delta V$")
+# plt.xlabel("Frecuencia [Hz]")
+# plt.ylabel("Amplitud [dB]")
+# plt.plot(freq_m_av, mag_m_av, label = "Medido")
+#
+# plt.plot(freq_teo_1, av_db, label = "Teórico", color='r')
+#
+# plt.xscale('log')
+# plt.legend()
+# plt.grid()
+# plt.show()
+#
+# plt.title("Ganancia de tesión del sistema $\Delta V_S$")
+# plt.xlabel("Frecuencia [Hz]")
+# plt.ylabel("Amplitud [dB]")
+# plt.plot(freq_m_avs, mag_m_avs, label = "Medido")
+# plt.plot(freq_s_avs, mag_s_avs, label = "Simulado")
+#
+# plt.plot(freq_teo_1, avs_db, label = "Teórico", color='r')
+#
+# plt.xscale('log')
+# plt.legend()
+# plt.grid()
+# plt.show()
 
 plt.title("Impedancia de entrada del amplificador $R_{ia}$")
 plt.xlabel("Frecuencia [Hz]")
@@ -153,7 +153,7 @@ freq_i = np.asarray(df["Frequency (Hz)"])
 ir1 = np.asarray(df["Channel 1 Magnitude (dB)"])
 ir2 = np.asarray(df["Channel 2 Magnitude (dB)"])
 
-i_db = ir2 -ir1-20*np.log10(6.99738091445127)
+i_db = ir2 - ir1 #-20*np.log10(6.99738091445127)
 plt.title("Ganancia de corriente $\Delta I$")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Ganancia [$dB$]")
