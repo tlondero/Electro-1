@@ -1,10 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-freq_teo = np.logspace(0, 6, 300)
-
-s = (1j)*2*np.pi*freq_teo
-
 #Tensiones
 vcc = 12
 vss = -10

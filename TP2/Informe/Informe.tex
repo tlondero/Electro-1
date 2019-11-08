@@ -274,7 +274,7 @@ Finalmente, se planteando nuevamente un divisor de corrientes, se obtiene
 
 Con lo obtenido en (\ref{equ:vo-ib2}), (\ref{equ:ib2-ib1}) y (\ref{equ:vi-ib1}), se procede a calcular la transferencia $\Delta V$, siendo esta de la forma
 \begin{equation}
-	\Delta V \triangleq \frac{V_o}{V_i} = \frac{V_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{V_i} = \frac{ \left( 1+h_{fe2} \right) R_d}{h_{ie2}+ \left( 1+h_{fe2} \right) R_d} = 0.9897 \equiv -0.0897 \ dB
+	\Delta V \triangleq \frac{V_o}{V_i} = \frac{V_o}{I_{B2}} \frac{I_{B2}}{I_{B1}} \frac{I_{B1}}{V_i} = \frac{ \left( 1+h_{fe2} \right) R_d}{h_{ie2}+ \left( 1+h_{fe2} \right) R_d}
 \label{equ:Av}
 \end{equation}
 
@@ -286,20 +286,17 @@ Luego, se calcula la ganancia de corriente de manera similar. Utilizando (\ref{e
 	\Delta I = \frac{R_C R_{E}^* R_B \left( 1 + h_{fe2} \right) \left( 1+h_{fe1} \right)}{ \left( R_{OF} R_L h_{oe2} + R_{OF} + R_L \right)  \left\lbrace \left[ \left( 1 + h_{fe2} \right) \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{E}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right]  \right\rbrace }
 	\label{equ:Ai}
 \end{equation}
-\begin{equation*}
-	\Delta I = 2.7673 \equiv 8.8412 \ dB
-\end{equation*}
 
 A continuación, se calcula la impedancia de entrada del amplificador, mediante el uso de (\ref{equ:vi-ib1}) y (\ref{equ:ib1-ii}), siendo esta
 \begin{equation}
-	R_{ia} = \frac{V_i}{I_i} =  \frac{V_i}{I_{B1}}\frac{I_{B1}}{I_i} = \frac{ R_B R_{E}^* \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] \left( 1 + h_{fe1} \right) }{ \left[ \left( 1 + h_{fe2} \right)  \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{E}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] } = 6.1793 \ k\Omega
+	R_{ia} = \frac{V_i}{I_i} =  \frac{V_i}{I_{B1}}\frac{I_{B1}}{I_i} = \frac{ R_B R_{E}^* \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] \left( 1 + h_{fe1} \right) }{ \left[ \left( 1 + h_{fe2} \right)  \left( 1 + h_{fe1} \right) R_d + h_{fe1} h_{ie2} + R_B + h_{ie2} \right] R_{E}^* + R_B \left[ h_{ie2} + \left( 1 + h_{fe2} \right) R_d \right] }
 	\label{equ:Ria}
 \end{equation}
 
 Una vez obtenidos $\Delta V$ y $R_{ia}$, se puede calcular la ganancia de tensión del sistema $\Delta V_S$, siendo esta
 \begin{equation}
 \begin{split}
-	\Delta V_S \triangleq \frac{V_S}{V_i} = \frac{V_S}{V_o} \frac{V_o}{V_i} = \frac{V_o}{V_i} \frac{R_{ia}}{R_S + R_{ia}} = 0.9075 \equiv -0.8432 \ dB
+	\Delta V_S \triangleq \frac{V_S}{V_i} = \frac{V_S}{V_o} \frac{V_o}{V_i} = \frac{V_o}{V_i} \frac{R_{ia}}{R_S + R_{ia}}
 \end{split}
 \label{equ:Avs}
 \end{equation}
@@ -367,12 +364,54 @@ $R_{oa}$ & 19.0.673 $\Omega$ & - \\
 \end{table}
 
 \subsection{Desarrollo y armado de la placa}
+Una vez realizado el calculo teórico, se realizó el circuito analizado. Primero, se presenta el PCB confeccionado mediante el uso del software \textbf{Altium}.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth, page=7]{Imagenes/PCB.png}
+	\caption{PCB obtenido en Altium.}
+\end{figure}
+
 \begin{center}
-	\LARGE{\textcolor{red}{\textbf{Esquemático, PCB y foto.}}}\\
-	\LARGE{\textcolor{red}{\textbf{Consideraciones necesarias para medir.}}}
+	\Large{\textcolor{red}{\textbf{ESQUEMÁTICO Y ALGUNA OTRA COSA.}}}
 \end{center}
 
 \subsection{Mediciones}
+A continuación se procede a analizar los resultados obtenidos de las mediciones sobre el circuito, comparando dichos resultados con los cálculos teóricos y simulados mediante el uso del programa \textbf{LTSpice}.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/Av.png}
+	\caption{Ganancia de tensión del amplificador.}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/Avs.png}
+	\caption{Ganancia de tensión del sistema.}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/Ai.png}
+	\caption{Ganancia de corriente del amplificador.}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/Ria.png}
+	\caption{Impedancia de entrada del amplificador.}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/Ris.png}
+	\caption{Impedancia de entrada del sistema.}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/Ros.png}
+	\caption{Impedancia de salida del sistema.}
+\end{figure}
+
+\begin{center}
+	\Large{\textcolor{red}{\textbf{HAY QUE REHACER MEDICIONES.}}}\\
+	\Large{\textcolor{red}{\textbf{OBSERVACIONES.}}}
+\end{center}
 
 \section{Conclusiones}
 Dado que se optó por confeccionar una configuración Darlington, se puede afirmar que la ganancia de corriente del circuito, la cual ya de por sí es grande, como se demostró en \textcolor{red}{\textbf{(...)}}, es mayor que la de los demás grupos, ya que la principal característica de este es la alta ganancia de dicha variable. Por otro lado, también es posible afirmar que la polarización resulta altamente estable, ya que se logró efectuar la polarización mediante una fuente de corriente.
