@@ -12,7 +12,7 @@ avs_db = freq_teo_1*0 - 0.8432197260313168
 ai_db = freq_teo_3*0 + 8.841197029645336
 
 zia = freq_teo_2*0 + 6179.27396184769
-zis =  freq_teo_2*0 + 6179.27396184769 + 560
+zis = freq_teo_2*0 + 6179.27396184769 + 560
 zo = freq_teo_2*0 + 16.06739415843958
 
 #GANACIA DE V
@@ -40,14 +40,18 @@ pha_s_avs = np.array(data[1]["V(vout)/V(vin) PHA"])
 
 #IMPEDANCIA DE ENTRADA
 
+suav_ria = 100
+suav_ris = 100
+suav_ros = 10
+
 df = pnd.read_csv('./Darlington/Ria.csv', sep=',')
 freq_m_ria = np.asarray(df["Frequency (Hz)"])
-mag_m_ria = np.asarray(df["Trace |Z| (Ohm)"])
+mag_m_ria = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ria).mean())
 pha_m_ria = np.asarray(df["Trace th (*)"])
 
 df = pnd.read_csv('./Darlington/Ris.csv', sep=',')
 freq_m_ris = np.asarray(df["Frequency (Hz)"])
-mag_m_ris = np.asarray(df["Trace |Z| (Ohm)"])
+mag_m_ris = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ris).mean())
 pha_m_ris = np.asarray(df["Trace th (*)"])
 
 lt_parser = SpiceParser()
@@ -65,7 +69,7 @@ pha_s_ris = np.array(data[1]["V(vin)/I(I1) PHA"])
 
 df = pnd.read_csv('./Darlington/Ros.csv', sep=',')
 freq_m_ros = np.asarray(df["Frequency (Hz)"])
-mag_m_ros = np.asarray(df["Trace |Z| (Ohm)"])
+mag_m_ros = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ros).mean())
 pha_m_ros = np.asarray(df["Trace th (*)"])
 
 data = lt_parser.parse('./Darlington/Ros.txt')
@@ -153,7 +157,7 @@ freq_i = np.asarray(df["Frequency (Hz)"])
 ir1 = np.asarray(df["Channel 1 Magnitude (dB)"])
 ir2 = np.asarray(df["Channel 2 Magnitude (dB)"])
 
-i_db = ir2 - ir1 #-20*np.log10(6.99738091445127)
+i_db = ir2 - ir1 + 20 #- 20*np.log10(0.06766433684918514)
 plt.title("Ganancia de corriente $\Delta I$")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Ganancia [$dB$]")
