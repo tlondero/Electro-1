@@ -304,7 +304,7 @@ Se definen $R_{S}^* = \left( R_B // R_S \right) + h_{ie1}$ y $R_{OF}^* = R_{OF} 
 
 Luego, observando el nodo $E_2$, se llega a
 \begin{equation}
-	I_{B2} \left( 1 + h_{fe2} \right) + I_o = \frac{V_o}{R_{OF}^*}
+	\left[ I_{B2} \left( 1 + h_{fe2} \right) + I_o \right] R_{OF}^* = V_o
 	\label{equ:roa2}
 \end{equation}
 
@@ -313,17 +313,45 @@ Se expresa la tensión $V_o$ como
 	V_o = - \left( I_{B1} h_{ie1} + I_{B2} h_{ie2} \right)
 	\label{equ:roa3}
 \end{equation}
-y se plantea para el nodo $C_1$, utilizando (\ref{equ:roa1}), llegándose a la expresión
+y se plantea para el nodo $E_1$, utilizando (\ref{equ:roa1}), llegándose a la expresión
+\begin{equation*}
+	I_{B2} = I_{B1} \left( 1 +h_{fe1} + \frac{I_{S}^{*}}{I_{E}^{*}} \right)
+\end{equation*}
 \begin{equation}
-	I_{B1} \left( 1 + h_{fe1} \right) + I_{OF} + I_{B2} h_{ie2} + I_o = \frac{V_o}{R_{OF}^*}
+	I_{B1} = \frac{I_{B2}}{1 +h_{fe1} + \frac{R_{S}^{*}}{R_{E}^{*}}}
 	\label{equ:roa4}
 \end{equation}
 
-De esta forma, con (\ref{equ:roa2}), (\ref{equ:roa3}) y (\ref{equ:roa4}), se opera algebraicamente y se obtiene finalmente la impedancia de salida del circuito
+Reemplazando (\ref{equ:roa4}) en (\ref{equ:roa3}) se obtiene
 \begin{equation}
-R_{oa} = \frac{V_o}{I_o} = 
-\frac {R_{OF}^* \left[ \left( h_{fe1} + 1 \right) R_{E}^* + R_{S}^* \right] \left( 1 + h_{fe2} \right) }{ \left[ \left( h_{ie2} R_{OF}^* + 3 h_{fe2} + 3 \right) h_{fe1} + h_{ie2} R_{OF}^* + h_{fe2} + 1 \right] R_{E}^* + \left( h_{ie2} R_{OF}^* + h_{fe2} + 1 \right) R_{S}^* }
+	V_o = - I_{B2} \left( h_{ie2} + \frac{R_{S}^{*}}{ 1 +h_{fe1} + \frac{R_{S}^{*}}{R_{E}^{*}}} \right)
+	\label{equ:roa5}
 \end{equation}
+
+Finalmente, con lo expresado en (\ref{equ:roa5}), al reemplazarlo en (\ref{equ:roa1}), se llega a
+\begin{equation}
+	\frac{V_o}{I_o} = \frac{R_{OF}}{h_{ie2} + \frac{R_{S}^{*}} {1 + h_{fe1} + \frac{R_{S}^{*}}{R_{S}^{*}}}  + R_{OF} \left( 1 + h_{fe2} \right)} \left( h_{ie2} + \frac{R_{S}^{*}} {1 + h_{fe1} + \frac{R_{S}^{*}}{R_{S}^{*}}}  \right)
+	\label{equ:roa}
+\end{equation}
+
+Una vez ya conseguidas las expresiones previas, solo resta reemplazar los valores de cada componente y estimador que permitan obtener el resultado final para cada una. Dichos valores son expresados en la Tabla (\ref{tab:resultados}).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Valor en dB} \\
+\hline
+$\Delta V$ & 0.9897 & -0.0897 \\
+$\Delta V_S$ & 0.9075 & -0.8432 \\
+$\Delta I$ & 2.7673 & 8.8412 \\
+$R_{ia}$ & 6.1792 $K\Omega$ & - \\
+$R_{oa}$ & 19.0.673 $\Omega$ & - \\
+\hline
+\end{tabular}
+\caption{Valores obtenidos del circuito incremental.}
+\label{tab:resultados}
+\end{table}
 
 \subsection{Desarrollo y armado de la placa}
 \begin{center}

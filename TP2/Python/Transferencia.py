@@ -11,6 +11,7 @@ vss = -10
 
 #Resistencias
 rg = 560
+RS = rg
 RB = 6.8E3
 re = 680
 rd = 680
@@ -76,6 +77,8 @@ Ai = (1 + hfe2) * Rof * (1 + hfe1) * RE * RB / (RL * Rof * hoe2 + RL + Rof) / ((
 Zi = RB * (RE * Rd * hfe1 * hfe2 + RE * Rd * hfe1 + RE * Rd * hfe2 + RE * hfe1 * hie2 + Rd * hfe2 * hie1 + RE * Rd + RE * hie1 + RE * hie2 + Rd * hie1 + hie1 * hie2) / (RE * Rd * hfe1 * hfe2 + RB * Rd * hfe2 + RE * Rd * hfe1 + RE * Rd * hfe2 + RE * hfe1 * hie2 + Rd * hfe2 * hie1 + RB * RE + RB * Rd + RB * hie2 + RE * Rd + RE * hie1 + RE * hie2 + Rd * hie1 + hie1 * hie2)
 Avs = Av * Zi/(Zi + rg)
 
+Zo = (RB * RE * hfe1 * hie2 + RE * RS * hfe1 * hie2 + RB * RE * RS + RB * RE * hie1 + RB * RE * hie2 + RB * RS * hie2 + RB * hie1 * hie2 + RE * RS * hie1 + RE * RS * hie2 + RS * hie1 * hie2) * Rof / (RB * RE * Rof * hfe1 * hfe2 + RE * RS * Rof * hfe1 * hfe2 + RB * RE * Rof * hfe1 + RB * RE * Rof * hfe2 + RB * RE * hfe1 * hie2 + RB * RS * Rof * hfe2 + RB * Rof * hfe2 * hie1 + RE * RS * Rof * hfe1 + RE * RS * Rof * hfe2 + RE * RS * hfe1 * hie2 + RS * Rof * hfe2 * hie1 + RB * RE * RS + RB * RE * Rof + RB * RE * hie1 + RB * RE * hie2 + RB * RS * Rof + RB * RS * hie2 + RB * Rof * hie1 + RB * hie1 * hie2 + RE * RS * Rof + RE * RS * hie1 + RE * RS * hie2 + RS * Rof * hie1 + RS * hie1 * hie2)
+
 print("Av =", Av)
 print("Av dB =", 20*np.log10(Av))
 
@@ -83,6 +86,8 @@ print("Avs =", Avs)
 print("Avs dB =", 20*np.log10(Avs))
 
 print("Zi =", Zi)
+
+print("Zo =", Zo)
 
 print("Ai =", Ai)
 print("Ai dB =", 20*np.log10(Ai))
