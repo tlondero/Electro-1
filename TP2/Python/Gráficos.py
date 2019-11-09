@@ -39,110 +39,110 @@ mag_s_avs = np.array(data[0]["V(vout)/V(vin) MAG"])
 pha_s_avs = np.array(data[1]["V(vout)/V(vin) PHA"])
 
 #IMPEDANCIA DE ENTRADA
-
-suav_ria = 100
-suav_ris = 100
-suav_ros = 10
-
-df = pnd.read_csv('./Darlington/Ria.csv', sep=',')
-freq_m_ria = np.asarray(df["Frequency (Hz)"])
-mag_m_ria = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ria).mean())
-pha_m_ria = np.asarray(df["Trace th (*)"])
-
-df = pnd.read_csv('./Darlington/Ris.csv', sep=',')
-freq_m_ris = np.asarray(df["Frequency (Hz)"])
-mag_m_ris = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ris).mean())
-pha_m_ris = np.asarray(df["Trace th (*)"])
-
-lt_parser = SpiceParser()
-data = lt_parser.parse('./Darlington/Ria.txt')
-freq_s_ria = np.array(data[1].index)
-mag_s_ria = 10**(np.array(data[0]["V(n002)/I(I1) MAG"])/20)
-pha_s_ria = np.array(data[1]["V(n002)/I(I1) PHA"])
-
-data = lt_parser.parse('./Darlington/Ris.txt')
-freq_s_ris = np.array(data[1].index)
-mag_s_ris = 10**(np.array(data[0]["V(vin)/I(I1) MAG"])/20)
-pha_s_ris = np.array(data[1]["V(vin)/I(I1) PHA"])
-
-#IMPEDANCIA DE SALIDA
-
-df = pnd.read_csv('./Darlington/Ros.csv', sep=',')
-freq_m_ros = np.asarray(df["Frequency (Hz)"])
-mag_m_ros = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ros).mean())
-pha_m_ros = np.asarray(df["Trace th (*)"])
-
-data = lt_parser.parse('./Darlington/Ros.txt')
-freq_s_ros = np.array(data[1].index)
-mag_s_ros = 10**(np.array(data[0]["V(vout)/I(I1) MAG"])/20)
-pha_s_ros = np.array(data[1]["V(vout)/I(I1) PHA"])
+#
+# suav_ria = 100
+# suav_ris = 100
+# suav_ros = 10
+#
+# df = pnd.read_csv('./Darlington/Ria.csv', sep=',')
+# freq_m_ria = np.asarray(df["Frequency (Hz)"])
+# mag_m_ria = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ria).mean())
+# pha_m_ria = np.asarray(df["Trace th (*)"])
+#
+# df = pnd.read_csv('./Darlington/Ris.csv', sep=',')
+# freq_m_ris = np.asarray(df["Frequency (Hz)"])
+# mag_m_ris = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ris).mean())
+# pha_m_ris = np.asarray(df["Trace th (*)"])
+#
+# lt_parser = SpiceParser()
+# data = lt_parser.parse('./Darlington/Ria.txt')
+# freq_s_ria = np.array(data[1].index)
+# mag_s_ria = 10**(np.array(data[0]["V(n002)/I(I1) MAG"])/20)
+# pha_s_ria = np.array(data[1]["V(n002)/I(I1) PHA"])
+#
+# data = lt_parser.parse('./Darlington/Ris.txt')
+# freq_s_ris = np.array(data[1].index)
+# mag_s_ris = 10**(np.array(data[0]["V(vin)/I(I1) MAG"])/20)
+# pha_s_ris = np.array(data[1]["V(vin)/I(I1) PHA"])
+#
+# #IMPEDANCIA DE SALIDA
+#
+# df = pnd.read_csv('./Darlington/Ros.csv', sep=',')
+# freq_m_ros = np.asarray(df["Frequency (Hz)"])
+# mag_m_ros = np.asarray(pnd.DataFrame(df["Trace |Z| (Ohm)"]).ewm(com=suav_ros).mean())
+# pha_m_ros = np.asarray(df["Trace th (*)"])
+#
+# data = lt_parser.parse('./Darlington/Ros.txt')
+# freq_s_ros = np.array(data[1].index)
+# mag_s_ros = 10**(np.array(data[0]["V(vout)/I(I1) MAG"])/20)
+# pha_s_ros = np.array(data[1]["V(vout)/I(I1) PHA"])
 
 #GRÁFICOS
 
-# plt.plot(freq_s_av, mag_s_av, label = "Simulado")
-# plt.title("Ganancia de tesión del amplificador $\Delta V$")
+plt.plot(freq_s_av, mag_s_av, label = "Simulado")
+plt.title("Ganancia de tesión del amplificador $\Delta V$")
+plt.xlabel("Frecuencia [Hz]")
+plt.ylabel("Amplitud [dB]")
+plt.plot(freq_m_av, mag_m_av, label = "Medido")
+
+plt.plot(freq_teo_1, av_db, label = "Teórico", color='r')
+
+plt.xscale('log')
+plt.legend()
+plt.grid()
+plt.show()
+
+plt.title("Ganancia de tesión del sistema $\Delta V_S$")
+plt.xlabel("Frecuencia [Hz]")
+plt.ylabel("Amplitud [dB]")
+plt.plot(freq_m_avs, mag_m_avs, label = "Medido")
+plt.plot(freq_s_avs, mag_s_avs, label = "Simulado")
+
+plt.plot(freq_teo_1, avs_db, label = "Teórico", color='r')
+
+plt.xscale('log')
+plt.legend()
+plt.grid()
+plt.show()
+
+# plt.title("Impedancia de entrada del amplificador $R_{ia}$")
 # plt.xlabel("Frecuencia [Hz]")
-# plt.ylabel("Amplitud [dB]")
-# plt.plot(freq_m_av, mag_m_av, label = "Medido")
+# plt.ylabel("Impedancia [k$\Omega$]")
+# plt.plot(freq_m_ria, mag_m_ria*1E-3, label = "Medido")
+# plt.plot(freq_s_ria, mag_s_ria*1E-3, label = "Simulado")
 #
-# plt.plot(freq_teo_1, av_db, label = "Teórico", color='r')
+# plt.plot(freq_teo_2, zia*1E-3, label = "Teórico", color='r')
 #
 # plt.xscale('log')
 # plt.legend()
 # plt.grid()
 # plt.show()
 #
-# plt.title("Ganancia de tesión del sistema $\Delta V_S$")
+# plt.title("Impedancia de entrada del sistema $R_{is}$")
 # plt.xlabel("Frecuencia [Hz]")
-# plt.ylabel("Amplitud [dB]")
-# plt.plot(freq_m_avs, mag_m_avs, label = "Medido")
-# plt.plot(freq_s_avs, mag_s_avs, label = "Simulado")
+# plt.ylabel("Impedancia [k$\Omega$]")
+# plt.plot(freq_m_ris, mag_m_ris*1E-3, label = "Medido")
+# plt.plot(freq_s_ris, mag_s_ris*1E-3, label = "Simulado")
 #
-# plt.plot(freq_teo_1, avs_db, label = "Teórico", color='r')
+# plt.plot(freq_teo_2, zis*1E-3, label = "Teórico", color='r')
 #
 # plt.xscale('log')
 # plt.legend()
 # plt.grid()
 # plt.show()
-
-plt.title("Impedancia de entrada del amplificador $R_{ia}$")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Impedancia [k$\Omega$]")
-plt.plot(freq_m_ria, mag_m_ria*1E-3, label = "Medido")
-plt.plot(freq_s_ria, mag_s_ria*1E-3, label = "Simulado")
-
-plt.plot(freq_teo_2, zia*1E-3, label = "Teórico", color='r')
-
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
-
-plt.title("Impedancia de entrada del sistema $R_{is}$")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Impedancia [k$\Omega$]")
-plt.plot(freq_m_ris, mag_m_ris*1E-3, label = "Medido")
-plt.plot(freq_s_ris, mag_s_ris*1E-3, label = "Simulado")
-
-plt.plot(freq_teo_2, zis*1E-3, label = "Teórico", color='r')
-
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
-
-plt.title("Impedancia de salida del sistema $R_{os}$")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Impedancia [k$\Omega$]")
-plt.plot(freq_m_ros, mag_m_ros*1E-3, label = "Medido")
-plt.plot(freq_s_ros, mag_s_ros*1E-3, label = "Simulado")
-
-plt.plot(freq_teo_2, zo*1E-3, label = "Teórico", color='r')
-
-plt.xscale('log')
-plt.legend()
-plt.grid()
-plt.show()
+#
+# plt.title("Impedancia de salida del sistema $R_{os}$")
+# plt.xlabel("Frecuencia [Hz]")
+# plt.ylabel("Impedancia [k$\Omega$]")
+# plt.plot(freq_m_ros, mag_m_ros*1E-3, label = "Medido")
+# plt.plot(freq_s_ros, mag_s_ros*1E-3, label = "Simulado")
+#
+# plt.plot(freq_teo_2, zo*1E-3, label = "Teórico", color='r')
+#
+# plt.xscale('log')
+# plt.legend()
+# plt.grid()
+# plt.show()
 
 #GANANCIA DE CORRIENTE
 
@@ -152,12 +152,16 @@ freq_s_ai = np.array(data[1].index)
 mag_s_ai = np.array(data[0]["-I(Rl)/I(I1) MAG"])
 pha_s_av = np.array(data[1]["-I(Rl)/I(I1) PHA"])
 
-df = pnd.read_csv('./Darlington/Ai.csv', sep=',')
+df = pnd.read_csv('./Darlington/Ai_3.csv', sep=',')
 freq_i = np.asarray(df["Frequency (Hz)"])
 ir1 = np.asarray(df["Channel 1 Magnitude (dB)"])
 ir2 = np.asarray(df["Channel 2 Magnitude (dB)"])
 
-i_db = ir2 - ir1 + 20 #- 20*np.log10(0.06766433684918514)
+r1 = 560
+r2 = 2.21E3
+
+i_db = 20*np.log10((10**((ir2 - ir1)/20))*r1/r2)
+
 plt.title("Ganancia de corriente $\Delta I$")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Ganancia [$dB$]")
