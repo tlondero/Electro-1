@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from sympy import limit, Symbol, oo
+
 
 #Tensiones
 vcc = 12
@@ -8,7 +10,8 @@ vss = -10
 #Resistencias
 rg = 560
 RS = rg
-RB = 6.8E3
+#RB = 6.8E3
+RB = Symbol("RB")
 re = 680
 rd = 680
 rs = 6.8E3
@@ -34,11 +37,16 @@ print("Rof = ", Rof)
 
 #Q1 y Q2
 
-ice1 = 15.25E-3
+hfe1 = 200
+hfe2 = 200
+
+#ice1 = 15.25E-3
+
+ice1 = (15 - 0.7 + ids*re/hfe2)/(RB/hfe1 + re)
+
 ice2 = ids
 
-hfe1 = 110
-hfe2 = 110
+
 
 gm1 = ice1/vt
 hie1 = hfe1/gm1
@@ -75,16 +83,29 @@ Avs = Av * Zi/(Zi + rg)
 
 Zo = (RB * RE * hfe1 * hie2 + RE * RS * hfe1 * hie2 + RB * RE * RS + RB * RE * hie1 + RB * RE * hie2 + RB * RS * hie2 + RB * hie1 * hie2 + RE * RS * hie1 + RE * RS * hie2 + RS * hie1 * hie2) * Rof / (RB * RE * Rof * hfe1 * hfe2 + RE * RS * Rof * hfe1 * hfe2 + RB * RE * Rof * hfe1 + RB * RE * Rof * hfe2 + RB * RE * hfe1 * hie2 + RB * RS * Rof * hfe2 + RB * Rof * hfe2 * hie1 + RE * RS * Rof * hfe1 + RE * RS * Rof * hfe2 + RE * RS * hfe1 * hie2 + RS * Rof * hfe2 * hie1 + RB * RE * RS + RB * RE * Rof + RB * RE * hie1 + RB * RE * hie2 + RB * RS * Rof + RB * RS * hie2 + RB * Rof * hie1 + RB * hie1 * hie2 + RE * RS * Rof + RE * RS * hie1 + RE * RS * hie2 + RS * Rof * hie1 + RS * hie1 * hie2)
 
-print("Av =", Av)
-print("Av dB =", 20*np.log10(Av))
+# print("Av =", Av)
+# print("Av dB =", 20*np.log10(Av))
+#
+# print("Avs =", Avs)
+# print("Avs dB =", 20*np.log10(Avs))
+#
+# print("Zi =", Zi)
+#
+# print("Zo =", Zo)
+#
+# print("Ai =", Ai)
+# print("Ai dB =", 20*np.log10(Ai))
 
-print("Avs =", Avs)
-print("Avs dB =", 20*np.log10(Avs))
+print("Av =", limit(Av, RB, oo))
+#print("Av dB =", 20*np.log10(limit(Av, RB, oo)))
 
-print("Zi =", Zi)
+print("Avs =", limit(Avs, RB, oo))
+#print("Avs dB =", 20*np.log10(limit(Avs, RB, oo)))
 
-print("Zo =", Zo)
+print("Zi =", limit(Zi, RB, oo))
 
-print("Ai =", Ai)
-print("Ai dB =", 20*np.log10(Ai))
+print("Zo =", limit(Zo, RB, oo))
+
+print("Ai =", limit(Ai, RB, oo))
+#print("Ai dB =", 20*np.log10(limit(Ai, RB, oo)))
 
