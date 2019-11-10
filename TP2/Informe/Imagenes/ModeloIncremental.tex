@@ -6,8 +6,9 @@
 \begin{page}
 \begin{circuitikz}[european voltages]
 	\node [ground, label=below left:$G$](g1){};
-	\draw (g1) to[R, l=$R_{GS}$] ++(0,2) -- ++(2,0) node[circ,label=above left:$S$](s){} to[R, l_=$R_S$] ++(0,-2) node[ground](){};
-	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l=$R_D$, f<=$I_o$] ++(2.5,0) node[ocirc](vo){} ++(0,-2.5) node[](-vo){};
+	\draw (g1) to[R, l=$R_{GS}$] ++(0,2) -- ++(1.5,0) node[circ,label=above left:$S$](s){} to[R, l_=$R_S$] ++(0,-2) node[ground](){};
+	\draw (s) to[open] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l=$R_D$, f<=$I_o$] ++(2.5,0) node[ocirc](vo){} ++(0,-2.5) node[](-vo){};
+	\draw (d) to[dcisource, l_=$gm V_{GS}$] (s);
 	\draw (-vo) to[open, v = $V_o$] (vo);
 	\draw (s) -- ++(0,1.5) to[R, l=$R_{DS}$] ++(2.5,0) -- (d);
 \end{circuitikz}

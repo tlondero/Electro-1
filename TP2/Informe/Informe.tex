@@ -19,7 +19,7 @@
 %		Informe		%
 %%%%%%%%%%%%%%%%%%%%%
 \section{Introducción}
-En el siguiente informe se busca analizar, desarrollar y confeccionar algún circuito estudiado a lo largo del cuatrimestre. Se destaca la existencia de una dificultad adicional, la cual se basa en el método mediante el cual se fueron adquiriendo los componentes. Estos fueron subastados durante la cursada, entre los diversos grupos. De esta forma, se condiciona el circuito final, ya que se posee acceso limitado a estos, los cuales no se pudieron elegir libremente.
+En el siguiente informe se busca analizar, desarrollar y confeccionar algún circuito estudiado a lo largo del cuatrimestre. Se destaca la existencia de una dificultad adicional, la cual se basa en el método mediante el cual se fueron adquiriendo los componentes. Estos fueron subastados durante la cursada, entre los diversos grupos. De esta forma, se condiciona el circuito final, ya que se posee acceso limitado a los recursos, los cuales no se pudieron elegir libremente.
 
 \section{Desarrollo}
 
@@ -60,17 +60,17 @@ Como primer opción se consideró utilizar el par Darlington y mediante el uso d
 \label{fig:pardar}
 \end{figure}
 
-La conexión representada en la Figura (\ref{fig:pardar1}) no es conveniente. Una de las principales desventajas consiste en que si es deseable aumentar la ganancia de tensión del sistema, se debe modificar el valor de $R_E$, modificando también la polarización del sistema.
+La conexión representada en la Figura (\ref{fig:pardar1}) no es la más conveniente. Una de las principales desventajas consiste en que si es deseable aumentar la ganancia de tensión del sistema, se debe modificar el valor de $R_E$, modificando también la polarización del sistema. En otras palabras, se debe realizar un balance adecuado y tener muy en cuenta lo que uno busca optimizar.
 
-Por otro lado, la mostrada en la Figura (\ref{fig:pardar2}) permite aumentar la corriente $I_{CE1}$ y aprovecharla de cierta forma llevándola al colector de $Q_2$. Una variación mejor de esta configuración es colocar la resistencia a tierra, ya que de esta forma permite extraer más corriente de $Q_1$.
+Por otro lado, la mostrada en la Figura (\ref{fig:pardar2}) permite aumentar la corriente $I_{CE1}$ y aprovecharla de cierta forma llevándola al colector de $Q_2$. Una variación que busca mejorar esta configuración consiste en colocar la resistencia a tierra, ya que de esta forma permite extraer más corriente de $Q_1$.
 
-Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) es la más optima para compensar el circuito, ya que permite polarizar el transistor $Q_2$ mediante corriente. Una particularidad de esta disposición es que la fuente empleada actúa tanto en la polarización como una carga activa. Además, de esta forma, es posible aumentar $I_{CE2}$ sin modificar otros factores del propio circuito.
+Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) se considera la más optima para compensar el circuito, ya que permite polarizar el transistor $Q_2$ mediante corriente, aprovechando también la resistencia a tierra mencionada para el caso anterior. Una particularidad de esta disposición es que la fuente empleada actúa tanto en la polarización como una carga activa. Además, de esta forma, es posible aumentar $I_{CE2}$ sin modificar otros factores del propio circuito.
 
 Cabe aclarar que, la disposición presentada en la Figura (\ref{fig:pardar2}), estrictamente hablando, es la más económica al problema anterior. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. También se destaca que se puede colocar un diodo entre el colector y el emisor de $Q_2$. Este tipo de configuración es utilizada para trabajar con potencias altas. Dado que este enfoque no es de interés, se reserva dicho componente.
 
 \subsection{Fuente de corriente}
 \label{subsec:fdei}
-Una vez determinado que la implementación optima, con los componentes disponibles, es la presentada en la Figura~(\ref{fig:pardar3}), se decide confeccionarla. Para ello, primero se opta por analizar la fuente de corriente. Esta puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice, como se presenta a continuación.
+Una vez determinado que la implementación optima, con los componentes disponibles, es la presentada en la Figura~(\ref{fig:pardar3}), se decide llevar adelante su analisis y confeccionarla. Para ello, primero se opta por analizar la fuente de corriente. Esta puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice, como se presenta a continuación.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.25\textwidth, page=4]{Imagenes/ParDarlington.pdf}
@@ -78,23 +78,23 @@ Una vez determinado que la implementación optima, con los componentes disponibl
 	\label{fig:fuentei}
 \end{figure}
 
-Recorriendo la malla de entrada y de salida del circuito de la Figura (\ref{fig:fuentei}), se obtienen las siguientes ecuaciones:
-\begin{equation}
+Recorriendo la malla de entrada del circuito de la Figura (\ref{fig:fuentei}), se obtiene la siguiente ecuación:
+\begin{equation*}
 	V_{GS} = V_{SS} - I_{DS} R_{S}
-\end{equation}
-\begin{equation}
-	V_{DS} = V_{DD} + V_{SS} - I_{DS} \left( R_{D} + R_{S} \right)
-\end{equation}
+\end{equation*}
+%\begin{equation}
+%	V_{DS} = V_{DD} + V_{SS} - I_{DS} \left( R_{D} + R_{S} \right)
+%\end{equation}
 
 Además, se plantean las ecuaciones del JFET:
-\begin{equation}
-\begin{split}
-	I_{DS} = I_{DSS} & \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
-	gm = & \ 2\frac{\sqrt{I_{DS} I_{DSS}}}{|V_P|}
-\end{split}
-\end{equation}
+\begin{equation*}
+	I_{DS} = I_{DSS} \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
+\end{equation*}
+\begin{equation*}
+	gm = \ 2\frac{\sqrt{I_{DS} I_{DSS}}}{|V_P|}
+\end{equation*}
 
-De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS} = 2 \ mA$ y $V_P = -8 \ V$, siendo estos los adecuados para el peor caso. Luego, estableciendo $V_{SS} = 10 \ V$, $R_S = 6.8 \ K\Omega$ y $R_D = 680 \ \Omega$ se calculan la corriente de drain y la tensión gate-source. Como es de esperarse, se obtienen dos valores posibles para cada variable:
+De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS} = 2 \ mA$ y $V_P = -8 \ V$, siendo estos los adecuados para el peor caso. Luego, estableciendo $V_{SS} = 10 \ V$, $R_S = 6.8 \ K\Omega$ y $R_D = 680 \ \Omega$ y operando algebraicamente, se calculan la corriente de drain y la tensión gate-source. Como es de esperarse, se obtienen dos valores posibles para cada variable:
 \begin{equation*}
 \left\lbrace
 \begin{split}
@@ -114,10 +114,10 @@ De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Coll
 Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente. 
 %\textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por la totalidad del circuito, por lo que este análisis es expuesto más adelante.}
 
-Con lo establecido previamente, se prosigue a plantear el circuito incremental. Es de interés calcular la impedancia de salida, para luego reemplazar la configuración por dicha variable en el análisis incremental del circuito de la Figura (\ref{fig:pardar3}).
+Con lo establecido previamente, se prosigue a plantear el circuito incremental. Es de interés calcular la impedancia de salida, para luego reemplazar la configuración por dicha variable en el análisis incremental del circuito de la Figura~(\ref{fig:pardar3}).
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.45\textwidth, page=1]{Imagenes/ModeloIncremental.pdf}
+	\includegraphics[width=0.5\textwidth, page=1]{Imagenes/ModeloIncremental.pdf}
 	\caption{Circuito incremental de la Figura (\ref{fig:fuentei}).}
 \label{fig:incfuente1}
 \end{figure}
@@ -134,14 +134,16 @@ Se define $R_S^* = R_S // R_{GS}$, para luego analizar el circuito presentado en
 \end{figure}
 
 Observando que la tensión $V_S$ es igual a $R_{S}^{*} I_o$, planteando las corrientes del nodo $D$ y analizando la tensión $V_o$ se obtienen las siguientes ecuaciones:
-\begin{equation*}
+\begin{equation}
 	V_o = I_{DS} R_{DS} + I_o \left( R_D + R_S^* \right)
-\end{equation*}
-\begin{equation*}
+	\label{equ:riojfet1}
+\end{equation}
+\begin{equation}
 	I_{DS} = gm V_S + I_o = \left( gm R_S^* + 1 \right) I_o
-\end{equation*}
+	\label{equ:riojfet2}
+\end{equation}
 
-Operando algebraicamente se llega a la variable deseada de la forma:
+Reemplazando con (\ref{equ:riojfet2}) en (\ref{equ:riojfet1}) y dividiendo miembro a miembro por $I_o$ , se obtiene la impedancia de entrada deseada.
 \begin{equation}
 \begin{split}
 	R_{OF} & = \frac{V_o}{I_o} = R_{DS} \left( 1 + gm R_S^* \right) + R_S^* + R_D \\
