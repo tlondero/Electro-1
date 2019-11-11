@@ -403,55 +403,76 @@ A continuación se procede a analizar los resultados obtenidos de las mediciones
 \centering
 	\includegraphics[width=\textwidth]{Imagenes/Av.png}
 	\caption{Ganancia de tensión del amplificador.}
+	\label{fig:av}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}
 \centering
 	\includegraphics[width=\textwidth]{Imagenes/Avs.png}
 	\caption{Ganancia de tensión del sistema.}
+	\label{fig:avs}
 \end{subfigure}
 \begin{subfigure}{.8\textwidth}
 \centering
 	\includegraphics[width=0.6\textwidth]{Imagenes/Ai.png}
 	\caption{Ganancia de corriente del amplificador.}
-	\label{fig:aicomp}
+	\label{fig:ai}
 \end{subfigure}
 \caption{Comparación de ganancias.}
 \label{fig:ganancias}
 \end{figure}
 
 Se observa de la Figura (\ref{fig:ganancias}) como a frecuencias medias se corresponden los tres valores obtenidos. 
-
-\begin{center}
-	\Large{\textcolor{red}{\textbf{HABLAR DE $\mathbf\Delta V_S$ Y VER $\mathbf\Delta I$.}}}
-\end{center}
-
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.49\textwidth}
 \centering
 	\includegraphics[width=\textwidth]{Imagenes/Ria.png}
 	\caption{Impedancia de entrada del amplificador.}
+	\label{fig:ria}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}
 \centering
 	\includegraphics[width=\textwidth]{Imagenes/Ris.png}
 	\caption{Impedancia de entrada del sistema.}
+	\label{fig:ris}
 \end{subfigure}
 \caption{Comparación de impedancias de entrada.}
+\label{fig:ri}
 \end{figure}
-
-\begin{center}
-	\Large{\textcolor{red}{\textbf{VER $\mathbf\Delta R_{ia}$ Y $\mathbf\Delta R_{is}$.}}}
-\end{center}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/Ros.png}
 	\caption{Comparación de impedancias de salida del sistema}
+	\label{fig:ro}
+\end{figure}
+
+Cabe aclarar que en las Figuras (\ref{fig:ai}), (\ref{fig:ria}) y (\ref{fig:ris}) la medición presenta una caída a altas frecuencias, alejandose de los valores deseados. Esto ocurre debido a la presencia de las puntas del osciloscopio con el cual se efectuaron las mediciones. A continuación se presentan simulaciones de los tres parámetros mencionados, comparando sus resultados tanto con como sin punta.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Ai_cp.png}
+	\caption{Ganancia de corriente.}
+	\label{fig:ai-cp}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Ria_cp.png}
+	\caption{Impedancia de entrada del amplificador.}
+	\label{fig:ria-cp}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Ris_cp.png}
+	\caption{Impedancia de entrada del sistema.}
+	\label{fig:ris-cp}
+\end{subfigure}
+\caption{Comparación de simulaciones con y sin punta.}
+\label{fig:cpvssp}
 \end{figure}
 
 \section{Conclusiones}
-Dado que se optó por confeccionar una configuración Darlington, era esperable obtener una ganancia de corriente alta. Se pretendía obtener $\Delta I \approx h_{fe1} h_{fe2} = 40000$. Como se demostró en la Figura (\ref{fig:aicomp}), esto no resultó así, sino que se obtuvo una ganancia mucho más baja. Una de las soluciones posibles consiste en aumentar el valor de la resistencia $R_B$, ya que si se toma $R_B \rightarrow \infty$, considerando la polarización, se obtiene $\Delta I \approx 36 \ dB$. Esto no resultó posible efectuarse ya que los componentes se encontraban limitados.
+Dado que se optó por confeccionar una configuración Darlington, era esperable obtener una ganancia de corriente alta. Se pretendía obtener $\Delta I \approx h_{fe1} h_{fe2} = 40000$. Como se demostró en la Figura (\ref{fig:ai}), esto no resultó así, sino que se obtuvo una ganancia mucho más baja. Una de las soluciones posibles consiste en aumentar el valor de la resistencia $R_B$, ya que si se toma $R_B \rightarrow \infty$, considerando la polarización, se obtiene $\Delta I \approx 36 \ dB$. Esto no resultó posible efectuarse ya que los componentes se encontraban limitados.
 
 Si bien el amplificador resulta ser un buen seguidor de tensión, dado que su impedancia de entrada no resulta mucho mayor a la del generador, el sistema no cuenta con dicha cualidad. Esto, nuevamente se podría solucionar aumentando $R_B$. Si se realiza el mismo análisis que se efectuó previamente para el caso de la ganancia de corriente, se obtiene $R_{ia} \rightarrow \infty$, lo que concluye en $\Delta V = \Delta V_S$.
 
