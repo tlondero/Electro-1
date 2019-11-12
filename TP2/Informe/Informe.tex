@@ -21,9 +21,7 @@
 \section{Introducción}
 En el siguiente informe se busca analizar, desarrollar y confeccionar algún circuito estudiado a lo largo del cuatrimestre. Se destaca la existencia de una dificultad adicional, la cual se basa en el método mediante el cual se fueron adquiriendo los componentes. Estos fueron subastados durante la cursada, entre los diversos grupos. De esta forma, se condiciona el circuito final, ya que se posee acceso limitado a los recursos, los cuales no se pudieron elegir libremente.
 
-\section{Desarrollo}
-
-\subsection{Componentes dispuestos}
+\section{Componentes dispuestos}
 El presente grupo se valió de los siguientes componentes:
 \begin{itemize}
 	\item Dos pares de resistencias de $6.8 \ k\Omega$ y de $680 \ k\Omega$.
@@ -34,7 +32,7 @@ El presente grupo se valió de los siguientes componentes:
 	\item Una placa de 5x5.
 \end{itemize}
 
-\subsection{Circuitos considerados}
+\section{Circuitos considerados}
 Como primer opción se consideró utilizar el par Darlington y mediante el uso de las resistencias, configurarlo de forma tal que este quede compensado. Una alternativa es el uso de una fuente de corriente, con el mismo objetivo que se mencionó anteriormente.
 \begin{figure}[H]
 \centering
@@ -68,7 +66,7 @@ Finalmente, la mostrada en la Figura (\ref{fig:pardar3}) se considera la más op
 
 Cabe aclarar que, la disposición presentada en la Figura (\ref{fig:pardar2}), estrictamente hablando, es la más económica al problema anterior. Dadas las condiciones, dicha consideración no afecta en la decisión a implementar, ya que se cuenta con componentes para realizar cualquiera de las tres. También se destaca que se puede colocar un diodo entre el colector y el emisor de $Q_2$. Este tipo de configuración es utilizada para trabajar con potencias altas. Dado que este enfoque no es de interés, se reserva dicho componente.
 
-\subsection{Fuente de corriente}
+\section{Fuente de corriente}
 \label{subsec:fdei}
 Una vez determinado que la implementación optima, con los componentes disponibles, es la presentada en la Figura~(\ref{fig:pardar3}), se decide llevar adelante su analisis y confeccionarla. Para ello, primero se opta por analizar la fuente de corriente. Esta puede ser realizada con el JFET, dispuesto en una configuración en la cual se autopolarice, como se presenta a continuación.
 \begin{figure}[H]
@@ -78,6 +76,7 @@ Una vez determinado que la implementación optima, con los componentes disponibl
 	\label{fig:fuentei}
 \end{figure}
 
+\subsection{Polarización}
 Recorriendo la malla de entrada del circuito de la Figura (\ref{fig:fuentei}), se obtiene la siguiente ecuación:
 \begin{equation*}
 	V_{GS} = V_{SS} - I_{DS} R_{S}
@@ -111,8 +110,8 @@ De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Coll
 \right.
 \end{equation*}
 
-Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente. 
-%\textcolor{red}{Por otro lado, para garantizar que se cumpla $V_{DS} > V_{DSE} = |V_{GS} - V_P|$, se requiere el valor de $V_{DD}$. Dado que este circuito es empleado para polarizar otro, dicha tensión queda fijada por la totalidad del circuito, por lo que este análisis es expuesto más adelante.}
+\subsection{Impedancia de salida}
+Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente.
 
 Con lo establecido previamente, se prosigue a plantear el circuito incremental. Es de interés calcular la impedancia de salida, para luego reemplazar la configuración por dicha variable en el análisis incremental del circuito de la Figura~(\ref{fig:pardar3}).
 \begin{figure}[H]
@@ -154,7 +153,7 @@ Reemplazando con (\ref{equ:riojfet2}) en (\ref{equ:riojfet1}) y dividiendo miemb
 
 Para poder continuar, se toma $R_{GS} \longrightarrow \infty$ y se asume $V_A = -90 \ V$, estimando así $R_{DS} = \frac{V_A}{I_{DS}} = 56.25 \ K\Omega$. De esta forma se obtiene de (\ref{equ:rof}) el valor de la impedancia de salida $R_{OF} \approx 234.79 \ K\Omega$.
 
-\subsection{Darlington compensado por corriente}
+\section{Darlington compensado por corriente}
 Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). En el análisis que se muestra a continuación se presentan la carga y la alimentación del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por cuestiones de simplicidad.
 \begin{figure}[H]
 \centering
@@ -163,6 +162,7 @@ Con lo obtenido en la Sección (\ref{subsec:fdei}), se posee la información nec
 	\label{fig:pardar4}
 \end{figure}
 
+\subsection{Polarización}
 A continuación, se seleccionan los transistores a utilizar en el par Darlington, eligiendo \href{https://www.sparkfun.com/datasheets/Components/BC546.pdf}{BC547} para este caso. Por un lado, como se está polarizando este transistor por corriente, se garantiza que $I_{CE2} = 1.60 \ mA$. Por otro lado, para el caso de $Q_1$, se plantea la malla de entrada, obteniéndose así la corriente $I_{CQ1}$ de la forma
 \begin{equation*}
 	V_{CC} - I_{B1} R_B - V_{BEON} - \left( I_{CE1} - I_{B2} \right) R_E = 0
@@ -179,7 +179,38 @@ Es así que, para la tensión $V_{CE1}$, se obtiene
 	V_{CE1} = V_{CC} - I_{CE1} R_E
 \end{equation}
 
-A continuación, tomando $V_{CC} = 12 \ V$, $R_E = 680 \ \Omega$ y $R_B = 6.8 \ k\Omega$, se obtiene $I_{CE1} = 15.25 \ mA$ y $V_{CE1} = 1.63 \ V$, teniendo así el transistor $Q_1$ polarizado. Luego, asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$ y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{oe}} = \frac{V_A}{I_{CE}}$, se buscan conseguir dichos valores para cada BJT. Para el caso de $h_{fe1}$ y $h_{fe2}$ se obtiene de la hoja de datos un valor de $h_{fe} = 200$, ya que se dispuso de integrado que cae en la clasificación tipo B. 
+Luego se recorre la malla que conecta $V_{CC}$ con el emisor de $Q_2$, pasando por las bases y emisores de ambos transistores. Llamando a la tensión en el emisor de $Q_2$ como $V_{DD}$, se obtiene
+\begin{equation*}
+	V_{CC} - I_{CE1} \frac{R_B}{h_{fe1}} - 2 V_{BEON} - V_{DD} = 0
+\end{equation*}
+\begin{equation}
+	V_{DD} = V_{CC} - I_{CE1} \frac{R_B}{h_{fe1}} - 2 V_{BEON}
+	\label{equ:vdd}
+\end{equation}
+
+Finalmente, recorriendo la malla de salida de $Q_2$, se llega a la ecuación
+\begin{equation*}
+	V_{CC} - V_{CE2} - V_{DD} = 0
+\end{equation*}
+\begin{equation}
+	V_{CE2} = V_{CC} - V_{DD}
+	\label{equ:vce2}
+\end{equation}
+
+Es así que, tomando $V_{CC} = 12 \ V$, $R_E = 680 \ \Omega$ y $R_B = 6.8 \ k\Omega$, se obtiene $I_{CE1} = 15.25 \ mA$, $V_{CE1} = 1.63 \ V$, $V_{DD} = 9.82 \ V$ y $V_{CE2} = 2.08 \ V$, teniendo así el transistor $Q_1$ polarizado.
+
+Con lo analizado, mediante el uso de simulaciones e información del transistor obtenida de la hoja de datos, se cuenta la información necesaria para poder efectuar una aproximación a las rectas de carga estática y dinámica.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.6\textwidth]{Imagenes/RectaDeCarga.png}
+	\caption{Recta de carga del circuito.}
+\label{fig:rcarg}
+\end{figure}
+
+Sabiendo que la tensión de saturación del transistor es $V_{SAT} = 0.25 \ V$ en el peor caso, se presenta en la Figura (\ref{fig:rcarg}) la zona de saturación del transistor en rojo, mientras que en verde, se muestra la región del eje horizontal que representa la excursión simétrica máxima, la cual es limitada por el factor previamente mencionado. De esta forma, se calcula el valor del $ESM$, siendo este de $2.22 \ V$.
+
+\subsection{Circuito incremental}
+Asumiendo $T = 27^o C$ y $V_{A1} = V_{A2} = V_A = -90 \ V$ y sabiendo que los estimadores empleados son $gm = \frac{I_{CE}}{V_T}$, $h_{ie} = \frac{h_{fe}}{gm}$ y $\frac{1}{h_{oe}} = \frac{V_A}{I_{CE}}$, se buscan conseguir dichos valores para cada BJT. Para el caso de $h_{fe1}$ y $h_{fe2}$ se obtiene de la hoja de datos un valor de $h_{fe} = 200$, ya que se dispuso de integrado que cae en la clasificación tipo B. 
 
 Con todos los datos obtenidos y presentados, se elabora la siguiente tabla, en la cual se presentan los valores de los estimadores necesarios.
 \begin{table}[H]
@@ -360,7 +391,7 @@ $R_{oa}$ & 16.0971 $\Omega$ & - \\
 \label{tab:resultados}
 \end{table}
 
-\subsection{Desarrollo y armado de la placa}
+\section{Desarrollo y armado de la placa}
 Una vez realizado el calculo teórico, se realizó el circuito analizado. Primero, se presenta el PCB confeccionado mediante el uso del software \textbf{Altium}.
 \begin{figure}[H]
 \centering
@@ -395,7 +426,7 @@ Se colocaron pines hembra para cada transistor, con el mismo objetivo que se col
 %	\caption{Montecarlo de la ganancia de tensión del sistema con tolerancia del $1\%$.}
 %\end{figure}
 
-\subsection{Mediciones}
+\section{Mediciones}
 A continuación se procede a analizar los resultados obtenidos de las mediciones sobre el circuito, comparando dichos resultados con los cálculos teóricos y simulados.
 \begin{figure}[H]
 \centering
@@ -472,10 +503,10 @@ Cabe aclarar que en las Figuras (\ref{fig:ai}), (\ref{fig:ria}) y (\ref{fig:ris}
 \end{figure}
 
 \section{Conclusiones}
-Dado que se optó por confeccionar una configuración Darlington, era esperable obtener una ganancia de corriente alta. Se pretendía obtener $\Delta I \approx h_{fe1} h_{fe2} = 40000$. Como se demostró en la Figura (\ref{fig:ai}), esto no resultó así, sino que se obtuvo una ganancia mucho más baja. Una de las soluciones posibles consiste en aumentar el valor de la resistencia $R_B$, ya que si se toma $R_B \rightarrow \infty$, considerando la polarización, se obtiene $\Delta I \approx 36 \ dB$. Esto no resultó posible efectuarse ya que los componentes se encontraban limitados.
+Dado que se optó por confeccionar una configuración Darlington, era esperable obtener una ganancia de corriente alta. Se pretendía obtener $\Delta I \approx h_{fe1} h_{fe2} = 40000$. Como se demostró en la Tabla (\ref{tab:resultados}) y en la Figura (\ref{fig:ai}), esto no resultó así, sino que se obtuvo una ganancia mucho más baja. Una de las soluciones posibles consiste en aumentar el valor de la resistencia $R_B$, ya que si se toma $R_B \rightarrow \infty$, considerando la polarización, se obtiene $\Delta I \approx 36 \ dB$. Esto no resultó posible de efectuarse ya que los componentes son limitados.
 
-Si bien el amplificador resulta ser un buen seguidor de tensión, dado que su impedancia de entrada no resulta mucho mayor a la del generador, el sistema no cuenta con dicha cualidad. Esto, nuevamente se podría solucionar aumentando $R_B$. Si se realiza el mismo análisis que se efectuó previamente para el caso de la ganancia de corriente, se obtiene $R_{ia} \rightarrow \infty$, lo que concluye en $\Delta V = \Delta V_S$.
+Si bien se obtuvo una buena ganancia de tensión del amplificador, es decir, el circuito resulta ser un buen seguidor de tensión, dado que su impedancia de entrada no resulta mucho mayor a la del generador, el sistema no cuenta con dicha cualidad. Esto, nuevamente se puede solucionar aumentando $R_B$. Si se realiza el mismo análisis que se efectuó previamente para el caso de la ganancia de corriente, se obtiene $R_{ia} \rightarrow \infty$, lo que concluye en $\Delta V = \Delta V_S$.
 
-Por otro lado, es posible afirmar que la polarización resulta altamente estable, ya que se logró efectuar la polarización mediante una fuente de corriente. Una alternativa aún mejor al circuito desarrollado, se basa en polarizar ambos transistores mediante el uso de fuentes de corriente. Si bien se cuenta con un diodo y un transistor NPN que no se han utilizado, no se poseen los componentes suficientes para realizar dicha disposición. Mínimamente se requeriría un diodo y dos resistencias más para efectuar una fuente simple compensada.
+Por otro lado, es posible afirmar que la polarización resulta estable, ya que se logró efectuarla mediante una fuente de corriente. Una alternativa aún mejor al circuito desarrollado, se basa en polarizar ambos transistores mediante el uso de fuentes de corriente. Si bien se cuenta con un diodo y un transistor NPN que no se han utilizado, no se poseen los componentes suficientes para realizar dicha disposición. Mínimamente se requeriría un diodo y dos resistencias más para efectuar una fuente simple compensada.
 	
 \end{document}
