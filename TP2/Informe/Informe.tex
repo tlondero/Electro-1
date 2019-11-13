@@ -123,7 +123,7 @@ Con lo establecido previamente, se prosigue a plantear el circuito incremental. 
 
 Se destaca que, como el gate queda a tierra, se cumple que $V_{GS} = V_G - V_S = - V_S$, por lo tanto, se da vuelta la fuente de corriente y se reemplaza con lo mencionado anteriormente. 
 
-Se define $R_{GS}^* = R_g // R_{GS}$, para luego analizar el circuito presentado en la Figura (\ref{fig:incfuente2}).
+Se define $R_{GS}^* = R_S // R_{GS}$, para luego analizar el circuito presentado en la Figura (\ref{fig:incfuente2}).
 \begin{figure}[H]
 \centering
 \hspace*{2cm}
@@ -132,7 +132,7 @@ Se define $R_{GS}^* = R_g // R_{GS}$, para luego analizar el circuito presentado
 \label{fig:incfuente2}
 \end{figure}
 
-Observando que la tensión $V_S$ es igual a $R_{S}^{*} I_o$, planteando las corrientes del nodo $D$ y analizando la tensión $V_o$ se obtienen las siguientes ecuaciones:
+Observando que la tensión $V_S$ es igual a $R_{GS}^{*} I_o$, planteando las corrientes del nodo $D$ y analizando la tensión $V_o$ se obtienen las siguientes ecuaciones:
 \begin{equation}
 	V_o = I_{DS} R_{DS} + I_o \left( R_D + R_{GS}^* \right)
 	\label{equ:riojfet1}
@@ -332,9 +332,9 @@ Por otro lado, para el cálculo de la impedancia de salida $R_{oa}$, se reemplaz
 \centering
 	\includegraphics[width=0.8\textwidth, page=7]{Imagenes/ModeloIncremental.pdf}
 \end{figure}
-Se definen $R_{S}^* = \left( R_B // R_g \right) + h_{ie1}$ y $R_{OF}^* = R_{OF} // \frac{1}{h_{oe1}}$. Luego, sabiendo que la tensión sobre $R_{O1}^{*}$ y $R_{S}^*$ es la misma, se obtiene
+Se definen $R_{g}^{*} = \left( R_B // R_g \right) + h_{ie1}$ y $R_{OF}^* = R_{OF} // \frac{1}{h_{oe1}}$. Luego, sabiendo que la tensión sobre $R_{O1}^{*}$ y $R_{g}^{*}$ es la misma, se obtiene
 \begin{equation}
-	I_{E}^{*} = I_{B1} \frac{R_{S}^*}{R_{O1}^{*}}
+	I_{E}^{*} = I_{B1} \frac{R_{g}^{*}}{R_{O1}^{*}}
 	\label{equ:roa1}
 \end{equation}
 
@@ -354,19 +354,19 @@ y se plantea para el nodo $E_1$, utilizando (\ref{equ:roa1}), llegándose a la e
 	I_{B2} = I_{B1} \left( 1 +h_{fe1} + \frac{I_{S}^{*}}{I_{E}^{*}} \right)
 \end{equation*}
 \begin{equation}
-	I_{B1} = \frac{I_{B2}}{1 +h_{fe1} + \frac{R_{S}^{*}}{R_{E}^{*}}}
+	I_{B1} = \frac{I_{B2}}{1 +h_{fe1} + \frac{R_{g}^{*}}{R_{E}^{*}}}
 	\label{equ:roa4}
 \end{equation}
 
 Reemplazando (\ref{equ:roa4}) en (\ref{equ:roa3}) se obtiene
 \begin{equation}
-	V_o = - I_{B2} \left( h_{ie2} + \frac{R_{S}^{*}}{ 1 +h_{fe1} + \frac{R_{S}^{*}}{R_{E}^{*}}} \right)
+	V_o = - I_{B2} \left( h_{ie2} + \frac{R_{g}^{*}}{ 1 +h_{fe1} + \frac{R_{g}^{*}}{R_{E}^{*}}} \right)
 	\label{equ:roa5}
 \end{equation}
 
 Finalmente, con lo expresado en (\ref{equ:roa5}), al reemplazarlo en (\ref{equ:roa1}), se llega a
 \begin{equation}
-	\frac{V_o}{I_o} = \frac{R_{OF}}{h_{ie2} + \frac{R_{S}^{*}} {1 + h_{fe1} + \frac{R_{S}^{*}}{R_{S}^{*}}}  + R_{OF} \left( 1 + h_{fe2} \right)} \left( h_{ie2} + \frac{R_{S}^{*}} {1 + h_{fe1} + \frac{R_{S}^{*}}{R_{S}^{*}}}  \right)
+	\frac{V_o}{I_o} = \frac{R_{OF}}{h_{ie2} + \frac{R_{g}^{*}} {1 + h_{fe1} + \frac{R_{g}^{*}}{R_{E}^{*}}}  + R_{OF} \left( 1 + h_{fe2} \right)} \left( h_{ie2} + \frac{R_{g}^{*}} {1 + h_{fe1} + \frac{R_{g}^{*}}{R_{E}^{*}}}  \right)
 	\label{equ:roa}
 \end{equation}
 
