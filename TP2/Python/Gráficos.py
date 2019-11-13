@@ -85,7 +85,7 @@ pha_s_ros = np.array(data[1]["V(vout)/I(I1) PHA"])
 plt.plot(freq_s_av, mag_s_av, label = "Simulado")
 plt.title("Ganancia de tesión del amplificador $\Delta V$")
 plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Amplitud [dB]")
+plt.ylabel("Ganancia [dB]")
 plt.plot(freq_m_av, mag_m_av, label = "Medido")
 
 plt.plot(freq_teo_1, av_db, label = "Teórico", color='r')
@@ -97,7 +97,7 @@ plt.show()
 
 plt.title("Ganancia de tesión del sistema $\Delta V_S$")
 plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Amplitud [dB]")
+plt.ylabel("Ganancia [dB]")
 plt.plot(freq_m_avs, mag_m_avs, label = "Medido")
 plt.plot(freq_s_avs, mag_s_avs, label = "Simulado")
 
