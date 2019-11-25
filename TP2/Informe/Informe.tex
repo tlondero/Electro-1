@@ -82,36 +82,36 @@ Recorriendo la malla de entrada del circuito de la Figura (\ref{fig:fuentei}), s
 	V_{GS} = V_{SS} - I_{DS} R_{S}
 \end{equation*}
 %\begin{equation}
-%	V_{DS} = V_{DD} + V_{SS} - I_{DS} \left( R_{D} + R_{S} \right)
+%	V_{DS} = V_{DD} + V_{SS} - I_{D} \left( R_{D} + R_{S} \right)
 %\end{equation}
 
 Además, se plantean las ecuaciones del JFET:
 \begin{equation*}
-	I_{DS} = I_{DSS} \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
+	I_{D} = I_{DSS} \left( 1 - \frac{V_{GS}}{V_P} \right)^2 \\
 \end{equation*}
 \begin{equation*}
-	gm = \ 2\frac{\sqrt{I_{DS} I_{DSS}}}{|V_P|}
+	gm = \ 2\frac{\sqrt{I_{D} I_{DSS}}}{|V_P|}
 \end{equation*}
 
 De esta forma, seleccionando el componente \href{https://www.onsemi.com/pub/Collateral/2N3819-D.PDF}{2N3819}, se obtiene de la hoja de datos los valores de interés, tales como $I_{DSS} = 2 \ mA$ y $V_P = -8 \ V$, siendo estos los adecuados para el peor caso. Luego, estableciendo $V_{SS} = 10 \ V$, $R_g = 6.8 \ K\Omega$ y $R_D = 680 \ \Omega$ y operando algebraicamente, se calculan la corriente de drain y la tensión gate-source. Como es de esperarse, se obtienen dos valores posibles para cada variable:
 \begin{equation*}
 \left\lbrace
 \begin{split}
-	&I_{DS} =  4.39 \ mA \\
+	&I_{D} =  4.39 \ mA \\
 	&V_{GS} =  -19.85 \ V
 \end{split}
 \right.
 \ \ y \ \
 \left\lbrace
 \begin{split}
-	&I_{DS} =  1.60 \ mA \\
+	&I_{D} =  1.60 \ mA \\
 	&V_{GS} =  -0.88 \ V
 \end{split}
 \right.
 \end{equation*}
 
 \subsection{Impedancia de salida}
-Sabiendo que se debe cumplir que $I_{DSS} \geq I_{DS}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{DS} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente.
+Sabiendo que se debe cumplir que $I_{DSS} \geq I_{D}$ y $V_{GS} > V_{P}$, se descartan los primeros valores, seleccionando $I_{D} = 1.60 \ mA$ y $V_{GS} = -0.88 \ V$, obteniéndose así $gm = 0.45 \ \frac{mA}{V}$. De esta forma se garantiza que esté polarizado adecuadamente.
 
 Con lo establecido previamente, se prosigue a plantear el circuito incremental. Es de interés calcular la impedancia de salida, para luego reemplazar la configuración por dicha variable en el análisis incremental del circuito de la Figura~(\ref{fig:pardar3}). Esto se debe a que la fuente no sufre variaciones incrementales. Si esta fuese una fuente referencial, no se da la misma situación y no se podría efectuar lo previamente mencionado.
 \begin{figure}[H]
@@ -134,11 +134,11 @@ Se define $R_{GS}^* = R_S // R_{GS}$, para luego analizar el circuito presentado
 
 Observando que la tensión $V_S$ es igual a $R_{GS}^{*} I_o$, planteando las corrientes del nodo $D$ y analizando la tensión $V_o$ se obtienen las siguientes ecuaciones:
 \begin{equation}
-	V_o = I_{DS} R_{DS} + I_o \left( R_D + R_{GS}^* \right)
+	V_o = I_{D} R_{DS} + I_o \left( R_D + R_{GS}^* \right)
 	\label{equ:riojfet1}
 \end{equation}
 \begin{equation}
-	I_{DS} = gm V_S + I_o = \left( gm R_{GS}^* + 1 \right) I_o
+	I_{D} = gm V_S + I_o = \left( gm R_{GS}^* + 1 \right) I_o
 	\label{equ:riojfet2}
 \end{equation}
 
@@ -151,7 +151,7 @@ Reemplazando con (\ref{equ:riojfet2}) en (\ref{equ:riojfet1}) y dividiendo miemb
 \label{equ:rof}
 \end{equation}
 
-Para poder continuar, se toma $R_{GS} \longrightarrow \infty$ y se asume $V_A = -90 \ V$, ya que dicho valor no se encuentra en la hoja de datos y este puede asumirse para los peores casos. Luego, se estima $R_{DS} = \frac{V_A}{I_{DS}} = 56.25 \ K\Omega$. De esta forma se obtiene de (\ref{equ:rof}) el valor de la impedancia de salida $R_{OF} \approx 234.79 \ K\Omega$.
+Para poder continuar, se toma $R_{GS} \longrightarrow \infty$ y se asume $V_A = -90 \ V$, ya que dicho valor no se encuentra en la hoja de datos y este puede asumirse para los peores casos. Luego, se estima $R_{DS} = \frac{V_A}{I_{D}} = 56.25 \ K\Omega$. De esta forma se obtiene de (\ref{equ:rof}) el valor de la impedancia de salida $R_{OF} \approx 234.79 \ K\Omega$.
 
 \section{Darlington polarizado por corriente}
 Con lo obtenido en la Sección (\ref{sec:fdei}), se posee la información necesaria para analizar el circuito presentado en la Figura (\ref{fig:pardar3}). En el análisis que se muestra a continuación se presentan la carga y la alimentación del sistema, componentes que no fueron presentados en la Figura (\ref{fig:pardar}) por cuestiones de simplicidad.
@@ -399,21 +399,44 @@ Una vez realizado el calculo teórico, se realizó el circuito analizado. Primer
 	\caption{PCB obtenido en Altium.}
 \end{figure}
 
+De esta forma, se procede a presentar las fotos del circuito elaborado.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=0.6\textwidth, trim={40cm 20cm 30cm 15cm}, clip]{Imagenes/Placa-Up.jpg}
+	\caption{Top Layer de la placa efectuada.}
+	\label{fig:pup}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=0.6\textwidth, trim={25cm 10cm 30cm 10cm}, clip]{Imagenes/Placa-Down.jpg}
+	\caption{Bottom Layer de la placa efectuada.}
+	\label{fig:pd}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+\centering
+	\includegraphics[width=0.4\textwidth, trim={20cm 0 20cm 0}, clip]{Imagenes/Medicion.jpg}
+	\caption{Set-up de las mediciones efectuadas.}
+	\label{fig:setup}
+\end{subfigure}
+\caption{Fotografías de la versión física.}
+\label{fig:fotos}
+\end{figure}
+
 Se colocaron pines hembra para cada transistor, con el mismo objetivo que se colocan zócalos para los distintos tipos de integrados. Además, se colocó un jumper sobre la resistencia $R_g$, de forma que se pueda medir la ganancia de corriente del amplificador y del sistema  con facilidad. Se emplearon resistencias SMD, con tolerancia del $1\%$. Esto se debe a que se buscó la mínima variación posible de las ganancias. Esta decisión queda respaldada por un análisis de Montecarlo efectuado en el programa \textbf{LTSpice}. Se observa en la Figura (\ref{fig:mc-ai1}) como varía la ganancia de corriente del sistema empleando las tolerancias previamente mencionadas. Por otro lado, en la Figura (\ref{fig:mc-ai2}), se efectúa el mismo análisis, pero esta vez con tolerancias del $5\%$. La diferencia entre ambos casos es notable, siendo más estable la primera.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth]{Imagenes/MC-Ai.png}
+	\includegraphics[width=0.6\textwidth]{Imagenes/MC-Ai.png}
 	\caption{Montecarlo de la ganancia de corriente con tolerancia del $1\%$.}
 	\label{fig:mc-ai1}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth]{Imagenes/MC-Ai_2.png}
+	\includegraphics[width=0.6\textwidth]{Imagenes/MC-Ai_2.png}
 	\caption{Montecarlo de la ganancia de corriente con tolerancia del $5\%$.}
 	\label{fig:mc-ai2}
 \end{figure}
-
-\newpage
 
 \section{Mediciones}
 A continuación se procede a analizar los resultados obtenidos de las mediciones sobre el circuito, comparando dichos resultados con los cálculos teóricos y simulados.
@@ -492,10 +515,13 @@ Cabe aclarar que en las Figuras (\ref{fig:ai}), (\ref{fig:ria}) y (\ref{fig:ris}
 \end{figure}
 
 \section{Conclusiones} \label{sec:conclusiones}
-Dado que se optó por confeccionar una configuración Darlington, era esperable obtener una ganancia de corriente alta. Se pretendía obtener $\Delta I \approx h_{fe1} h_{fe2} = 40000$. Como se demostró en la Tabla (\ref{tab:resultados}) y en la Figura (\ref{fig:ai}), esto no resultó así, sino que se obtuvo una ganancia mucho más baja. Una de las soluciones posibles consiste en aumentar el valor de la resistencia $R_B$, adecuando también toda la polarización a esto, ya que si se toma $R_B \rightarrow \infty$, se obtiene $\Delta I \approx 36 \ dB$. Esto no resultó posible de efectuarse ya que los componentes son limitados.
+Dado que se optó por confeccionar una configuración Darlington, era esperable obtener una ganancia de corriente alta. Se pretendía obtener $\Delta I \approx h_{fe1} h_{fe2} = 40000$. Como se demostró en la Tabla (\ref{tab:resultados}) y en la Figura (\ref{fig:ai}), esto no resultó así, sino que se obtuvo una ganancia mucho más baja. Una de las soluciones posibles consiste en aumentar el valor de la resistencia $R_B$, adecuando también toda la polarización a esto, ya que si se toma $R_B \rightarrow \infty$, se obtiene $\Delta I \approx 36 \ dB$. Esto no resultó posible de efectuarse ya que los componentes son limitados. 
+
+Con lo dicho anteriormente, se contempla retirar la resistencia $R_S$ de la fuente de corriente y colocarla en serie con la resistencia $R_B$. De esta forma, se logra incrementar la resistencia deseada, ya que se presentan dos impedancias de $6.8 \ k\Omega$ en serie. A costo de esto, se obtiene una fuente de corriente cuya $I_D$ es igual al valor $I_{DSS}$. Si bien esta corriente aumenta, este tipo de fuente no es estable, ya que dicho valor no lo es, provocando variaciones en los parámetros del sistema.
 
 Si bien se obtuvo una buena ganancia de tensión del amplificador, es decir, el circuito resulta ser un buen seguidor de tensión, dado que su impedancia de entrada no resulta mucho mayor a la del generador, el sistema no cuenta con dicha cualidad. Esto, nuevamente se puede solucionar aumentando $R_B$. Si se realiza el mismo análisis que se efectuó previamente para el caso de la ganancia de corriente, se obtiene $R_{ia} \rightarrow \infty$, lo que concluye en $\Delta V = \Delta V_S$. En otras palabras, se está buscando efectuar una adaptación de las impedancias. Si bien esto no se puede lograr con los componentes disponibles, lo que sí se obtuvo es una baja impedancia de salida, lo que permite una buena adaptación en caso de conectar otro sistema a la salida de este. 
 
 Por otro lado, es posible afirmar que la polarización resulta estable, ya que se logró efectuarla mediante una fuente de corriente. Una alternativa aún mejor al circuito desarrollado, se basa en polarizar ambos transistores mediante el uso de fuentes de corriente. Si bien se cuenta con un diodo y un transistor NPN que no se han utilizado, no se poseen los componentes suficientes para realizar dicha disposición. Mínimamente se requeriría un diodo y dos resistencias más para efectuar una fuente simple compensada. También se destaca que se pudo haber colocado un diodo entre el colector y el emisor de $Q_2$. Este tipo de configuración es utilizada para trabajar con potencias altas. Dado que este enfoque no es de interés, se reserva dicho componente.
-	
+
+Finalmente, se destaca un último punto, el cuál consiste en el ancho de banda del circuito. Se pudo corroborar, mediante observaciones en el laboratorio, que si se emplea el sistema como seguidor de tensión, dicha variable es sumamente grande. Analizando que, limitado por la frecuencia máxima del generador, a $20 \ MHz$ se presenta una atenuación menor a $2 \ dB$. Esto muestra que, empleando el circuito como seguidor de tensión, este posee un ancho de banda superior que al de varios operacionales comerciales, como por ejemplo lo son el \href{http://www.ti.com/lit/ds/symlink/tl082-n.pdf}{TL082} con $3 \ MHz$, \href{http://www.ti.com/lit/ds/symlink/lm833.pdf}{LM833} con $10 \ MHz$ y el \href{http://www.ti.com/lit/ds/symlink/lm741.pdf}{LM741} con $1.5 \ MHz$.
 \end{document}

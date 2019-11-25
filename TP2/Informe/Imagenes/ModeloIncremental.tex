@@ -21,7 +21,7 @@
 	\draw (s) to[R, l_=$R_{GS}^*$, f>=$I_o$] ++(0,-2) node[ground, label=below left:$G$](){} ++(-1,0) node[](aux1){};
 	\draw (s) to[dcisource, l=$gm V_S$] ++(2.5,0) node[circ,label=above right:$D$](d){} to[R, l=$R_D$, f<=$I_o$] ++(2.5,0) node[ocirc](vo){} ++(0,-2.5) node[](-vo){};
 	\draw (-vo) to[open, v = $V_o$] (vo);
-	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$, f<=$I_{DS}$] ++(2.5,0) -- (d);
+	\draw (s) -- ++(0,1.5) to[R, label=$R_{DS}$, f<=$I_{D}$] ++(2.5,0) -- (d);
 	\draw (aux1) ++(0,-0.5) to[open, v^=$V_S$] ++(0,2.5);
 \end{circuitikz}
 \end{page}
